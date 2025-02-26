@@ -14,4 +14,38 @@ preparing for version 2.
 Obviously, it needs to be great.
 
 You've gathered a list of $k$ features \llist{F}{1}{k} that you could potentially add to version 2.
-How
+However, there are complicated dependencies and requirements among them so you don't necessarily want to add all of them.
+There are 3 types of specifications defined over pairs of features $F_i \tand F_j$: \begin{enumerate}
+  \item Requirements: Your app must include either $F_i$ or $F_j$.
+  \item Conflicts: You cannot include both $F_i$ and $F_j$.
+  \item Dependencies: If you include $F_i$, then you must include $F_j$.
+\end{enumerate}
+Collectively, we call requirements, conflicts, and dependencies the \tit{feature specifications}.
+The feature specifications are given in list form.
+The high-level task is to decide which of the features to implement, based on the given feature specifications.
+We have two versions of the problem: \begin{enumerate}
+  \item In the idealistic feature selection problem, the task is to decide if there is a subset of features that satisfies all the feature specifications.
+  \item In the realistic feature selection problem, the task is to choose a subset of
+  features that satisfies the maximum number of feature specifications.
+\end{enumerate}
+For each of the problems above, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.
+\setcounter{section}{10}
+\setcounter{exercise}{3}
+% \setcounter{subexercise}{1}
+\begin{subexercise}
+Exercise
+\end{subexercise}
+
+\begin{solution}
+solution
+\end{solution}
+\pagebreak
+
+\begin{subexercise}
+Exercise
+\end{subexercise}
+
+\begin{solution}
+solution
+\end{solution}
+\end{document}

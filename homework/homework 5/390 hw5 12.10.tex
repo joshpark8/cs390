@@ -1,0 +1,51 @@
+\documentclass{article}
+\setlength{\headheight}{22.50113pt}
+\addtolength{\topmargin}{-10.50113pt}
+
+\input{preamble}
+\input{letterfont}
+\input{macros}
+
+\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\tbo{CS 390ATA\\Homework 5 (\theexercise)}}
+\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+
+\begin{document}
+\setcounter{section}{12}
+\setcounter{exercise}{10}
+
+\tbo{Exercise \theexercise} Let $ G = (V, E) $ be a directed graph with $ m $ edges and $ n $ vertices, where each vertex $v \in V$ is given an integer label $\ell(v) \in\N$.
+The goal is to find the length of the longest path\textsuperscript{\hyperref[fn:path]{3}} in $ G $ where the labels of the vertices are (strictly) increasing.\\
+\noindent\rule{2in}{0.4pt} \\
+\parbox{\linewidth}{\small \textsuperscript{\label{fn:path}3}Recall that a path is a walk that does not repeat vertices.}
+
+%-------------------------------- 12.10.1 SOLUTION ---------------------------------%
+\begin{subexercise}
+  Suppose $G$ is a DAG. For this problem, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\pagebreak
+
+%-------------------------------- 12.10.2 SOLUTION ---------------------------------%
+\begin{subexercise}
+  Consider now the problem for general graphs. For this problem, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\pagebreak
+
+%-------------------------------- 12.10.3 SOLUTION ---------------------------------%
+\begin{subexercise}
+  Suppose instead we ask for the length of the longest path in $G$ where $G$ is a general graph and the labels of the vertices are weakly increasing.\footnote[4]{A sequence $ \llist{x}{1}{k} $ is weakly increasing if $ x_1\leq x_2\leq \cdots\leq x_k $.}
+  For this problem, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\end{document}

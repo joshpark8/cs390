@@ -6,8 +6,8 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA: Advanced Topics in Algorithms\\Homework 4 (\theexercise)}}
+\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\tbo{CS 390ATA \\ Homework 4 (\theexercise)}}
 \fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
@@ -19,18 +19,76 @@ traversing the edge $e$ as follows. Let $s \in V$ be a fixed starting vertex / s
 
 \setcounter{section}{8}
 \setcounter{exercise}{2}
-% \setcounter{subexercise}{1}
+
+% -------------------------------- 8.2.1 SOLUTION ---------------------------------%
+
 \begin{subexercise}
-Given an integer $ k\leq n $, the goal is to compute a walk of length at most $ k $ maximizing the sum of rewards along that walk. (If you repeat an edge, you
-get the same reward each time you repeat the edge.) Design and analyze an
-algorithm for this problem.
+Given an integer $ k\leq n $, the goal is to compute a walk of length at most $ k $ maximizing the sum of rewards along that walk. (If you repeat an edge, you get the same reward each time you repeat the edge.) Design and analyze an algorithm for this problem.
 \end{subexercise}
 
 \begin{solution}
-solution
+Our approach is to constrain Bellman-Ford to compute minimum walks with no more than $k$ edges.
+
+\begin{quote}%
+\defalgo{K-Bellman-Ford}{G=(V,E),s\in V,k}
+
+\doc{Computes the minimum-length $d(s,v)$ of a $k$-walk from $s$ to $v$ for all $v \in V$.}
+
+% \noindent\tun{\tmo{K-Bellman-Ford($G (V, E)$, $s \in V$, k):}}%
+\begin{steps}
+  \item Set $d(s, v) = +\infty$ for all $v \in V$.
+  \item Set $d(s,s) = 0.$
+  \item Do the following $k$ times
+  \begin{steps}
+      \item For all edges $e=(u,v) \in E$
+      \begin{steps}
+          \item $d(s,v) \leftarrow \min (d(s,v), \ d(s,u) + \ell(u,v))$
+      \end{steps}
+  \end{steps}
+\end{steps}
+\end{quote}
+
+% \vspace{1cc}
+\
+
+Given $G = (V, E)$ with positive edge weights, we negate the edge weights to obtain a graph $G^{-}$ with only negatively weighted edges.
+Running \subcall{K-Bellman-Ford}{G^-,s,k} assigns $d (s,t) := \subcall{SW}{s,t,k}$ for all $t \in V$.
+Hence, the distance of the maximum $k$-walk in $G$ can be directly computed by negating the minimum value of $\subcall{SW}{s, t, k}$ in $G^{-}$.
+
+% \vspace{1cc}
+\begin{subproof}[Runtime.]
+\[T(n) = \sum_{i=1}^{k} \sum_{e \ \in \ E} 1 \in O(mk)\]
+\end{subproof}
+
+\begin{subproof}[Correctness.]
+The correctness of this algorithm is inherited from the correctness proof of Bellman-Ford. If we want to prove this explicitly, it suffices to show that in $k$ iterations, \texttt{K-Bellman-Ford} produces the shortest walks using no more than $k$ edges; in particular, $d(s,t) = \subcall{SW}{s,t,k}$ for all $t \in V$.
+
+We approach this proof by induction on $k$, the number of iterations.
+
+In the base case, $k=0$, we have $d(s,t) = +\infty = \subcall{SW}{s,t,0}$ for all $t \not= s$, and $d(s,s) = 0 = \subcall{SW}{s,s,0}$, as desired.
+
+Now suppose the claim holds for $k$. Then on the $(k+1)$-th iteration, for each $t \in V$, we have one of the following cases:
+\begin{enumerate}
+    \item [i.] $\subcall{SW}{s,t,k+1} = \subcall{SW}{s,t,k}$. Then by the induction hypothesis, the algorithm assigns \[d(s,t)= \subcall{SW}{s,t,k} = \subcall{SW}{s,t,k+1}\]as desired.
+
+    \item [ii.] $\subcall{SW}{s,t,k+1} \not= \subcall{SW}{s,t,k}$.
+    For such $t$, there must exist some $v \in V$ such that $d(s,v)=\subcall{SW}{s,v,k}$ is finite. When $d(s,v) + \ell(v,t)$ is minimal, we get the shortest possible $(k+1)$-walk from $s$ to $t$ through $v$.
+    Correspondingly, the algorithm assigns
+    \begin{align*}
+        d(s,t)
+        &= \min_{v \in V: \ (v,t) \in E} d(s,v) + \ell(v,t) \\
+        &= \min_{v \in V: \ (v,t) \in E} \subcall{SW}{s,v,k} + \ell(v,t) \\
+        &= \subcall{SW}{s,t,k+1}
+    \end{align*}
+\end{enumerate}
+By induction, the claim holds for all $k$.
+\end{subproof}
 \end{solution}
+
 \pagebreak
 
+
+% -------------------------------- 8.2.2 SOLUTION ---------------------------------%
 \begin{subexercise}
   Here we also incorporate a \tit{discount rate}.
   Let $ \alpha\in (0,1) $ be given.
@@ -43,8 +101,52 @@ solution
   Design and analyze an algorithm for this problem.
 \end{subexercise}
 
-\begin{solution}
+\begin{solution} Our approach is to use a modified $\subcall{SW}{s,t,k}$ from the text to get the maximum value of a $k$-walk starting from $s$.
 
+\begin{quote}%
+\defalgo{max-discount-walk}{s,t,k}
+
+\doc{Given a nonnegative integer $k\in \ZZ{\geq 0}$ and two vertices $ s,t\in V$, returns the maximum total reward for a path of length $k$ from $s$ to a vertex $t$.}
+\begin{steps}
+  \item If $ k=0 $: \begin{steps}
+    \item If $s=t$, return 0
+    \item Else, return $-\infty$
+\end{steps}
+  \item Return $\max\begin{cases}
+  \subcall{max-discount-walk}{s,t,k-1}\\
+  \max\limits_{v\in V\;:\;e:=(v, t) \in E}\Big\{ \subcall{max-discount-walk}{s,v,k - 1} + \alpha^{k-1}\cdot r(e)\Big\}
+  \end{cases}$
+\end{steps}
+\end{quote}
+We assume there exists some globally defined directed graph $G=(V,E)$ with positive edge weights $r:E\to \bbR_{>0}$.
+To use this algorithm, we run $\subcall{max-discount-walk}{s,t,k}$ for all $t\in V\tand i\leq k$, using DP to cache the solutions to the sub-problems. That is,
+\begin{align}
+    \max_{\substack{v\in V\\0\leq i \leq k}} \Big\{\subcall{max-discount-walk}{s,t,i}\Big\} \label{eq:call}
+\end{align}
+
+\begin{subproof}[Runtime.]
+Since the meaningful structure of our algorithm is exactly $\subcall{SW}{s,t,k}$ from page 145 of the text, by Lemma 8.2 we can compute $\subcall{max-discount-walk}{s,t,k}$ for all $t\in V$ and $i\leq k$ in $O(k(m + n))$ time.
+\end{subproof}
+
+\begin{subproof}[Correctness.]
+We prove correctness by strong induction.
+The base case when $k=0$ is trivial.
+
+Now, assume we have shown that the desired property holds for all values up to $k$.
+We wish to show that it must then also hold for $k$.
+By assumption, a $k-1$-walk gives a discounted total reward of \begin{align*}
+    r(e_1) + \alpha r(e_2)+ \cdots + \alpha^{k-2}\,r(e_{k-1}).
+\end{align*}
+Upon running $\subcall{max-discount-walk}{s,t,k}$, our algorithm presents two cases: either it adds a new edge, or it does nothing.
+
+\tit{Case 1.} If $\subcall{MDW}{s,t,k}=\subcall{MDW}{s,t,k-1}$, then correctness follows directly from the inductive hypothesis.
+
+\tit{Case 2.} If $\subcall{MDW}{s,t,k}\neq \subcall{MDW}{s,t,k-1}$, then $\subcall{MDW}{s,t,k}=\subcall{MDW}{s,t,k-1}+\alpha^{k-1}r(e_k)$ for some $k^{\text{th}}$ edge $e_k$. By the inductive hypothesis, we have that \begin{align*}
+\subcall{MDW}{s,t,k}&=\subcall{MDW}{s,t,k-1}+\alpha^{k-1}r(e_k) \\
+&= r(e_1) + \alpha r(e_2)+ \cdots + \alpha^{k-2} r(e_{k-1}) +\alpha^{k-1}r(e_k).
+\end{align*}
+Thus this algorithm is correct for all $k\in \N_0$.
+\end{subproof}
 \end{solution}
 
 \end{document}

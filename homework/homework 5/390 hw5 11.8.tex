@@ -1,0 +1,53 @@
+\documentclass{article}
+
+\input{preamble}
+\input{letterfont}
+\input{macros}
+
+\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\tbo{CS 390ATA \\ Homework 5 (\theexercise)}}
+\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+
+\begin{document}
+\setcounter{section}{11}
+\setcounter{exercise}{8}
+
+\tbo{Exercise \theexercise} (Approximating subset sum.) Let $ \eps\in (0, 1)$ be fixed.
+Here we treat $ \eps $ as a fixed constant (like $ \eps $ = .1, for 10\% error); in particular, running times of the form $ O(n^{O(1/\eps)}) $ count as a polynomial.
+
+A ($ 1 \pm \eps $)-approximation algorithm for subset sum is one that (correctly) either: \begin{enumerate}
+  \item Returns a subset whose sum lies in the range $[( 1-\eps )T , ( 1+\eps )T ]$.
+  \item Declares that there is no subset that sums to (exactly) $T$.
+\end{enumerate}
+Note that such an algorithm does not solve the (exact) subset sum problem.
+
+%-------------------------------- 11.8.1 SOLUTION ---------------------------------%
+
+\begin{subexercise}
+  Suppose every input number $ x_i $ was ``small'', in the sense that $ x_i \leq \eps T $. Give a polynomial time ($ 1\pm \eps $)-approximation algorithm for this setting.
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\pagebreak
+
+%-------------------------------- 11.8.2 SOLUTION ---------------------------------%
+\begin{subexercise}
+  Suppose every input number $ x_i $ was ``big'', in the sense that $ x_i > \eps T $. Give a polynomial time ($ 1\pm \eps $)-approximation algorithm for this setting.
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\pagebreak
+
+%-------------------------------- 11.8.3 SOLUTION ---------------------------------%
+\begin{subexercise}
+  Now give a polynomial time ($ 1\pm \eps $)-approximation algorithm for subset sum in the general setting (with both big and small inputs).
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\end{document}

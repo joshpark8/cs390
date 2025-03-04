@@ -24,7 +24,46 @@ For each of the following problems, either (a) design and analyze a polynomial t
 \end{subexercise}
 
 \begin{solution}
+We claim that a polynomial time solution for the partition problem would imply a polynomial time solution for SAT. To see this, we present a polynomial time reduction from subset sum, a problem known to be hard, to the partition problem.
 
+\begin{note}[Notation]
+Given some set $ S = \{\llist{s}{1}{n}\}$, we denote the sum $ \sum\limits_{s\in S}s $ with  $  \Sigma S $.
+\end{note}
+
+Consider an arbitrary instance of subset sum.
+That is, suppose we have a set of positive integers \begin{align*}
+  A := \{\llist{\alpha}{1}{n}\} \sseq \Z_+
+\end{align*}
+and a positive integer target value $ T\in \Z_+ $.
+Now, let $ x := 2T-\Sigma A $, and define a new set $ \bar A := A\cup \{x\}$.
+In the case that $ T < \Sigma A/{2} $, notice that the value of $ x $ will end up being negative.
+However, if there exists some set $ B = \{\llist{\beta}{1}{k}\}\sseq A $ such that $ \Sigma B = T $ then $ A\setminus B $ sums to $ \Sigma A - T \leq \Sigma A/{2} $, so we can simply rephrase the problem to use $ (\Sigma A)- T$ as the target value.
+
+Then, notice that \begin{align*}
+  \Sigma \bar A &= \Sigma A + 2T-\Sigma A \\
+  &= 2T.
+\end{align*}
+% Obviously, if there exists some valid partition of $ \bar A $ into two subsets with equal sums then each partitioned subset must sum to $ T $.
+\begin{subproof}[Correctness.] (SS\imp PP)
+  Suppose there exists some $ B\sseq A $ such that $ \Sigma B = T $.
+  Consider the partition of $ \bar A $ defined as $ \bar B = B\cup \{x\} $.
+  Then, \begin{align*}
+    \Sigma \bar B= T + 2T-\Sigma A.
+  \end{align*}
+  The remaining partition is then $ C := \bar A\setminus \bar B $, and \begin{align*}
+  \Sigma C &= 2T- T + 2T-\Sigma A \\
+  &= T + 2T-\Sigma A,
+  \end{align*}
+  and we can see that these two sums are equal.
+  Hence, the partition problem is solved.
+
+  (SS\pmi PP)
+  Suppose the set $ \bar A $ has a valid partition such that each of the two subsets sum to $ T $.
+  Recall that $ \bar A $ is defined as the union of $ A $ and the singleton set $ \{x\} $.
+  By the pigeonhole principle, we know that one of these subsets of $ \bar A $ is a subset of $ A $, whence the subset sum problem is solved.
+\end{subproof}
+Since each step in the reduction process takes only $ O(1)\tor O(n) $ time, the entire reduction can be done in polynomial time relative to the size of $ A $.
+Thus, a polynomial time solution for the partition problem implies a polynomial time solution for SAT.
 \end{solution}
 \pagebreak
 

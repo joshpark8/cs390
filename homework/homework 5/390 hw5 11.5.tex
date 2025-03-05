@@ -37,7 +37,7 @@ That is, suppose we have a set of positive integers \begin{align*}
 and a positive integer target value $ T\in \Z_+ $.
 Now, let $ x := 2T-\Sigma A $, and define a new set $ \bar A := A\cup \{x\}$.
 In the case that $ T < \Sigma A/{2} $, notice that the value of $ x $ will end up being negative.
-However, if there exists some set $ B = \{\llist{\beta}{1}{k}\}\sseq A $ such that $ \Sigma B = T $ then $ A\setminus B $ sums to $ \Sigma A - T \leq \Sigma A/{2} $, so we can simply rephrase the problem to use $ (\Sigma A)- T$ as the target value.
+However, if there exists some set $ B = \{\llist{\beta}{1}{k}\}\sseq A $ such that $ \Sigma B = T $ then $ A\setminus B $ sums to $ \Sigma A - T \leq \Sigma A/{2} $, so we can simply rephrase the problem to use $ \Sigma A - T$ as the target value.
 
 Then, notice that \begin{align*}
   \Sigma \bar A &= \Sigma A + 2T-\Sigma A \\

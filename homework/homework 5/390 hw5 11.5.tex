@@ -38,6 +38,7 @@ That is, suppose we have a set of positive integers \begin{align*}
 and a positive integer target value $ T\in \N $.
 
 Now, let $ x := 2T-\Sigma A $ and define a new set $ \Abar := A\cup \{x\}$.
+We claim that $A$ has a subset sum to $T$ if and only if an exact partition of $\Abar$ exists.
 
 Note that if $ T < \Sigma A/{2} $, the value of $ x $ becomes less than 0.
 However, if there exists some set $ B = \{\llist{\beta}{1}{k}\}\sseq A $ such that $ \Sigma B = T $, then $ A\setminus B $ sums to $ \Sigma A - T \leq \Sigma A/{2} $.

@@ -20,27 +20,105 @@ A ($ 1 \pm \eps $)-approximation algorithm for subset sum is one that (correctly
   \item Declares that there is no subset that sums to (exactly) $T$.
 \end{enumerate}
 Note that such an algorithm does not solve the (exact) subset sum problem.
+
 \begin{note}
   You may (and should) assume $ T,x_i\in\R_{\geq 0} $. The problem appears (computationally) hard otherwise.
 \end{note}
+
 %-------------------------------- 11.8.1 SOLUTION ---------------------------------%
 
-\begin{subexercise}
+\begin{subexercise}\label{qs:small}
   Suppose every input number $ x_i $ was ``small'', in the sense that $ x_i \leq \eps T $. Give a polynomial time ($ 1\pm \eps $)-approximation algorithm for this setting.
 \end{subexercise}
 
 \begin{solution}
+Assuming $x_i \leq \epsilon T$ for all $i$, we can take a greedy approach that exploits the ``smallness'' of each $x_i$ to guarantee the construction of a subset-sum that does not overshoot the target range $[( 1-\eps )T , ( 1+\eps )T ]$.
+
+% pseudocode --------- %
+\begin{quote}%
+\defalgo{approx-subset-sum}{\{x_1, ..., x_n\}, \epsilon, T}
+
+\doc{returns a nonempty subset $S \subseteq \{x_1, ..., x_n\}$ such that $\sum S \in [( 1-\eps )T , ( 1+\eps )T ]$; returns the empty set if no such subset exists. }
+\begin{steps}
+    \item Let $S$ be an empty set.
+    \item For $i$ from 1 to $n$ do
+    \begin{steps}
+        \item $S \leftarrow S \ \cup \{x_i\}$.
+        \item If $\sum S \geq (1 - \epsilon) T$ then return $S$.
+    \end{steps}
+    \item Return $\emptyset$.
+\end{steps}
+\end{quote}
+Note that since $T > 0$, $S \not= \emptyset$ is necessary when we successfully return a subset sum $S$; hence we distinguish between ``successful'' and ``unsuccessful'' outputs by whether the algorithm returns a nonempty or empty set.
+
+\begin{subproof} [Runtime]
+The algorithm above has asymptotic runtime in $O(n)$, which gives us a polynomial-time solution.
+\end{subproof}
+
+\vspace{-0.7cc}
+\begin{subproof} [Correctness]
+We prove correctness by showing (i) if we successfully return a nonempty subset $S$, then $\sum S$ is in the target range and (ii) if we do not successfully return a nonempty subset, it is indeed impossible for a subset of $\{x_1, ..., x_n\}$ to sum to the target range.
+\begin{enumerate}
+    \item [(i)] First, we assume that the algorithm successfully returns some nonempty subset $S = \{x_1, ..., x_i\}$ for some $i \ \in [1,n]$. Our return condition guarantees that $\sum S \geq (1 - \epsilon) T$; to complete the proof, we show that $\sum S \leq (1 + \epsilon) T$.
+
+    We already know that $\sum S \smallsetminus \{x_i\} < (1 - \epsilon) T$, otherwise, we would have already returned $S = \{x_1, ..., x_{i-1}\}$ in a previous iteration. But $x_i \leq \epsilon T$, so
+    \begin{align*}
+        \sum S = x_i + \sum S \smallsetminus \{x_i\} \ \leq \epsilon \ T + (1 - \epsilon) T = T \leq (1 + \epsilon) T
+    \end{align*}
+    \vspace{-1.3cc}
+    \item [(ii)] Now assume that we return an empty subset, indicating that the algorithm did not find a successful subset. Then for all $i$, $\sum_{j\ \in [1, i]} x_j < (1 - \epsilon) T$; in particular, $\sum_{j\ \in [1, n]} x_j < (1 - \epsilon) T$, where all $x_j > 0$. Clearly, this means that no subset of $\{x_1, ..., x_n\}$ will be large enough to reach the target range.
+\end{enumerate}
+
+\end{subproof}
 
 \end{solution}
 \pagebreak
 
 %-------------------------------- 11.8.2 SOLUTION ---------------------------------%
-\begin{subexercise}
+\begin{subexercise} \label{qs:big}
   Suppose every input number $ x_i $ was ``big'', in the sense that $ x_i > \eps T $. Give a polynomial time ($ 1\pm \eps $)-approximation algorithm for this setting.
 \end{subexercise}
 
 \begin{solution}
+  We can leverage the fact that if each $x_i > \eps T$, then any feasible subset summing to at most $T$ can contain \emph{at most} $\tfrac{1}{\eps}$ items.
+  Hence, we can afford to enumerate all subsets of size up to $\frac{1}{\eps}$.
 
+  \begin{quote}
+  \defalgo{approx-subset-sum-big}{\{x_1, \dots, x_n\}, \epsilon, T}
+
+  \doc{returns a subset $S$ whose sum is in $[(1-\eps)T,\,(1+\eps)T]$ if possible; otherwise returns $\emptyset$.}
+
+  \begin{steps}
+    \item For $k$ from 0 to $\lfloor 1/\eps \rfloor$ do
+    \begin{steps}
+      \item Enumerate all subsets of $\{x_1,\dots,x_n\}$ of size exactly $k$, and call each such subset $S_k$.
+      \item If $\sum S_k \in [(1-\eps)T,\,(1+\eps)T]$, then return $S_k$.
+    \end{steps}
+    \item Return $\emptyset$.
+  \end{steps}
+  \end{quote}
+
+  \begin{subproof}[Runtime]
+  Since each $x_i > \eps T$, any subset of size $ >\frac{1}{\eps}$ would exceed $T$.
+  Thus we can simply check all subsets of size at most $\frac{1}{\eps}$.
+  The number of such subsets is
+  \[
+  \binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{\lfloor 1/\eps \rfloor},
+  \]
+  which is $O(n^{1/\eps})$.
+  This is polynomial time for fixed $\eps$.
+  \end{subproof}
+
+  \begin{subproof}[Correctness]
+    If there exists a subset summing to exactly $T$, then any such subset must have size at most $\frac{1}{\eps}$.
+    We enumerate all such subsets such that if a feasible subset $S$ exists, we will find one with sum in $[(1-\eps)T,\,(1+\eps)T]$.
+    Indeed, notice that $\sum S \leq T \leq (1+\eps)T$, and $\sum S \geq T \geq (1-\eps)T$ trivially if it equals $T$.
+
+    If we return the empty set, then no combination of up to $\frac{1}{\eps}$ items falls within the target interval.
+    In particular, no subset can sum exactly to $T$.
+
+    Thus the procedure satisfies the $(1 \pm \eps)$-approximation requirement.
+  \end{subproof}
 \end{solution}
 \pagebreak
 
@@ -50,7 +128,59 @@ Note that such an algorithm does not solve the (exact) subset sum problem.
 \end{subexercise}
 
 \begin{solution}
+  We combine the ideas from \ref{qs:small} and \ref{qs:big}.
+  Split the input into two sets:
+  \begin{align*}
+    \mcB = \{\,x_i \st x_i > \eps T\}, \quad \mcS = \{\,x_i \st x_i \le \eps T\}.
+  \end{align*}
 
+  \begin{quote}
+  \defalgo{approx-subset-sum-general}{\{\llist{x}{1}{n}\}, \eps, T}
+
+  \doc{returns a subset $S$ whose sum is in $[(1-\eps)T,\,(1+\eps)T]$ if possible; otherwise returns $\emptyset$.}
+  \begin{steps}
+    \item Enumerate all subsets of $\mcB$ of size up to $\lfloor 1/\eps \rfloor$.
+    \item For each such subset $B \subseteq \mcB$:
+    \begin{steps}
+      \item Let $C \leftarrow T - \sum B$ be the remaining capacity for the small items.
+      \item $ S_{\text{small}} \leftarrow $ \subcall{approx-subset-sum}{\mcS, \eps, C}
+      \item If $\sum B + \sum S_{\text{small}} \in [(1-\eps)T,\,(1+\eps)T]$ \begin{steps}
+        \item Return $B \cup S_{\text{small}}$.
+      \end{steps}
+    \end{steps}
+    \item Return $\emptyset$.
+  \end{steps}
+  \end{quote}
+
+  \begin{subproof}[Runtime]
+  We only enumerate subsets of $\mcB$ up to size $\frac{1}{\eps}$, which is at most $O(n^{1/\eps})$.
+  For each such subset, we run \subcall{approx-subset-sum}{\mcS, \eps, C} in $O(n)$.
+  Thus for fixed $\eps$, the algorithm is polynomial in $n$ and $(1/\eps)$.
+  \end{subproof}
+
+  \begin{subproof}[Correctness]
+  We consider two cases:
+
+    \tit{Case 1:} Suppose there exists a subset
+    \[
+    S^* \subseteq \{x_1, \dots, x_n\} \quad \text{with} \quad \sum_{x \in S^*} x = T.
+    \]
+    Partition $ S^* $ into big and small items by letting
+    \[
+    B^* = S^* \cap \mcB \quad \text{and} \quad S^*_{\text{small}} = S^* \cap \mcS,
+    \]
+    so that $ S^* = B^* \cup S^*_{\text{small}} $.
+    When the algorithm enumerates subsets of $ \mcB $, it will eventually consider a subset $ B $ corresponding to $ B^* $.
+    Define the residual capacity
+    \[
+    C = T - \sum_{x \in B} x.
+    \]
+    Then, calling $ S_{\text{small}} = \subcall{approx-subset-sum}{\mcS, \eps, C} $ yields a subset of $ \mcS $ whose sum is within a factor of $ (1\pm\eps) $ of $ C $.
+    Consequently, the combined sum $ \sum \lt[B \cup S_{\text{small}}\rt] $ falls within the interval $ [(1-\eps)T,\,(1+\eps)T] $.
+
+    \tit{Case 2:} If no subset of the input sums to $ T $, then the algorithm returns $ \emptyset $.
+    This outcome is correct, as it does not falsely claim the existence of a feasible subset.
+  \end{subproof}
 \end{solution}
 \pagebreak
 

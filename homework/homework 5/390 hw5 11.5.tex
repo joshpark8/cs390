@@ -89,7 +89,7 @@ Thus, a polynomial time solution for the partition problem implies a polynomial 
   That is, consider a set of positive integers \begin{align*}
     A := \{\llist{\alpha}{1}{m}\} \sseq \N.
   \end{align*}
-  We wish to find two disjoint subsets $ B,C\sseq A $ such that $ B\sqcup C = A $ and $ \Sigma B = \Sigma C $.
+  The partition problem seeks two disjoint subsets $ B,C\sseq A $ such that $ B\sqcup C = A $ and $ \Sigma B = \Sigma C $.
 
   Note that if $ \Sigma A $ is odd or the cardinality of $ A $ is less than 2, then the problem becomes impossible.
   Thus, WLOG we may assume that $ \Sigma A = 2n $ for some $ n\in \N $ and that $ A $ contains at least 2 elements.
@@ -136,7 +136,7 @@ Thus, a polynomial time solution for the partition problem implies a polynomial 
   That is, consider a set of positive integers \begin{align*}
     A := \{\llist{\alpha}{1}{m}\} \sseq \N.
   \end{align*}
-  We wish to find $ k-1 $ pairwise disjoint subsets $ A_1,A_2,\ldots,A_{k-1}\sseq A $ such that \begin{align*}
+  The $ (k-1) $-partition problem seeks $ k-1 $ pairwise disjoint subsets $ A_1,A_2,\ldots,A_{k-1}\sseq A $ such that \begin{align*}
     \bigsqcup_{1\leq i \leq k-1}A_{i} = A \quad \tand \quad \Sigma A_1 = \Sigma A_2 = \cdots = \Sigma A_{k-1}.
   \end{align*}
   Note that if $ \Sigma A $ is not divisible by $ k-1 $ or if the cardinality of $ A $ is less than $ k-1 $, then the problem is rendered impossible.
@@ -224,46 +224,39 @@ This reduction can clearly be performed in polynomial time relative to the input
   That is, consider a set of positive integers \begin{align*}
     A := \{\llist{\alpha}{1}{m}\} \sseq \N.
   \end{align*}
-  We wish to find two disjoint subsets $ B,C\sseq A $ such that $ B\sqcup C = A $ and $ \Sigma B = \Sigma C = \Sigma A / 2$.
+  The partition problem seeks two disjoint subsets $ B,C\sseq A $ such that $ B\sqcup C = A $ and $ \Sigma B = \Sigma C = \Sigma A / 2$.
 
   Note that if $ \Sigma A $ is odd or the cardinality of $ A $ is less than 2, then the problem becomes impossible.
-  Thus, WLOG we may assume that $ \Sigma A = 2n $ for some $ n\in \N $ and that $ A $ contains at least 2 elements.
+  Thus, WLOG we may assume that $ \Sigma A = 2T $ for some $ T\in \N $ and that $ A $ contains at least 2 elements.
+
+  In any valid partition of A, the two parts may have different cardinalities.
+  Suppose that in a given partition we have $ |B| = p $ and $ |C| = q $.
+  WLOG we can assume $ p \geq q $, and let the difference between the cardinalities be $ x = p-q $.
+
+  Note that if $ x = 0 $, then the partition is already `perfect'.
+  However if $ x > 0 $, although A is partitionable, it is not perfectly partitionable.
+
+  We can't yet know the value of $ x $, but it is easy to see that it is bounded above by $ m $.
+  Then for each possible $ x\in \{1,\ldots,m\}$, define $ A_x = A \cup S_x \cup Y_x $ where $ S_x := \{\llist{s}{1}{x+1} \} $ such that $ s = 1 $ for each $ s\in S_x $ and $ Y_x := \{x+1\} $.
 
   \begin{subproof}[Correctness.]
     (PP\imp PPP)
-    Assume the partition problem is solved.
-    That is, assume that $ \exists B,C\sseq A\ \suth B\sqcup C = A \tand \Sigma B = \Sigma C = n $.
-    Then, we can say
-    \begin{align*}
-      B := \{\llist{\beta}{1}{i}\} \quad \tand \quad C := \{\llist{\gamma}{1}{j}\},
-    \end{align*}
-    such that $ \{\llist{\beta}{1}{i},\llist{\gamma}{1}{j}\} = A $.
+    Assume that $ \exists B,C\sseq A\ \suth B\sqcup C = A \tand \Sigma B = \Sigma C = T $. Let $ x=\order{B}-\order{C} $
 
-    WLOG we can say $ i \geq j $, that is, $ \order{B} \geq \order{C} $, so define $ \vphi = i-j $.
-    Now, we have 2 cases depending on the value of $ \vphi $.
-    \begin{subproof}[Case 1 ($ \vphi = 0 $).]
-      This case is trivial; if $ i-j =0 $ then $ B $ and $ C $ have equal cardinalities and by our hypothesis we have that $ B\sqcup C = A \tand \Sigma B = \Sigma C $.
-      Thus the perfect partition problem is solved.
+    \begin{subproof}[Case 1 ($ x = 0 $).]
+      As above, this case is trivial. The partition is already perfect and hence the perfect partiton problem is solved.
     \end{subproof}
-    \begin{subproof}[Case 2 ($ \vphi \geq 1 $).]
-      Let $ S := \{\llist{s}{1}{\vphi+1} \} $ such that $ s = 1 $ for each $ s\in S $.
-      Next, let $ \psi := \vphi + 1 $ and $ \Psi = \{\psi\} $.
-      Note that $ \Sigma S = \Sigma \Psi = \vphi+1 $.
-      Then by hypothesis \begin{align*}
-        B\sqcup C = A \quad \tand \quad \Sigma (B\cup \Psi) = \Sigma (C\cup S).
-      \end{align*}
-      Now, notice that \begin{align*}
-        \order{C\cup S}&=\order{C} + x + 1 \\
-        &= \order{C} + \order{B}-\order{C} + 1\\
-        &= \order{B} + 1 \\
-        &= \order{B\cup \Psi}
-      \end{align*}
+    \begin{subproof}[Case 2 ($ x \geq 1 $).]
+      Construct $ A_x $ as above.
+      Now, consider the partition of $ A_x $ in which $ B_x := B\cup Y $ and $ C_x := C\cup S_x $.
+      Then $ \Sigma B_x = T + (x+1) $ and $ \Sigma C_x = T + (x+1) $.
+      Also, $ \order{B_x} = \order{B}+1 $ and $ \order{C_x} = \order{C}+(x+1) $.
+      However notice that by definition of $ x $, $ \order{C_x} = \order{C} + (\order{B} - \order{C} + 1) = \order{B} + 1 = \order{B_x} $ and thus the sets have equal cardinality.
       Hence the perfect partition problem is solved.
     \end{subproof}
 
     (PP\pmi PPP)
-    Assume the perfect partition problem is solved.
-    That is, assume that there exist disjoint $ B,C\sseq A $ such that
+    Assume that there exist disjoint $ B,C\sseq A $ such that
     \begin{align*}
       B\sqcup C = A, \qquad \Sigma B = \Sigma C = n, \quad \tand \quad \order{B}=\order{C}.
     \end{align*}

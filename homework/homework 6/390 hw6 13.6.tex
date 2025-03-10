@@ -1,0 +1,46 @@
+\documentclass{article}
+
+\input{preamble}
+\input{letterfont}
+\input{macros}
+
+\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\tbo{CS 390ATA \\ Homework 6 (\theexercise)}}
+\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+
+\begin{document}
+\setcounter{section}{13}
+\setcounter{exercise}{6}
+\tbo{Exercise \theexercise.} Recall the dominating set problem\textsuperscript{\hyperref[fn:dmset]{$\dagger$}} from section 13.3.
+  Here we will consider the weighted version where the vertices are given positive weights, and the goal is to compute the minimum weight dominating set.
+  For each of the following problems, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT. \\
+\noindent\rule{2in}{0.4pt} \\
+\parbox{\linewidth}{\small \textsuperscript{\label{fn:dmset}$\dagger$}A set of vertices $S \sseq V$ is a \tit{dominating set} if every vertex $v \in V$ is either in $S$ or the neighbor of a vertex in $S$.
+  The minimum dominating set problem is to compute the minimum cardinality dominating set.}
+
+% >>==========|| 13.6 ||==========<<
+\begin{subexercise}
+  The minimum weight dominating set problem for intervals, \tit{with the additional assumption that} no two intervals are nested.
+  To state it more precisely: the input consists of $ n $ weighted intervals $ \mcI $.
+  The non-nested assumptions means that for any two intervals $ I, J \in \mcI $, we never have $ I $ contained in $ J $ or $ J $ contained in $ I $.
+
+  The goal is to compute the minimum weight subset $ S \sseq \mcI $ of intervals such that every interval in $ \mcI $ is either in $ S $ or overlaps some interval in $ S $.
+\begin{itemize}
+  \item (For 1 pt. extra credit) Extend your algorithm to general intervals.\footnote[8]{Of course, anyone who has already solved the general case automatically solves the special case where no two intervals are nested.}
+\end{itemize}
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\pagebreak
+
+\begin{subexercise}
+  The minimum weight dominating set problem in trees.
+\end{subexercise}
+
+\begin{solution}
+
+\end{solution}
+\pagebreak
+\end{document}

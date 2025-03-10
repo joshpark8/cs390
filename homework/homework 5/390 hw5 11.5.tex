@@ -236,16 +236,17 @@ This reduction can clearly be performed in polynomial time relative to the input
 
   Note that if $ x = 0 $, then the partition is already `perfect'.
   However if $ x > 0 $, although A is partitionable, it is not perfectly partitionable.
-
   We can't yet know the value of $ x $, but it is easy to see that it is bounded above by $ m $.
   Then for each possible $ x\in \{1,\ldots,m\}$, define $ A_x = A \cup S_x \cup Y_x $ where $ S_x := \{\llist{s}{1}{x+1} \} $ such that $ s = 1 $ for each $ s\in S_x $ and $ Y_x := \{x+1\} $.
+
+  We claim that a partition on $A$ exists if and only a perfect partition on $A_x$ exists for some value of $x$, where $ x\in \{1,\ldots,m\}$.
 
   \begin{subproof}[Correctness.]
     (PP\imp PPP)
     Assume that $ \exists B,C\sseq A\ \suth B\sqcup C = A \tand \Sigma B = \Sigma C = T $. Let $ x=\order{B}-\order{C} $
 
     \begin{subproof}[Case 1 ($ x = 0 $).]
-      As above, this case is trivial. The partition is already perfect and hence the perfect partiton problem is solved.
+      As above, this case is trivial. The partition is already perfect and hence the perfect partition problem is solved.
     \end{subproof}
     \begin{subproof}[Case 2 ($ x \geq 1 $).]
       Construct $ A_x $ as above.
@@ -261,7 +262,7 @@ This reduction can clearly be performed in polynomial time relative to the input
     \begin{align*}
       B\sqcup C = A, \qquad \Sigma B = \Sigma C = n, \quad \tand \quad \order{B}=\order{C}.
     \end{align*}
-    Obviously, the partition problem is solved.
+    Clearly, the partition problem is solved.
   \end{subproof}
   Each step of the reduction process can be done in polynomial time relative to the size of $ A $, so it follows that the a polynomial time solution to the perfect partition problem implies a polynomial time solution to the partition problem, whence a polynomial time solution to SAT.
 \end{solution}

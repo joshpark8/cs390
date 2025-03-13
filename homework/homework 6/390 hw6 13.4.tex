@@ -20,7 +20,26 @@ For this problem, either (a) design and analyze a polynomial time algorithm (the
 \end{exercise}
 
 \begin{solution}
+  We claim that the maximum cardinality almost independent set (MCAIS) problem is NP-complete.
+  To see this, we present a polynomial time reduction from the maximum cardinality independent set (MCIS) problem, a problem we saw to be NP-complete in class, to MCAIS.
 
+  \begin{note}
+    Since the condition for vertices $ v,w\in V $ to be neighbors only requires that there be a connection between the two, the directional property of the edges in $ E $ can be ignored.
+    Hence, we will not discriminate between two edges $ (v,w) $ and $ (w,v) $.
+  \end{note}
+
+  Consider an arbitrary instance of independent set.
+  That is, suppose we have a graph $ G=(V,E) $.
+  The MCAIS problem seeks the largest $ S\ss V $ such that $ (v,w)\not\in E $ for all $ v,w\in S $.
+
+  Create an auxiliary graph $ G'=(V',E') $, where $ V'=\{v_i'\st v_i\in V\}\cup V $ and $ E'=\{(v_i,v_i')\st v_i\in V\}\cup E $.
+  Then, $ V' $ contains duplicates of each vertex in $ V $ and $ E' $ contains each edge in $ E $, as well as an additional edge connecting each pair of vertices $ v_j $ and $ v_j' $.
+
+  \begin{subproof}[Correctness.]
+    (MCIS\imp MCAIS)
+    Suppose we have a set $ S\ss V $ that solves MCIS for $ G $.
+    Create a new set $ S'=\{v_i'\st v_i\in S\}\cup S $.
+  \end{subproof}
 \end{solution}
 \pagebreak
 

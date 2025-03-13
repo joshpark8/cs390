@@ -18,16 +18,67 @@ Let $G = (V,E)$ be a directed graph where each vertex $v \in V$ has $C_v \geq 0$
 For a walk in $G$, we say that the \tit{number of coins collected by the walk} is the total sum of $C_v$ over all \tit{distinct} vertices $v$ in the walk.
 (If we visit a vertex $v$ more than once, we still only get $C_v$ coins total.)
 Given $s, t \in V$, the goal is to compute the maximum number of coins collected by any $(s, t)$-walk.
+
 % >>==========|| 12.15 ||==========<<
-\begin{subexercise}
+
+
+% --------------------------------- 12.15.1 -------------------------------- %
+
+\begin{subexercise} \label{mario-dag}
 Let G be a DAG.
 For this problem, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.
 \end{subexercise}
 
 \begin{solution}
+We claim that the following algorithm suffices.
+
+\begin{quote}%
+\defalgo{mcw-dag}{v, t}
+
+\doc{given $v, t \in V$ in a DAG, computes the maximum number of coins collected by any (v,t)-walk and returns $-\infty$ if no such walk exists.}
+
+\begin{steps}
+    \item If $v = t$ then return $C_v$.
+    \item Let $m \leftarrow -\infty$.
+    \item For $(v,w)\in \delta^+(v)$ do
+    \begin{steps}
+        \item $m \leftarrow \max \ (m, \ C_v + \subcall{mcw-dag}{w, t})$
+    \end{steps}
+  \item Return $m$
+\end{steps}
+\end{quote}
+
+We find the maximum number of coins collected along any $(s,t)$-walk by calling \subcall{mcw-dag}{s, t}.
+
+
+\begin{subproof} [Runtime]
+Given a goal vertex $t \in V$, if we cache the return value of \subcall{mcw-dag}{v, t} for all $v \in V$, then our algorithm has the following runtime complexity:
+\begin{align*}
+    O \left( \sum_{v\in V} ( 1 +  d^+(v) ) \right) = O \left( m+n \right)
+\end{align*}
+\vspace{-0.5cc}
+\end{subproof}
+
+\vspace{-0.5cc}
+\begin{subproof} [Correctness]
+The correctness of this algorithm follows from performing induction, in reverse topological order, according to the recursive specification. We claim that \subcall{mcw-dag}{v,t} returns the maximum number of coins collected by any $(v,t)$-walk for all $v \in V$.
+
+In the base case, $v$ is the last vertex in topological order---a sink---so the maximum number of collectible coins is $C_v$ if $v=t$ and $-\infty$ if $v \not= t$, as returned in the algorithm.
+
+Now we assume that for some $v \in V$, the claim holds for all vertices that follow $v$ in topological order. In the case where $v$ is a sink, there are no vertices reachable from $v$ and consequently, the algorithm correctly returns $C_v$ if $v=t$ and $-\infty$ if $v \not= t$. Otherwise, since the claim holds, by assumption, for all $w$ such that $(v',w) \ \in \ \delta^{+}(v')$, we can conclude that the maximum number of collectible coins on a $(v, t)$-walk is
+\begin{align*}
+    C_{v} \ + \max_{w : \ (v,w) \ \in \ \delta^{+}(v)} \subcall{mcw-dag}{w, t}
+\end{align*}
+as computed in the algorithm.
+
+Thus, by induction, the claim that \subcall{mcw-dag}{v, t} returns the maximum collectible coins along a $(v,t)$-walk holds for all $v \in V$.
+\end{subproof}
 
 \end{solution}
 \pagebreak
+
+
+% --------------------------------- 12.15.2 -------------------------------- %
 
 \begin{subexercise}
 Let G be a general directed graph.
@@ -35,6 +86,47 @@ For this problem, either (a) design and analyze a polynomial time algorithm (the
 \end{subexercise}
 
 \begin{solution}
+When $G$ is a general directed graph, we compress $G$ to its condensation graph $G'$, then apply the algorithm given in \ref{mario-dag} to $G'$.
+
+\begin{quote}%
+\defalgo{mcw}{s, t}
+
+\doc{given $s, t \in V$ in a general digraph, computes the maximum number of coins collected by any (s,t)-walk and returns $-\infty$ if no such walk exists.}
+
+\doc{see \ref{mario-dag} for \subcall{mcw-dag}{} pseudocode.}
+
+\begin{steps}
+    \item Let $\{S_1, S_2, ..., S_k\}$ be the strongly-connected components in $G$.
+    \item Contract each $S_i$ into a single vertex $s_i$ in $G' = (V', E')$ with $C_{S_i} = \sum_{ v\in S_i} C_v$.
+    \item For $i \not= j$, $(s_i, s_j) \in E'$ iff there exist $u \in S_i$, $v \in S_j$ with $(u,v) \in E$.
+    \item Let $S_s$ and $S_t$ be the sccs containing $s$ and $t$, respectively.
+    \item Return \subcall{mcw-dag}{s_s, s_t}.
+\end{steps}
+\end{quote}
+
+Calling \subcall{mcw}{s, t} gives us the maximum number of coins collected by any (s,t)-walk.
+
+
+\begin{subproof}[Runtime]
+The runtime of SCC-compression on $G$ is in $O(m+n)$, as is the runtime of \subcall{mcw-dag}{}. Hence, the total runtime complexity of our algorithm is in $O(m+n)$.
+\end{subproof}
+
+
+\begin{subproof}[Correctness]
+Since the correctness of \subcall{mcw-dag}{} was proven in \ref{mario-dag}, it suffices for us to show that our SCC-compression preserves the maximal number of coins collected along any $(s,t)$-walk.
+
+First, we claim that a maximal coin-collection walk in $G$ necessarily collects all of the coins in every SCC it visits; otherwise, we would be able to make ``detours'' in at least one SCC to pick up coins we've missed, contradicting the maximality of the walk. We call such a walk an SCC-walk.
+
+Since we now know the maximum number of coins collected from an $(s,t)$-walk in $G$ can be given by an SCC-walk on $G$; so, we can simply maximize coin collection on only the SCC-walks in $G$, rather than on all walks.
+
+We have a clear correspondence between coins collected on SCC-walks in $G$ and all walks in $G'$:
+\begin{enumerate}
+    \item [(i)] First, for every $(s,t)$-SCC-walk $W$ on $G$, there exists a walk of the same coin-numerage from $s_s$ to $s_t$ in $G'$ by taking all the SCCs $W$ passes through.
+    \item [(ii)] Conversely, for every walk from $s_s$ to $s_t$ in $G'$, there exists an $(s,t)$-SCC-walk in $G$ with the same total weight.
+\end{enumerate}
+
+By this bijection, we can conclude that the maximum coin collection over all $(s,t)$-walks in $G$ is equal to the maximum coin collection over all $(s_s,s_t)$-walks in $G'$.
+\end{subproof}
 
 \end{solution}
 \pagebreak

@@ -134,7 +134,7 @@ No proof of correctness is required.
   \item \defalgo{five-eight}{s,t}
   \begin{steps}
     \item Run \tmo{BFS}$\bigl(s, 0, 0\bigr)$.
-    \item Find the smallest $ d = \nf{dist}((s,0,0),(t,r_5,r_8)) $ such that $ d = 5x + 8y $ for some $ x, y \in \bbN $.
+    \item Find the smallest $ d = \nf{dist}((s,0,0),(t,r_5,r_8)) $ such that $ d = 5x + 8y $ for some $ x, y \in \N $.
     \item If such an $(r_5, r_8)$ exists, return $\nf{dist}((s,0,0),(t,r_5,r_8))$.
     \item Otherwise, return $\infty$ (no valid walk exists).
   \end{steps}
@@ -250,7 +250,7 @@ No proof of correctness is required.
   However, you don't want to run too high a risk of getting a ticket, so you decide you are willing to speed for a limited number $ k $ of streets.
   The goal is to get to the exam as fast as possible, going 25\% over the speed limit for up to $ k $ streets, and obeying the speed limit everywhere else.
 
-  Formally, the input consists of a directed graph $G = (V, E)$, positive edge weights $ \ell:E\to \bbR_{>0} $, vertices $ s,t\in V $, and an integer $k \in \bbN$.
+  Formally, the input consists of a directed graph $G = (V, E)$, positive edge weights $ \ell:E\to \bbR_{>0} $, vertices $ s,t\in V $, and an integer $k \in \N$.
   The \tit{k-speeding distance} from $s$ to $t$ is defined as the minimum total length of any $(s, t)$-walk, except there the $ k $ largest edges are decreased by a factor of 4/5.
   For example, if $k = 3$, and you have an $(s, t)$-walk with edge lengths 6, 3, 4, 6, 9, 3, 6, 9, 7, 1, then the total length including the $ k $ ``speedups'' becomes \begin{align*}
     6+3+4+6+\frac{4}{5}*9+4+6+\frac{4}{5}*9+\frac{4}{5}*7+1=50.
@@ -260,7 +260,7 @@ No proof of correctness is required.
 \end{exercise}
 
 \begin{solution}
-\defalgo{k-speeding}{G=(V,E),\ell:E\to\bbR_>0,s\in V,t\in V,k\in\bbN}
+\defalgo{k-speeding}{G=(V,E),\ell:E\to\bbR_>0,s\in V,t\in V,k\in\N}
 \begin{steps}
   \item Let $ L $ be an auxiliary graph
   \item Let $V_L = { (v, i) \st v \in V, 0 \leq i \leq k }$ \begin{steps}

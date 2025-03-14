@@ -31,6 +31,70 @@
 \end{subexercise}
 
 \begin{solution}
+We claim that the following algorithm suffices as a polynomial time solution.
+\begin{subproof}[Preprocessing]
+    Sorting the intervals $\mathcal{I}$ by left endpoint $\in \mathcal{O}(n\log n)$
+\end{subproof}
+
+\begin{subproof}[Algorithm]
+
+\begin{quote}%
+\defalgo{MWDS}{\mathcal{I}=\{I_1,I_2...,I_n\},w=\mathcal{I} \rightarrow R_{>0}}
+
+\doc{given $n$ non-nested weighted intervals in $\mathcal{I}$ sorted by first endpoint, computes the minimum weight subset $S\subseteq\mathcal{I}$ such that every interval in $\mathcal{I}$ is in either S or overlaps some interval in S}
+%modifying to return subset too rn :) it only returns weights
+\begin{steps}
+    \item If $n = 0$ then return $\emptyset, 0$.
+    \item Let $J_1 = \{I_j \in \mathcal{I} : I_j\neq I_1 \text{ and } I_j \text{ overlaps } I_1\}$
+    \item If $\mathcal{I} \setminus (J_1 \cup {I_1}) == \emptyset$:
+    \begin{steps}
+        \item return $ \min\text{-weight} \begin{cases}
+            I_1, w(I_1)\\
+            \subcall{MWDS}{\mathcal{I} \setminus {I_1},w}
+        \end{cases}$
+    \end{steps}
+    \item Else
+    \begin{steps}
+    \item $S_{rem}, w_{rem}\leftarrow \subcall{MWDS}{\mathcal{I} \setminus (J_1 \cup {I_1}), w}$
+        \item $S_{inc}, w_{inc}\leftarrow \{I_1\} \cup S_{rem} , w(I_1) + w_{rem}$
+        \item If $J_1 \neq \emptyset$:
+        \begin{steps}
+            \item return $ \min\text{-weight} \begin{cases}
+           S_{inc},w_{inc}\\
+            \subcall{MWDS}{\mathcal{I} \setminus {I_1},w}
+        \end{cases}$
+        \end{steps}
+        \item Else return $S_{inc},w_{inc}$
+
+    \end{steps}
+
+\end{steps}
+\end{quote}
+\end{subproof}
+\begin{subproof}[Runtime and Caching]
+% hows it going?
+% do u have any ideas for second part or should i start brainstorming
+
+%i just need to add how to use this algorithm and done with this part
+% i know it's a lot of case work so need to check how to optimise it... do we want to write something for EC? its NP-HArd
+% we get 1 pt ec for solving an NP hard problem??? ohhh
+% lolol i think that's the trick question? just stating it's np hard? yeaaa
+% love how we just forgot there is a chat feature too
+The above algorithm can be implemented by using caching the resulting subset and weight for every subproblem on an interval \subcall{MWDS}{\mathcal{I},w} to avoid recomputation.\\
+The number of subproblems due to non-nested intervals property is O(n) and time per subproblem is O(n) to find all the overlapping intervals with $I_1$. Hence, the runtime for \subcall{MWDS}{\mathcal{I},w} is \begin{center}
+    (\# of subproblems)(\# time per subproblem) = $\mathcal{O}(n)\mathcal{O}(n) = \mathcal{O}(n^2)$
+\end{center}
+Making our \textbf{Total Runtime} \(\mathcal{O}(n\log n) + \mathcal{O}(n^2) \in \mathcal{O}(n^2)\)
+
+\end{subproof}
+\begin{subproof}[How to use the algorithm] We need to first sort our intervals $\mathcal{I}$ by left endpoint and then call  \subcall{MWDS}{\mathcal{I},w}
+
+\end{subproof}
+\begin{itemize}
+    \item \begin{solution}
+    Algorithm for general intervals... a polynomial time algorithm for minimum weight dominating set for general intervals would imply a polynomial for SAT, since the number of subrpoblems can grow exponentially as an interval can be contained by another and increasing the recursion stack?
+\end{solution}
+\end{itemize}
 
 \end{solution}
 \pagebreak
@@ -39,8 +103,61 @@
   The minimum weight dominating set problem in trees.
 \end{subexercise}
 
-\begin{solution}
+\begin{solution} We claim that the following algorithm suffices as a polynomial time solution.
 
+\begin{quote}%
+\defalgo{MWDST}{T,v,exclude-root}
+
+\doc{given a tree $T=(V,E)$, vertex $v\in V$, weights $w:V\rightarrow \mathbb{R}$ and boolean exclude-root indicating whether v is excluded from the dominating set, computes the minimum weighted dominating subset in T}
+%modifying to return subset too rn :) it only returns weights
+\begin{steps}
+    \item If $v$ is a leaf:
+    \begin{steps}
+        \item If exclude-root return $\emptyset, \infty$
+        \item Else return $\{v\}, w(v)$
+    \end{steps}
+
+    \item If exclude-root:
+    \begin{steps}
+         \item return union of subsets and sum of weights \subcall{MWDST}{T,c,False} for all children c of v
+     \end{steps}
+    % \item Else minimum of w(v) + sum(\subcall{MWDST}{T,c,True} for all children c of v)??
+    \item Else
+    \begin{steps}
+        \item $S_{children}, w_{children} \rightarrow$ union and sum of \subcall{MWDST}{T,c,True} for all children c of v
+        \item $S_{inc}\leftarrow \{v\} \cup S_{children} ,w_{inc} \leftarrow w(v) + w_{children}$
+        \item $S_{exc}, w_{exc} \leftarrow$ Union and sum of \subcall{MWDST}{T,c,False} for all children c of v
+        \item return return $ \min\text{-weight} \begin{cases}
+           S_{inc},w_{inc}\\
+           S_{exc}, w_{exc}
+        \end{cases}$
+    \end{steps}
+
+\end{steps}
+\end{quote}
+\begin{subproof}[Runtime and Caching]
+
+The above algorithm for trees can be implemented by caching the resulting subset and weight for every subproblem on a tree \subcall{MWDST}{T,v,exclude-root} to avoid recomputation.
+
+The number of subproblems is O(n) since there are n vertices in the tree, and each vertex can be in two states (excluded or not excluded). Hence, there are at most 2n distinct subproblems.
+
+The time per subproblem is to process all children of vertex v.
+
+Hence, the runtime for \subcall{MWDST}{T,v,exclude-root} with memoization is
+\begin{center}
+(\# of subproblems)(\# time per subproblem)\\
+$\sum_v($time spent on \subcall{MWDST}{T,v..}) = $O\bigg(\sum_v\#$ children of $v\bigg) = O(n)$
+\end{center}
+
+Making our \textbf{Total Runtime} $\mathcal{O}(n)$
+We also mention that the space usage is O(n) because there are O(n) subproblems, each requiring constant space.
+
+\end{subproof}
+\begin{subproof}[How to use the algorithm]
+We need to first choose an arbitrary vertex as the root of the tree (if the tree is not already rooted). Then, we call \subcall{MWDST}{T,root,False} to compute the minimum weight dominating set for the entire tree.
+
+The algorithm will return the minimum weight dominating set and its corresponding weight. If we want to allow the possibility that the root is excluded, we can take the minimum of \subcall{MWDST}{T,root,False} and \subcall{MWDST}{T,root,True}.
+\end{subproof}
 \end{solution}
 \pagebreak
 \end{document}

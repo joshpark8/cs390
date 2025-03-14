@@ -520,13 +520,13 @@ edge is the initial point of the next edge. This is also called a (directed) wal
 \pagebreak
 
 \tbo{Exercise 2.2.7.} % PROBLEM 2.2.7
-Given $ n $ integers $ x_1,\ldots,x_n\in\bbZ $, returns \boolT~if there is a subset of indicies $ S\sseq [n] $ such that $ \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i $, and \boolF~otherwise.
+Given $ n $ integers $ x_1,\ldots,x_n\in\Z $, returns \boolT~if there is a subset of indicies $ S\sseq [n] $ such that $ \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i $, and \boolF~otherwise.
 
 \begin{solution}\ % SOLUTION 2.2.7
 \begin{quote}%
 \noindent\tun{def func \tmo{partition($G = (V, E)$):}}%
 
-\doc{Given $ n $ integers $ x_1,\ldots,x_n\in\bbZ $, returns \boolT~if there is a subset of indicies $ S\sseq [n] $ such that $ \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i $, and \boolF~otherwise.}%
+\doc{Given $ n $ integers $ x_1,\ldots,x_n\in\Z $, returns \boolT~if there is a subset of indicies $ S\sseq [n] $ such that $ \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i $, and \boolF~otherwise.}%
 
 \begin{steps}
   \item Let $ total = \sum_{i\in [n]} x_i $

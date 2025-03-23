@@ -263,7 +263,7 @@ No proof of correctness is required.
 \defalgo{k-speeding}{G=(V,E),\ell:E\to\bbR_>0,s\in V,t\in V,k\in\N}
 \begin{steps}
   \item Let $ L $ be an auxiliary graph
-  \item Let $V_L = { (v, i) \st v \in V, 0 \leq i \leq k }$ \begin{steps}
+  \item Let $V_L = { (v, i) \mid v \in V, 0 \leq i \leq k }$ \begin{steps}
     \item For each edge $(u,v)\in E$ \begin{steps}
       \item For each $ i\in[0..k] $: \begin{steps}
         \item Add the edge (($ u,i ),( v,i $)) to $ E_L $ with length $ \ell(u,v) $

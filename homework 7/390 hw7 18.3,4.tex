@@ -10,26 +10,19 @@
 
 \begin{document}
 % >>==========|| 18.3 ||==========<<
-\hypertarget{ex:flow-decomp}{%
-\tbo{Exercise 18.3.} Suppose you had an \( (s, t) \)-flow \( f \). \label{ex:flow-decomp}
-We know that there exists an \( (s,t) \)-path packing of the same size as \( f \); here we are interested in algorithms that take \( f \) and compute such a path packing.
-Such a path packing is called a \tit{flow decomposition} of \( f \).\\\\
-Design and analyze an algorithm that, in \( O(m\sq) \) time, computes a maximum path packing \( x \) of the same size as \( f \), such that:
-}
 \setcounter{section}{18}
-\setcounter{exercise}{3}
-\begin{subexercise}
-  There are at most \( m \) distinct paths (with nonzero value) in \( x \).
-\end{subexercise}
+\setcounter{exercise}{2}
+\begin{exercise} \label{ex:flow-decomp}
+  Suppose you had an \( (s, t) \)-flow \( f \).
+  We know that there exists an \( (s,t) \)-path packing of the same size as \( f \); here we are interested in algorithms that take \( f \) and compute such a path packing.
+  Such a path packing is called a \tit{flow decomposition} of \( f \).
 
-\begin{solution}
-
-\end{solution}
-\pagebreak
-
-\begin{subexercise}
-  If \( f \) is integral, then \( x \) is also integral.
-\end{subexercise}
+  Design and analyze an algorithm that, in \( O(m\sq) \) time, computes a maximum path packing \( x \) of the same size as \( f \), such that:
+  \begin{enumerate}
+    \item There are at most \( m \) distinct paths (with nonzero value) in \( x \).
+    \item If \( f \) is integral, then \( x \) is also integral.
+  \end{enumerate}
+\end{exercise}
 
 \begin{solution}
 
@@ -37,7 +30,7 @@ Design and analyze an algorithm that, in \( O(m\sq) \) time, computes a maximum 
 \pagebreak
 
 % >>==========|| 18.4 ||==========<<
-\tbo{Exercise 18.4.} This exercise develops a \( O((m\sq + mn\log(n))\log(\lambda)) \)-time algorithm for maximum \( (s,t) \)-flow and builds on ideas from exercise \hyperlink{ex:flow-decomp}{18.3}.
+\tbo{Exercise 18.4.} This exercise develops a \( O((m\sq + mn\log(n))\log(\lambda)) \)-time algorithm for maximum \( (s,t) \)-flow and builds on ideas from exercise \ref{ex:flow-decomp}.
 
 \stepcounter{exercise}
 \begin{subexercise}

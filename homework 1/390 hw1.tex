@@ -37,7 +37,7 @@
 \setcounter{section}{3}
 \setcounter{exercise}{2}
 \begin{exercise} % PROBLEM 3.3
-  Let $ P $ be a set of $ n $ points in $ \bbR\sq $. Design and analyze an algorithm that computes a
+  Let \( P \) be a set of \( n \) points in \( \bbR\sq \). Design and analyze an algorithm that computes a
   list of all pairs of points with distance within a factor of 2 of the minimum distance between all
   pairs of points.
 \end{exercise}
@@ -46,221 +46,221 @@
 \defalgo{find-pairs}{P}
 \doc{Use the divide-and-conquer algorithm from lecture to find minimum distance in P.}.
 \begin{steps}
-  \item Let $ \mcM $ be an empty list
-  \item Let $ \delta = \tmo{min-distance}(P) $\rcomm{$ \mcO(n\log n) $}
-  \item For $ p \in P $: \rcomm{$ \mcO(n) $}
+  \item Let \( \mcM \) be an empty list
+  \item Let \( \delta = \tmo{min-distance}(P) \)\rcomm{\( \mcO(n\log n) \)}
+  \item For \( p \in P \): \rcomm{\( \mcO(n) \)}
 % \end{steps}
-% \doc{Find all points contained within a square centered at $ p $ with side length $ 4\delta $.}
+% \doc{Find all points contained within a square centered at \( p \) with side length \( 4\delta \).}
 % \begin{steps} \setcounter{stepsi}{3}
 % \item[]
   \begin{steps}
-    \item Let $ Q = \{(x,y)\in P\ :\ \abs{p.x-x} < 2\delta \tand \abs{p.y-y} < 2\delta\} $
-    \item For $ q \in Q $: \rcomm{$ \mcO(1) $}
+    \item Let \( Q = \{(x,y)\in P\ :\ \abs{p.x-x} < 2\delta \tand \abs{p.y-y} < 2\delta\} \)
+    \item For \( q \in Q \): \rcomm{\( \mcO(1) \)}
     \begin{steps}
-      \item If $ (q,p) \not\in \mcM $ AND $ \sqrt{(p.x-q.x)^2 + (p.y-q.y)^2} < 2\delta $:
+      \item If \( (q,p) \not\in \mcM \) AND \( \sqrt{(p.x-q.x)^2 + (p.y-q.y)^2} < 2\delta \):
       \begin{steps}
-        \item Add $ (p,q) $ to $ \mcM $
+        \item Add \( (p,q) \) to \( \mcM \)
       \end{steps}
     \end{steps}
   \end{steps}
-  \item Return $ \mcM $
+  \item Return \( \mcM \)
 \end{steps}
 \end{quote}
 \begin{proof}[Proof of Correctness]
-We know that the subroutine \tmo{min-distance}($ P $) will return the minimum distance between any two points in $ P $ in $ \mcO(n\log n) $ time. Then as we iterate through each point in $ P $ (taking $ \mcO(n) $ time), we create a square $ Q $ with side length $ 4\delta $ centered at $ p $.
+We know that the subroutine \tmo{min-distance}(\( P \)) will return the minimum distance between any two points in \( P \) in \( \mcO(n\log n) \) time. Then as we iterate through each point in \( P \) (taking \( \mcO(n) \) time), we create a square \( Q \) with side length \( 4\delta \) centered at \( p \).
   \begin{claim}
-    $ Q $ contains at most 31 points.
+    \( Q \) contains at most 31 points.
   \end{claim}
   \begin{subproof}[Proof of Claim 1.]
-  We know that the minimum distance between any two points in $ P $ is $ \delta $. For each $ q\in Q\cap P $, draw a ball of radius $ \delta/2 $ centered at $ q $. Then each ball $ B_p $ has area $ A_{B_p} = \pi \delta\sq /4 $ and lies in the ``padded'' square $ \hat Q $ with side length $ 5\delta $ and area $ A_{\hat Q} = 25\delta\sq $. Obviously every $ B_p $ must be disjoint, so the maximum number of $ B_p $ in $ \hat Q $ must be \begin{align*}
+  We know that the minimum distance between any two points in \( P \) is \( \delta \). For each \( q\in Q\cap P \), draw a ball of radius \( \delta/2 \) centered at \( q \). Then each ball \( B_p \) has area \( A_{B_p} = \pi \delta\sq /4 \) and lies in the ``padded'' square \( \hat Q \) with side length \( 5\delta \) and area \( A_{\hat Q} = 25\delta\sq \). Obviously every \( B_p \) must be disjoint, so the maximum number of \( B_p \) in \( \hat Q \) must be \begin{align*}
     \left\lfloor\frac{25\delta\sq}{\pi\delta\sq/4}\right\rfloor = \lt\lfloor\frac{100}{\pi}\rt\rfloor = \floor{31.8} = 31.
   \end{align*}
 \end{subproof}
-Thus there exists at most a constant number of points in $ Q $ and we can iterate through them in $ \mcO(1) $ time. As we iterate through each $ q\in Q $, we confirm that the pair $ (q,p) $ is not already in our list of pairs $ \mcM $ and whether the distance between $ p $ and $ q $ is less than $ 2\delta $. If both conditions are true, we add $ (p,q) $ to $ \mcM $. Thus \tmo{find-pairs} will comprehensively find all valid pairs in $ \mcO(n\log n) + \mcO(n)\mcO(1) = \mcO(n\log n) $ time.
+Thus there exists at most a constant number of points in \( Q \) and we can iterate through them in \( \mcO(1) \) time. As we iterate through each \( q\in Q \), we confirm that the pair \( (q,p) \) is not already in our list of pairs \( \mcM \) and whether the distance between \( p \) and \( q \) is less than \( 2\delta \). If both conditions are true, we add \( (p,q) \) to \( \mcM \). Thus \tmo{find-pairs} will comprehensively find all valid pairs in \( \mcO(n\log n) + \mcO(n)\mcO(1) = \mcO(n\log n) \) time.
 \end{proof}
 \pagebreak
 
 \setcounter{exercise}{5}
 \begin{exercise} % PROBLEM 3.6
-  \nf{[The example]} parallel algorithm is very fast, but has a $ \mcO(\log n) $-factor more work than the obvious sequential algorithm.
-  The goal of this exercise is to develop a (recursive) parallel divide-and-conquer algorithm that is just as fast --- $ \mcO(\log n) $ parallel time --- but has $ \mcO(n) $ total work.
+  \nf{[The example]} parallel algorithm is very fast, but has a \( \mcO(\log n) \)-factor more work than the obvious sequential algorithm.
+  The goal of this exercise is to develop a (recursive) parallel divide-and-conquer algorithm that is just as fast --- \( \mcO(\log n) \) parallel time --- but has \( \mcO(n) \) total work.
   In addition to designing the algorithm, you should analyze the running time and the work similar to how we did [for the example].
 \end{exercise}
 
 \begin{quote}
 \defalgo{parallel-sums}{A[1..n]}
 
-\doc{Given an input array of numbers $ A[1..n] $, returns an array of the prefix sums of $ A $.}
+\doc{Given an input array of numbers \( A[1..n] \), returns an array of the prefix sums of \( A \).}
 \begin{steps}
-  \item If $ n=1 $, return $ A $
-  \item Let $ B $ be an empty array of size $ n/2 $
-  \item In parallel for integers $ i\in [0, \frac{n}{2}-1]$: % \rcomm{$ \mcO(n) $}
+  \item If \( n=1 \), return \( A \)
+  \item Let \( B \) be an empty array of size \( n/2 \)
+  \item In parallel for integers \( i\in [0, \frac{n}{2}-1] \): % \rcomm{\( \mcO(n) \)}
   \begin{steps}
-    \item $ B[i] = A[2i] + A[2i + 1] $
+    \item \( B[i] = A[2i] + A[2i + 1] \)
   \end{steps}
-  \item $ B = \tmo{prefixSum}(B) $ % \rcomm{$ \mcO(\log n) $ work in $ \mcO(n) $ rounds}
-  \item In parallel for integers $ i \in [0, \frac{n}{2}-1] $:
+  \item \( B = \tmo{prefixSum}(B) \) % \rcomm{\( \mcO(\log n) \) work in \( \mcO(n) \) rounds}
+  \item In parallel for integers \( i \in [0, \frac{n}{2}-1] \):
   \begin{steps}
-    \item $ A[2i] = B[i] $
-    \item $ A[2i+1] = B[i] + A[2i+1] $
+    \item \( A[2i] = B[i] \)
+    \item \( A[2i+1] = B[i] + A[2i+1] \)
   \end{steps}
-  \item return $ A $
+  \item return \( A \)
 \end{steps}
 \end{quote}
 
 \begin{proof}[Proof of correctness.]
-  WLOG, we may assume $ n $ is even.
-  In the case $ n_{\neq 1} $ is odd, we simply pad $ A $ with a zero.
+  WLOG, we may assume \( n \) is even.
+  In the case \( n_{\neq 1} \) is odd, we simply pad \( A \) with a zero.
 
-  The base case is trivial, if $ n=1 $ then the array is already its own prefix sum.
+  The base case is trivial, if \( n=1 \) then the array is already its own prefix sum.
 
-  We begin by summing pairs into $ B $ and then recursing on $ B $, which gives us the partial sums of pairs up to each index $ i $.
-  We then distribute these sums back into $ A $, adjusting each pair by the total prefix sum of all previous pairs.
-  Thus, the element $ A[2i] $ becomes the sum up to its own index, and $ A[2i+1] $ becomes the sum up to index $ 2i+1 $.
+  We begin by summing pairs into \( B \) and then recursing on \( B \), which gives us the partial sums of pairs up to each index \( i \).
+  We then distribute these sums back into \( A \), adjusting each pair by the total prefix sum of all previous pairs.
+  Thus, the element \( A[2i] \) becomes the sum up to its own index, and \( A[2i+1] \) becomes the sum up to index \( 2i+1 \).
 \end{proof}
 
 \begin{proof}[Proof of complexity.]
-  Let $ W(n) $ be the function representing the work complexity.
+  Let \( W(n) \) be the function representing the work complexity.
   Our algorithm is represented by the recurrence \begin{align*}
     W(n) &= W(n/2) + \mcO(n) \\
          &= W(n/4) + \mcO(n/2) + \mcO(n) \\
          &= W(n/2^k) + \sum_{j=0}^{k-1} \mcO(n/2^j).
   \end{align*}
-  It is a basic fact that a decreasing geometric series is convergent, whence our recurrence solves to a final work complexity of $ W(n) = \mcO(n) $.
+  It is a basic fact that a decreasing geometric series is convergent, whence our recurrence solves to a final work complexity of \( W(n) = \mcO(n) \).
 
-  Let $ T(n) $ be the function representing the time complexity. Then by running them in parallel, we can compute $ \mcO(n) $ sums in $ O(1) $ time. Thus our algorithm is represented by the recurrence \begin{align*}
+  Let \( T(n) \) be the function representing the time complexity. Then by running them in parallel, we can compute \( \mcO(n) \) sums in \( O(1) \) time. Thus our algorithm is represented by the recurrence \begin{align*}
     T(n) &= T(n/2) + \mcO(1) \\
          &= T(n/4) + \mcO(1) + \mcO(1) \\
          &= T(n/2^k) + \mcO(1).
   \end{align*}
-  Thus our recurrence gives us a final time complexity of $ T(n) = \mcO(\log n) $.
+  Thus our recurrence gives us a final time complexity of \( T(n) = \mcO(\log n) \).
 \end{proof}
 
 \pagebreak
 \setcounter{section}{4}
 \setcounter{exercise}{2}
-Let $ X \tand Y $ be two sets of integers. We define the \tit{unique sums} of $ X \tand Y $ as the set of integers of the form \begin{align*}
+Let \( X \tand Y \) be two sets of integers. We define the \tit{unique sums} of \( X \tand Y \) as the set of integers of the form \begin{align*}
   z = x+y
-\end{align*} where $ x\in X,\ y\in Y $, and the choice of $ (x,y) \in X\times Y $ is unique. You may assume that all the integers in $ X $ are distinct (amongst themselves) and that all the integers in $ Y $ are distinct (amongst themselves).
+\end{align*} where \( x\in X,\ y\in Y \), and the choice of \( (x,y) \in X\times Y \) is unique. You may assume that all the integers in \( X \) are distinct (amongst themselves) and that all the integers in \( Y \) are distinct (amongst themselves).
 
 \begin{subexercise}
-  Suppose $ X\tand Y $ each have $ n $ integers. Design and analyze a $ \mcO(n\sq \log n) $ time algorithm to compute the unique sums of $ X\tand Y $.
+  Suppose \( X\tand Y \) each have \( n \) integers. Design and analyze a \( \mcO(n\sq \log n) \) time algorithm to compute the unique sums of \( X\tand Y \).
 \end{subexercise}
 
 \begin{quote}
 \defalgo{unique-sums}{X,Y}
 
-\doc{Given two sets of integers $ X $ and $ Y $, returns the set of unique sums of $ X $ and $ Y $. Preprocessing: sort $ X $ and $ Y $.}
+\doc{Given two sets of integers \( X \) and \( Y \), returns the set of unique sums of \( X \) and \( Y \). Preprocessing: sort \( X \) and \( Y \).}
 
 \begin{steps}
-  \item Let $ \mcS \tand \mcU $ be empty lists
-  \item For $ x \in X $: \rcomm{$ \mcO(n) $}
+  \item Let \( \mcS \tand \mcU \) be empty lists
+  \item For \( x \in X \): \rcomm{\( \mcO(n) \)}
   \begin{steps}
-    \item For $ y \in Y $: \rcomm{$ \mcO(n) $}
+    \item For \( y \in Y \): \rcomm{\( \mcO(n) \)}
     \begin{steps}
-      \item Let $ s = x+y $
-      \item Add $ (s, (x,y)) $ to $ S $
+      \item Let \( s = x+y \)
+      \item Add \( (s, (x,y)) \) to \( S \)
     \end{steps}
   \end{steps}
-  \item Sort $ \mcS $ by value of $ s $ \rcomm{$ \mcO(n\sq \log n) $}
-  \item For integers $ i\in [1,n\sq] $:
+  \item Sort \( \mcS \) by value of \( s \) \rcomm{\( \mcO(n\sq \log n) \)}
+  \item For integers \( i\in [1,n\sq] \):
   \begin{steps}
-    \item If \Big[$ \exists\mcS[i+1] $ AND $ \mcS[i+1].s = \mcS[i].s $\Big] AND \Big[ $ \exists\mcS[i-1] $ AND $ \mcS[i-1].s = \mcS[i].s $\Big]:
+    \item If \Big[\( \exists\mcS[i+1] \) AND \( \mcS[i+1].s = \mcS[i].s \)\Big] AND \Big[ \( \exists\mcS[i-1] \) AND \( \mcS[i-1].s = \mcS[i].s \)\Big]:
     \begin{steps}
       \item Skip this iteration
     \end{steps}
-    \item Add $ \mcS[i].s $ to $ \mcU $
+    \item Add \( \mcS[i].s \) to \( \mcU \)
   \end{steps}
-  \item Return $ \mcU $
+  \item Return \( \mcU \)
 \end{steps}
 \end{quote}
 
 \begin{proof}[Proof of correctness.]
-We first add all possible combinations of $ x\in X $ and $ y\in Y $ and add them to the list $ \mcS $. We then sort elements of $ \mcS $ by their sum attributes. Next, we iterate through $ \mcS $ and check if any adjacent elements share the same sum. If they do, we skip that iteration. Otherwise, we add the sum to the list $ \mcU $. This guarantees that only unique sums are added to $ \mcU $.
+We first add all possible combinations of \( x\in X \) and \( y\in Y \) and add them to the list \( \mcS \). We then sort elements of \( \mcS \) by their sum attributes. Next, we iterate through \( \mcS \) and check if any adjacent elements share the same sum. If they do, we skip that iteration. Otherwise, we add the sum to the list \( \mcU \). This guarantees that only unique sums are added to \( \mcU \).
 \end{proof}
 
 \begin{proof}[Proof of complexity.]
-We first iterate through all possible combinations of $ x\in X $ and $ y\in Y $, which takes $ \mcO(n\sq) $ time. We then sort $ \mcS $ by sum, which takes $ \mcO(n\sq \log n) $ time. Finally, we iterate through $ \mcS $ to find unique sums, which takes $ \mcO(n\sq) $ time. Thus, the final time complexity for \tmo{unique-sums} is \begin{align*}
+We first iterate through all possible combinations of \( x\in X \) and \( y\in Y \), which takes \( \mcO(n\sq) \) time. We then sort \( \mcS \) by sum, which takes \( \mcO(n\sq \log n) \) time. Finally, we iterate through \( \mcS \) to find unique sums, which takes \( \mcO(n\sq) \) time. Thus, the final time complexity for \tmo{unique-sums} is \begin{align*}
   \mcO(n\sq) + \mcO(n\sq \log n) + \mcO(n\sq) = \mcO(n\sq\log n).
 \end{align*}
 \end{proof}
 \pagebreak
 
 \begin{subexercise}
-  \item Suppose all the integers in $ X\tand Y $ are between $ 0\tand M $ for some $ M\in \N $. Design and analyze a $ \mcO(M\log M) $ time algorithm to compute the unique sums of $ X\tand Y $.
+  \item Suppose all the integers in \( X\tand Y \) are between \( 0\tand M \) for some \( M\in \N \). Design and analyze a \( \mcO(M\log M) \) time algorithm to compute the unique sums of \( X\tand Y \).
 \end{subexercise}
 
 \begin{quote}
 \defalgo{unique-sums-M}{X,Y,M}
 
-\doc{Given two sets of integers $ X $ and $ Y $ and an integer $ M $, returns the set of unique sums of $ X $ and $ Y $. Assumes use of subroutines $ F^*_n\tand F_n $ from lecture. Preprocessing: sort $ X $ and $ Y $.}
+\doc{Given two sets of integers \( X \) and \( Y \) and an integer \( M \), returns the set of unique sums of \( X \) and \( Y \). Assumes use of subroutines \( F^*_n\tand F_n \) from lecture. Preprocessing: sort \( X \) and \( Y \).}
 
 \begin{steps}
-  \item Let $ A \tand B $ be arrays of length $ M+1 $, initialized to 0
-  \item For $ x \in X $: \rcomm{$ \mcO(n) $}
+  \item Let \( A \tand B \) be arrays of length \( M+1 \), initialized to 0
+  \item For \( x \in X \): \rcomm{\( \mcO(n) \)}
   \begin{steps}
-    \item $ A[x] = 1 $
+    \item \( A[x] = 1 \)
   \end{steps}
-  \item For $ y \in Y $: \rcomm{$ \mcO(n) $}
+  \item For \( y \in Y \): \rcomm{\( \mcO(n) \)}
   \begin{steps}
-    \item $ B[y] = 1 $
+    \item \( B[y] = 1 \)
   \end{steps}
-  \item Let $ \mcN $ be the smallest power of 2 greater than $ 2(M+1) $
-  \item Let $ \tilde A \tand \tilde B $ be arrays of length $ \mcN $, initialized to 0
-  \item For $ i \in [0,M] $: \rcomm{$ \mcO(M) $}
+  \item Let \( \mcN \) be the smallest power of 2 greater than \( 2(M+1) \)
+  \item Let \( \tilde A \tand \tilde B \) be arrays of length \( \mcN \), initialized to 0
+  \item For \( i \in [0,M] \): \rcomm{\( \mcO(M) \)}
   \begin{steps}
-    \item $ \tilde A[i] = A[i] $
-    \item $ \tilde B[i] = B[i] $
+    \item \( \tilde A[i] = A[i] \)
+    \item \( \tilde B[i] = B[i] \)
   \end{steps}
-  \item For $ i \in [M+1,\mcN-1] $: \rcomm{$ \mcO(M) $}
+  \item For \( i \in [M+1,\mcN-1] \): \rcomm{\( \mcO(M) \)}
   \begin{steps}
-    \item $ \tilde A[i] = 0 $
-    \item $ \tilde B[i] = 0 $
-  \end{steps}
-
-  \item Let $ \hat A = F_N(\tilde A) $ and let $ \hat B = F_N(\tilde B) $ \rcomm{$ \mcO(M\log M) $}
-
-  \item Let $ \hat C $ be an array of length $ \mcN $, initialized to 0
-  \item For $ k \in [0,\mcN-1] $: \rcomm{$ \mcO(M) $}
-  \begin{steps}
-    \item $ \hat C[k] = \hat A[k] \cdot \hat B[k] $
+    \item \( \tilde A[i] = 0 \)
+    \item \( \tilde B[i] = 0 \)
   \end{steps}
 
-  \item Let $ C_{aux} = F_N^*(\hat C) $
-  \item For $ k \in [0,\mcN-1] $: \rcomm{$ \mcO(M) $}
+  \item Let \( \hat A = F_N(\tilde A) \) and let \( \hat B = F_N(\tilde B) \) \rcomm{\( \mcO(M\log M) \)}
+
+  \item Let \( \hat C \) be an array of length \( \mcN \), initialized to 0
+  \item For \( k \in [0,\mcN-1] \): \rcomm{\( \mcO(M) \)}
   \begin{steps}
-    \item $ C_{aux}[k] = C_{aux}[k] / \mcN $
+    \item \( \hat C[k] = \hat A[k] \cdot \hat B[k] \)
   \end{steps}
-  \item Let $ \mcU $ be an empty list
-  \item For $ z\in [0,2M] $:
+
+  \item Let \( C_{aux} = F_N^*(\hat C) \)
+  \item For \( k \in [0,\mcN-1] \): \rcomm{\( \mcO(M) \)}
   \begin{steps}
-    \item If $ round(C_{aux}[z]) = 1 $:
+    \item \( C_{aux}[k] = C_{aux}[k] / \mcN \)
+  \end{steps}
+  \item Let \( \mcU \) be an empty list
+  \item For \( z\in [0,2M] \):
+  \begin{steps}
+    \item If \( round(C_{aux}[z]) = 1 \):
     \begin{steps}
-      \item Append $ z $ to $ \mcU $
+      \item Append \( z \) to \( \mcU \)
     \end{steps}
   \end{steps}
-  \item Return $ \mcU $
+  \item Return \( \mcU \)
 \end{steps}
 \end{quote}
 
 \begin{proof}[Proof of correctness.]
-  We form ``indicator'' arrays $A$ and $B$ of length $M+1$, then create extended copies $ \tilde A\tand \tilde B $ of length $N \ge 2(M+1)$.
-Applying $F_N$ to each padded array,
-we multiply their transforms pointwise and take the inverse transform $F_N^*$. We then
-divide by $N$, because $F_N^*(F_N(\cdot)) = N \cdot (\cdot)$.
-A well known DFT property implies that this returns the (linear) convolution of $A$ and $B$.
-Hence each index $z$ of the output equals
-$\sum_{x+y=z} A[x] \, B[y]$, i.e.\ the number of pairs $(x,y)$ summing to $z$.
-Therefore, $z$ is a unique sum exactly if this convolution value is 1.
+  We form ``indicator'' arrays \( A \) and \( B \) of length \( M+1 \), then create extended copies \( \tilde A\tand \tilde B \) of length \( N \ge 2(M+1) \).
+Applying \( F_N \) to each padded array,
+we multiply their transforms pointwise and take the inverse transform \( F_N^* \). We then
+divide by \( N \), because \( F_N^*(F_N(\cdot)) = N \cdot (\cdot) \).
+A well known DFT property implies that this returns the (linear) convolution of \( A \) and \( B \).
+Hence each index \( z \) of the output equals
+\( \sum_{x+y=z} A[x] \, B[y] \), i.e.\ the number of pairs \( (x,y) \) summing to \( z \).
+Therefore, \( z \) is a unique sum exactly if this convolution value is 1.
 \end{proof}
 
 \pagebreak
 
 \begin{subexercise}
-  \item Suppose now that we have $ k $ sets $ X_1,\ldots, X_k $, each consisting of integers between
-  $ 1\tand M $. (You may again assume no duplicates within each set.) A unique sum of $ X_1,\ldots, X_k $ is defined as an integer of of the form \begin{align*}
+  \item Suppose now that we have \( k \) sets \( X_1,\ldots, X_k \), each consisting of integers between
+  \( 1\tand M \). (You may again assume no duplicates within each set.) A unique sum of \( X_1,\ldots, X_k \) is defined as an integer of of the form \begin{align*}
     z = x_1 + \cdots + x_k
-  \end{align*} where $ x_i\in X_i $ for all $ i\in [k] $, and the choice of $ (x_1,\ldots,x_k) \in X_1\times \cdots \times X_k $ is unique. Design and analyze an algorithm to compute the unique sums of $ X_1,\ldots,X_k $ in $ \mcO(kM\log(Mk)\log(k)) $ time. You may assume for simplicity that $ k $ is a power of 2.
+  \end{align*} where \( x_i\in X_i \) for all \( i\in [k] \), and the choice of \( (x_1,\ldots,x_k) \in X_1\times \cdots \times X_k \) is unique. Design and analyze an algorithm to compute the unique sums of \( X_1,\ldots,X_k \) in \( \mcO(kM\log(Mk)\log(k)) \) time. You may assume for simplicity that \( k \) is a power of 2.
 \end{subexercise}
 
 

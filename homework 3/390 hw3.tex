@@ -10,82 +10,82 @@
 
 \begin{document}
 % >>==========|| 6.5 ||==========<<
-\tbo{Exercise 6.5.} Let $G = (V, E)$ be a directed graph. We say two vertices $s, t \in V$ are \tit{half-connected} if either $s$ can reach $t$ or $t$ can reach $s$.
-We say that the graph $G$ is \tit{half-connected} if every pair of vertices is half-connected.
-We say that two vertices $s$ and $t$ are \tit{strictly half-connected} if either $s$ can reach $t$, or $t$ can reach $s$, but not both.
+\tbo{Exercise 6.5.} Let \( G = (V, E) \) be a directed graph. We say two vertices \( s, t \in V \) are \tit{half-connected} if either \( s \) can reach \( t \) or \( t \) can reach \( s \).
+We say that the graph \( G \) is \tit{half-connected} if every pair of vertices is half-connected.
+We say that two vertices \( s \) and \( t \) are \tit{strictly half-connected} if either \( s \) can reach \( t \), or \( t \) can reach \( s \), but not both.
 We say that G is \tit{strictly half-connected} if every pair of vertices is strictly half-connected.
 \setcounter{section}{6}
 \setcounter{exercise}{5}
 \begin{subexercise}
-Consider the problem of deciding if $G$ is half-connected.
+Consider the problem of deciding if \( G \) is half-connected.
 Design and analyze an algorithm for this problem.
 \end{subexercise}
 
 \begin{solution}
-We take as input the adjacency matrix representation of $ G $, $ A[1..n][1..n] $.
+We take as input the adjacency matrix representation of \( G \), \( A[1..n][1..n] \).
 \begin{quote}
 \defalgo{half-connected}{A[1..n][1..n]}
 \begin{steps}
-  \item For $ k\in [1..n] $: \begin{steps}
-    \item For $ i\in [1..n] $: \begin{steps}
-      \item For $ j\in [1..n] $: \begin{steps}
-        \item Set $ A[i][j] $ := $ A[i][j] $ or $ (A[i][k] $ and $ A[k][j]) $
+  \item For \( k\in [1..n] \): \begin{steps}
+    \item For \( i\in [1..n] \): \begin{steps}
+      \item For \( j\in [1..n] \): \begin{steps}
+        \item Set \( A[i][j] \) := \( A[i][j] \) or \( (A[i][k] \) and \( A[k][j]) \)
       \end{steps}
     \end{steps}
   \end{steps}
-  \item For each $ (i,j) $ with $ i\neq j $, \begin{steps}
-    \item If $ A[i][j] = 0 $ and $ A[j][i] = 0 $: \begin{steps}
+  \item For each \( (i,j) \) with \( i\neq j \), \begin{steps}
+    \item If \( A[i][j] = 0 \) and \( A[j][i] = 0 \): \begin{steps}
       \item return \boolF
     \end{steps}
   \end{steps}
   \item return \boolT
 \end{steps}
 \end{quote}
-This algorithm iterates over the vertices of $ G $ and updates $ A $ by using $ k $ as an ``intermediary'' vertex.
-After $ n $ iterations of the outer loop, $ A[i][j] $ will be 1 if vertex $ i $ can reach vertex $ j $.
-Next, we check the distinct pairs $ i,j $ to confirm that one of the two vertices are able to reach each other.
+This algorithm iterates over the vertices of \( G \) and updates \( A \) by using \( k \) as an ``intermediary'' vertex.
+After \( n \) iterations of the outer loop, \( A[i][j] \) will be 1 if vertex \( i \) can reach vertex \( j \).
+Next, we check the distinct pairs \( i,j \) to confirm that one of the two vertices are able to reach each other.
 If neither of them are, the algorithm terminates by returning \boolF.
-If it gets through step 2 without terminating, then all pairs of vertices are half-connected and thus $ G $ is half-connected.
+If it gets through step 2 without terminating, then all pairs of vertices are half-connected and thus \( G \) is half-connected.
 
-This algorithm executes in $ \mcO(n\cb) $ time.
+This algorithm executes in \( \mcO(n\cb) \) time.
 \end{solution}
 \pagebreak
 
 \begin{subexercise}
-  Consider the problem of deciding if $G$ is strictly half-connected.
+  Consider the problem of deciding if \( G \) is strictly half-connected.
   Design and analyze an algorithm for this problem.
 \end{subexercise}
 
 \begin{solution}
-Again, we take as input the adjacency matrix representation of $ G $, $ A[1..n][1..n] $.
+Again, we take as input the adjacency matrix representation of \( G \), \( A[1..n][1..n] \).
 \begin{quote}
 \defalgo{strictly-half-connected}{A[1..n][1..n]}
 \begin{steps}
-  \item For $ k\in [1..n] $: \begin{steps}
-    \item For $ i\in [1..n] $: \begin{steps}
-      \item For $ j\in [1..n] $: \begin{steps}
-        \item Set $ A[i][j] $ := $ A[i][j] $ or $ (A[i][k] $ and $ A[k][j]) $
+  \item For \( k\in [1..n] \): \begin{steps}
+    \item For \( i\in [1..n] \): \begin{steps}
+      \item For \( j\in [1..n] \): \begin{steps}
+        \item Set \( A[i][j] \) := \( A[i][j] \) or \( (A[i][k] \) and \( A[k][j]) \)
       \end{steps}
     \end{steps}
   \end{steps}
-  \item For each $ (i,j) $ with $ i\neq j $, \begin{steps}
-    \item If $ A[i][j] = A[j][i] $: \begin{steps}
+  \item For each \( (i,j) \) with \( i\neq j \), \begin{steps}
+    \item If \( A[i][j] = A[j][i] \): \begin{steps}
       \item return \boolF
     \end{steps}
   \end{steps}
   \item return \boolT
 \end{steps}
 \end{quote}
-This algorithm is functionally identical to the previous one, but changes the check in step 2.A to confirm that $ A[i][j] \neq A[j][i] $, returning false if they are equal.
-This is because $ A[i][j] = A[j][i] $ implies that vertices $ i,j $ are either unable to reach each other or are both able to reach each other, and both of these outcomes violate strict half-connectedness.
+This algorithm is functionally identical to the previous one, but changes the check in step 2.A to confirm that \( A[i][j] \neq A[j][i] \), returning false if they are equal.
+This is because \( A[i][j] = A[j][i] \) implies that vertices \( i,j \) are either unable to reach each other or are both able to reach each other, and both of these outcomes violate strict half-connectedness.
 Thus getting to step 3 guarantees the graph is strictly half-connected.
 
-This algorithm executes in $ \mcO(n\cb) $ time.
+This algorithm executes in \( \mcO(n\cb) \) time.
 \end{solution}
 \pagebreak
 
 % >>==========|| 7.1 ||==========<<
-\tbo{Exercise 7.1.} Each of the following problems describes a graph problem over an unweighted directed graph $G = (V, E)$ with $m$ edges and $n$ vertices.
+\tbo{Exercise 7.1.} Each of the following problems describes a graph problem over an unweighted directed graph \( G = (V, E) \) with \( m \) edges and \( n \) vertices.
 Each problem can be solved by constructing an auxiliary graph and calling a shortest path algorithm from this chapter as a black box.
 For each problem, (a) design an auxiliary graph and shortest path problem, (b) indicate which algorithm to apply and how, and (c) analyze the running time.
 No proof of correctness is required.
@@ -93,127 +93,127 @@ No proof of correctness is required.
 \setcounter{exercise}{1}
 \setcounter{subexercise}{2}
 \begin{subexercise} % 7.1.3
-  For two vertices $s$ and $t$, compute the length of the shortest walk from $s$ to $t$ where the number of edges is either a multiple of 2 or a multiple of 3.
+  For two vertices \( s \) and \( t \), compute the length of the shortest walk from \( s \) to \( t \) where the number of edges is either a multiple of 2 or a multiple of 3.
 \end{subexercise}
 
 \begin{solution}
 \begin{enumerate}[label=(\alph*)]
-  \item For our auxiliary graph $ \hat G=(\hat V,\hat E) $, first set $\hat V =V\times\{0,1,2,3,4,5\}$.
-  The vertex $(v,r)\in\hat V$ will represent being at vertex $ v $ after $ \ell $ steps, where $ r = \ell\mod 6 $.
+  \item For our auxiliary graph \( \hat G=(\hat V,\hat E) \), first set \( \hat V =V\times\{0,1,2,3,4,5\} \).
+  The vertex \( (v,r)\in\hat V \) will represent being at vertex \( v \) after \( \ell \) steps, where \( r = \ell\mod 6 \).
 
-  Next, for every edge $(u \to w)\in E$ and for every remainder $r\in \{0,\dots,5\}$, add an edge $(u, r)\to(w, (r+1)\bmod 6)$ to $ \hat E $.
+  Next, for every edge \( (u \to w)\in E \) and for every remainder \( r\in \{0,\dots,5\} \), add an edge \( (u, r)\to(w, (r+1)\bmod 6) \) to \( \hat E \).
   Then each new edge will have an effective `cost' of 1 in this auxiliary graph.
   \item \defalgo{two-or-three}{s,t}
   \begin{steps}
-    \item Run \tmo{BFS}($ \hat G,\ (s,0) $)
-    \item Find the smallest $ \nf{dist}((s,0),(t,r)) $ for $ r \in \{0,2,3,4\} $.
-    \item If $ \exists r\in\{0,2,3,4\} $ such that $ \nf{dist}((s,0),(t,r)) \neq \infty$: \begin{steps}
-      \item Return $ \nf{dist}((s,0),(t,r)) $
+    \item Run \tmo{BFS}(\( \hat G,\ (s,0) \))
+    \item Find the smallest \( \nf{dist}((s,0),(t,r)) \) for \( r \in \{0,2,3,4\} \).
+    \item If \( \exists r\in\{0,2,3,4\} \) such that \( \nf{dist}((s,0),(t,r)) \neq \infty \): \begin{steps}
+      \item Return \( \nf{dist}((s,0),(t,r)) \)
     \end{steps}
-    \item Else: return $ \infty $
+    \item Else: return \( \infty \)
   \end{steps}
 
-  \item We know the auxiliary graph contains $ 6n $ vertices and $ \leq 6m $ edges. Thus running BFS takes $ \mcO(6m+6n) = \mcO(m+n) $ time.
+  \item We know the auxiliary graph contains \( 6n \) vertices and \( \leq 6m \) edges. Thus running BFS takes \( \mcO(6m+6n) = \mcO(m+n) \) time.
 
-  Thus our final running time is $ \mcO(m+n) $.
+  Thus our final running time is \( \mcO(m+n) \).
 \end{enumerate}
 \end{solution}
 \pagebreak
 
 \begin{subexercise} % 7.1.4
-  For two vertices $s$ and $t$, compute the length of the shortest walk from $s$ to $t$ where the number of edges is of the form $ 5x+8y $ for $ x,y\in \ZZ{\geq 0} $
+  For two vertices \( s \) and \( t \), compute the length of the shortest walk from \( s \) to \( t \) where the number of edges is of the form \( 5x+8y \) for \( x,y\in \ZZ{\geq 0} \)
 \end{subexercise}
 
 \begin{solution}
 
 \begin{enumerate}[label=(\alph*)]
-  \item For our auxiliary graph $ \bar G=(\bar V,\bar E) $, first set $\bar V =V\times\{0,1,2,3,4\}\times\{0,1,2,3,4,5,6,7\}$.
-  The vertex $(v,r_1,r_2)\in\bar V$ will represent being at vertex $ v $ after $ \ell $ steps, where $ r_1=\ell\mod 5 $ and $ r_2=\ell\mod 8 $.
+  \item For our auxiliary graph \( \bar G=(\bar V,\bar E) \), first set \( \bar V =V\times\{0,1,2,3,4\}\times\{0,1,2,3,4,5,6,7\} \).
+  The vertex \( (v,r_1,r_2)\in\bar V \) will represent being at vertex \( v \) after \( \ell \) steps, where \( r_1=\ell\mod 5 \) and \( r_2=\ell\mod 8 \).
 
-	For each edge $(u \to w)\in E$ and for each $(r_5,r_8)$, add the edge $ (u, r_5, r_8)\to(w, (r_5+1)\bmod 5, (r_8+1)\bmod 8) $ to $ \bar E $.
+	For each edge \( (u \to w)\in E \) and for each \( (r_5,r_8) \), add the edge \( (u, r_5, r_8)\to(w, (r_5+1)\bmod 5, (r_8+1)\bmod 8) \) to \( \bar E \).
   \item \defalgo{five-eight}{s,t}
   \begin{steps}
-    \item Run \tmo{BFS}$\bigl(s, 0, 0\bigr)$.
-    \item Find the smallest $ d = \nf{dist}((s,0,0),(t,r_5,r_8)) $ such that $ d = 5x + 8y $ for some $ x, y \in \N $.
-    \item If such an $(r_5, r_8)$ exists, return $\nf{dist}((s,0,0),(t,r_5,r_8))$.
-    \item Otherwise, return $\infty$ (no valid walk exists).
+    \item Run \tmo{BFS}\( \bigl(s, 0, 0\bigr) \).
+    \item Find the smallest \( d = \nf{dist}((s,0,0),(t,r_5,r_8)) \) such that \( d = 5x + 8y \) for some \( x, y \in \N \).
+    \item If such an \( (r_5, r_8) \) exists, return \( \nf{dist}((s,0,0),(t,r_5,r_8)) \).
+    \item Otherwise, return \( \infty \) (no valid walk exists).
   \end{steps}
 
-  \item We know the auxiliary graph contains $ (5\cdot 8) n = 40n $ vertices and $ \leq (5\cdot 8) m = 40m $ edges. Thus running BFS takes $ \mcO(40m+40n) = \mcO(m+n) $ time.
+  \item We know the auxiliary graph contains \( (5\cdot 8) n = 40n \) vertices and \( \leq (5\cdot 8) m = 40m \) edges. Thus running BFS takes \( \mcO(40m+40n) = \mcO(m+n) \) time.
 
-  Thus our final running time is $ \mcO(m+n) $.
+  Thus our final running time is \( \mcO(m+n) \).
 \end{enumerate}
 \end{solution}
 \pagebreak
 
 \begin{subexercise} % 7.1.5
-  Suppose $ G $ is a patriotic directed graph where all the edges are colored either red, white, or blue.
+  Suppose \( G \) is a patriotic directed graph where all the edges are colored either red, white, or blue.
   An \tit{American walk} is a walk where the edges alternate in color in the order of the American dream: red, white, blue, red, white, blue...
   Here the first edge could be any color and then the colors have to cycle through the American dream thereafter.
-  Compute the length of the shortest American walk from $ s $ to $ t $.
+  Compute the length of the shortest American walk from \( s \) to \( t \).
 \end{subexercise}
 
 \begin{solution}
 
 \begin{enumerate}[label=(\alph*)]
-  \item Create an auxiliary graph $G'=(V',E')$.
+  \item Create an auxiliary graph \( G'=(V',E') \).
 
-  For each original vertex $v\in V$ and each color $c \in \{\text{R},\text{W},\text{B}\}$, create a state $(v,c) \in G'$ to denote that we are at vertex $ v $ after an edge of color $ c $.
-  Create an extra starting node and call it $(s, null)$ to denote not having crossed an edge yet.
+  For each original vertex \( v\in V \) and each color \( c \in \{\text{R},\text{W},\text{B}\} \), create a state \( (v,c) \in G' \) to denote that we are at vertex \( v \) after an edge of color \( c \).
+  Create an extra starting node and call it \( (s, null) \) to denote not having crossed an edge yet.
 
-  Add an edge to $ E' $ from $(s,null) \to (u,c)$ $ \iff $ $ \exists $ some $c$-colored edge $(s,u)\in E$.
+  Add an edge to \( E' \) from \( (s,null) \to (u,c) \) \( \iff \) \( \exists \) some \( c \)-colored edge \( (s,u)\in E \).
 
-  Add an edge to $ E' $ from $(v,\mathrm{R}) \to (u,\mathrm{W})$ $ \iff $ $ \exists $ a red edge $(v, u)\in E$. Repeat for white $ \to $ blue, and blue $ \to $ red.
+  Add an edge to \( E' \) from \( (v,\mathrm{R}) \to (u,\mathrm{W}) \) \( \iff \) \( \exists \) a red edge \( (v, u)\in E \). Repeat for white \( \to \) blue, and blue \( \to \) red.
 
   \item \defalgo{american}{s,t}
   \begin{steps}
-    \item Run \tmo{BFS}($ G', (s,null)$)
-    \item Return $ \min\limits_{c\in\{\nf{R,G,B}\}}\{dist((s,null),(t,c))\} $
+    \item Run \tmo{BFS}(\( G', (s,null) \))
+    \item Return \( \min\limits_{c\in\{\nf{R,G,B}\}}\{dist((s,null),(t,c))\} \)
   \end{steps}
-  \item The auxiliary graph has $3n + 1$ vertices and $\mcO(m)$ edges, so BFS runs in $ \mcO(m+(3n+1)) $ time.
+  \item The auxiliary graph has \( 3n + 1 \) vertices and \( \mcO(m) \) edges, so BFS runs in \( \mcO(m+(3n+1)) \) time.
 
-  Thus our final time complexity is $ \mcO(m+n) $
+  Thus our final time complexity is \( \mcO(m+n) \)
 \end{enumerate}
 \end{solution}
 \pagebreak
 
 \begin{subexercise} % 7.1.6
-  Suppose $ G $ is again a patriotic directed graph where all the edges are colored either red, white, or blue.
+  Suppose \( G \) is again a patriotic directed graph where all the edges are colored either red, white, or blue.
   An \tit{un-American walk} is a walk that never cycles through the American dream; that is, a walk where no three consecutive edges in the walk have colors that form any of the following three sequences: (red, white, blue), (white, blue, red), or (blue, red, white).
-  Compute the length of the shortest un-American walk from $ s $ to $ t $.
+  Compute the length of the shortest un-American walk from \( s \) to \( t \).
 \end{subexercise}
 
 \begin{solution}
 
 \begin{enumerate}[label=(\alph*)]
-  \item Create an auxiliary graph $G' = (V', E')$.
+  \item Create an auxiliary graph \( G' = (V', E') \).
 
-  For each vertex $v \in V$ and each pair $(c_1, c_2) \in \{\nf{R,W,B}, null\}\times \{\nf{R,W,B}, null\}$, add $(v, c_1, c_2) \in V'$.
-  Add an extra starting node $(s, null, null)$.
+  For each vertex \( v \in V \) and each pair \( (c_1, c_2) \in \{\nf{R,W,B}, null\}\times \{\nf{R,W,B}, null\} \), add \( (v, c_1, c_2) \in V' \).
+  Add an extra starting node \( (s, null, null) \).
 
-  Add an edge to $ E' $ from $(s, null, null)$ to $(u, null, c)$ if $(s,u)\in E$ has color $c$.
+  Add an edge to \( E' \) from \( (s, null, null) \) to \( (u, null, c) \) if \( (s,u)\in E \) has color \( c \).
 
-  Add an edge to $ E' $ from  $(v, c_1, c_2) $ to $ (u, c_2, c_3)$ iff $(v,u)\in E$ has color $c_3$, and the triple $(c_1, c_2, c_3)\not\in \{ (\mathrm{R},\mathrm{W},\mathrm{B}), (\mathrm{W},\mathrm{B},\mathrm{R}), (\mathrm{B},\mathrm{R},\mathrm{W}) \}.$
+  Add an edge to \( E' \) from  \( (v, c_1, c_2) \) to \( (u, c_2, c_3) \) iff \( (v,u)\in E \) has color \( c_3 \), and the triple \( (c_1, c_2, c_3)\not\in \{ (\mathrm{R},\mathrm{W},\mathrm{B}), (\mathrm{W},\mathrm{B},\mathrm{R}), (\mathrm{B},\mathrm{R},\mathrm{W}) \}. \)
 
   \item \defalgo{unamerican}{G', G}
   \begin{steps}
-    \item Run \tmo{BFS}($G', (s, {null}, null))$
-    \item Return $\min\limits_{c_1,c_2 \in \{\mathrm{R}, \mathrm{W}, \mathrm{B}, {null}\}} \{\mathrm{dist}((s,{null},{null}), (t, c_1, c_2))\}$
+    \item Run \tmo{BFS}(\( G', (s, {null}, null)) \)
+    \item Return \( \min\limits_{c_1,c_2 \in \{\mathrm{R}, \mathrm{W}, \mathrm{B}, {null}\}} \{\mathrm{dist}((s,{null},{null}), (t, c_1, c_2))\} \)
   \end{steps}
 
-  \item In $G'$, there are at most $(3 + 1)^2 \cdot n = 16n$ states, giving us $\mathcal{O}(n)$ vertices.
-  Each original edge generates at most a constant number of edges in $G'$, whence $G'$ has $\mathcal{O}(m)$ edges.
-  We know BFS takes $ \mcO(m+n) $ time to complete.
+  \item In \( G' \), there are at most \( (3 + 1)^2 \cdot n = 16n \) states, giving us \( \mathcal{O}(n) \) vertices.
+  Each original edge generates at most a constant number of edges in \( G' \), whence \( G' \) has \( \mathcal{O}(m) \) edges.
+  We know BFS takes \( \mcO(m+n) \) time to complete.
 
-  Thus the total time to find the shortest un-American walk is $\mathcal{O}(m + n)$.
+  Thus the total time to find the shortest un-American walk is \( \mathcal{O}(m + n) \).
 \end{enumerate}
 \end{solution}
 \pagebreak
 
 \begin{subexercise} % 7.1.7
-  Let $ s,t\in V $ be two vertices.
+  Let \( s,t\in V \) be two vertices.
   Consider the following game with two people Alice and Bob.
-  Initially, Alice is on $ s $, and Bob is on $ t $.
+  Initially, Alice is on \( s \), and Bob is on \( t \).
   Each round, Alice and Bob are on two vertices, and they simultaneously take an outgoing edge to another vertex.
   The goal is to guide Alice and Bob to the same vertex with the minimum number of rounds or declare that it is impossible to have them meet.
   Compute the minimum number of rounds needed to have Alice and Bob meet at the same vertex.
@@ -222,23 +222,23 @@ No proof of correctness is required.
 \begin{solution}
 
 \begin{enumerate}[label=(\alph*)]
-  \item Create an auxiliary graph $G' = (V', E')$.
+  \item Create an auxiliary graph \( G' = (V', E') \).
 
-  For each pair of vertices $(a,b) \in V \times V$, add a node $(a,b) \in V'$, representing the state in which Alice is at vertex $a$ and Bob is at vertex $b$.
+  For each pair of vertices \( (a,b) \in V \times V \), add a node \( (a,b) \in V' \), representing the state in which Alice is at vertex \( a \) and Bob is at vertex \( b \).
 
-  Add a directed edge from $(a,b)$ to $(a',b')$ in $E'$ iff $(a, a') \in E$ and $(b, b') \in E$, meaning Alice moves from $a \to a'$ and Bob moves from $b \to b'$ in the same round.
+  Add a directed edge from \( (a,b) \) to \( (a',b') \) in \( E' \) iff \( (a, a') \in E \) and \( (b, b') \in E \), meaning Alice moves from \( a \to a' \) and Bob moves from \( b \to b' \) in the same round.
 
-  We begin at $(s,t)$, and want to end at some $(x, x)$ for $ x\in V $.
+  We begin at \( (s,t) \), and want to end at some \( (x, x) \) for \( x\in V \).
 
   \item \defalgo{alice-bob}{G', G}
   \begin{steps}
-    \item Run \tmo{BFS}($G', (s,t)$)
-    \item Return $\min\limits_{x\in V}\{\text{dist}((s,t), (x,x))\}$
+    \item Run \tmo{BFS}(\( G', (s,t) \))
+    \item Return \( \min\limits_{x\in V}\{\text{dist}((s,t), (x,x))\} \)
   \end{steps}
 
-  \item The auxiliary graph $ G' $ has $ \order{V}\times\order{V}=n\sq $ vertices, and each vertex in $ G' $ can have up to $ m\sq $ out-edges.
+  \item The auxiliary graph \( G' \) has \( \order{V}\times\order{V}=n\sq \) vertices, and each vertex in \( G' \) can have up to \( m\sq \) out-edges.
 
-  We know BFS takes $\mcO(m+n)$ time to complete, giving us a final time complexity of $\mcO(n^2 + m^2)$.
+  We know BFS takes \( \mcO(m+n) \) time to complete, giving us a final time complexity of \( \mcO(n^2 + m^2) \).
 \end{enumerate}
 \end{solution}
 \pagebreak
@@ -247,40 +247,40 @@ No proof of correctness is required.
 \setcounter{exercise}{2}
 \begin{exercise}
   Suppose you drive to campus but you are running late for the CS580 midterm, and in this extreme circumstance you are willing to speed up to 25\% over the speed limit.
-  However, you don't want to run too high a risk of getting a ticket, so you decide you are willing to speed for a limited number $ k $ of streets.
-  The goal is to get to the exam as fast as possible, going 25\% over the speed limit for up to $ k $ streets, and obeying the speed limit everywhere else.
+  However, you don't want to run too high a risk of getting a ticket, so you decide you are willing to speed for a limited number \( k \) of streets.
+  The goal is to get to the exam as fast as possible, going 25\% over the speed limit for up to \( k \) streets, and obeying the speed limit everywhere else.
 
-  Formally, the input consists of a directed graph $G = (V, E)$, positive edge weights $ \ell:E\to \bbR_{>0} $, vertices $ s,t\in V $, and an integer $k \in \N$.
-  The \tit{k-speeding distance} from $s$ to $t$ is defined as the minimum total length of any $(s, t)$-walk, except there the $ k $ largest edges are decreased by a factor of 4/5.
-  For example, if $k = 3$, and you have an $(s, t)$-walk with edge lengths 6, 3, 4, 6, 9, 3, 6, 9, 7, 1, then the total length including the $ k $ ``speedups'' becomes \begin{align*}
+  Formally, the input consists of a directed graph \( G = (V, E) \), positive edge weights \( \ell:E\to \bbR_{>0} \), vertices \( s,t\in V \), and an integer \( k \in \N \).
+  The \tit{k-speeding distance} from \( s \) to \( t \) is defined as the minimum total length of any \( (s, t) \)-walk, except there the \( k \) largest edges are decreased by a factor of 4/5.
+  For example, if \( k = 3 \), and you have an \( (s, t) \)-walk with edge lengths 6, 3, 4, 6, 9, 3, 6, 9, 7, 1, then the total length including the \( k \) ``speedups'' becomes \begin{align*}
     6+3+4+6+\frac{4}{5}*9+4+6+\frac{4}{5}*9+\frac{4}{5}*7+1=50.
   \end{align*}
-  Design and analyze an algorithm computing the $k$-speeding distance from $ s $ to $t$.
-  Your running time may depend on $ k $. (You may assume $ k < n $ since any shortest walk should be a path anyway).
+  Design and analyze an algorithm computing the \( k \)-speeding distance from \( s \) to \( t \).
+  Your running time may depend on \( k \). (You may assume \( k < n \) since any shortest walk should be a path anyway).
 \end{exercise}
 
 \begin{solution}
 \defalgo{k-speeding}{G=(V,E),\ell:E\to\bbR_>0,s\in V,t\in V,k\in\N}
 \begin{steps}
-  \item Let $ L $ be an auxiliary graph
-  \item Let $V_L = { (v, i) \mid v \in V, 0 \leq i \leq k }$ \begin{steps}
-    \item For each edge $(u,v)\in E$ \begin{steps}
-      \item For each $ i\in[0..k] $: \begin{steps}
-        \item Add the edge (($ u,i ),( v,i $)) to $ E_L $ with length $ \ell(u,v) $
-        \item If $ i<k $: \begin{steps}
-          \item Add the edge ($(u, i), (v, i+1)$) to $ E_L $ with length $\frac{4}{5}\ell(u,v)$
+  \item Let \( L \) be an auxiliary graph
+  \item Let \( V_L = { (v, i) \mid v \in V, 0 \leq i \leq k } \) \begin{steps}
+    \item For each edge \( (u,v)\in E \) \begin{steps}
+      \item For each \( i\in[0..k] \): \begin{steps}
+        \item Add the edge ((\( u,i ),( v,i \))) to \( E_L \) with length \( \ell(u,v) \)
+        \item If \( i<k \): \begin{steps}
+          \item Add the edge (\( (u, i), (v, i+1) \)) to \( E_L \) with length \( \frac{4}{5}\ell(u,v) \)
         \end{steps}
       \end{steps}
     \end{steps}
   \end{steps}
-  \item Run \tmo{Dijsktra}$(L,\ell,(s,0))$ and denote the distance from $ (s,0) $ to $ (v,i) $ by $ \nf{dist}(v,i) $
-  \item Return $ \min\limits_{i\in[0..k]}\{\nf{dist}(t,i)\} $
+  \item Run \tmo{Dijsktra}\( (L,\ell,(s,0)) \) and denote the distance from \( (s,0) \) to \( (v,i) \) by \( \nf{dist}(v,i) \)
+  \item Return \( \min\limits_{i\in[0..k]}\{\nf{dist}(t,i)\} \)
 \end{steps}
-By using a layered construction, each path from $(s,0)$ to $(t,i)$ encodes a walk from $s\to t$ in $G$ spending exactly $i \leq k$ speedups, and Dijkstra's algorithm finds the minimal possible total length among those paths.
-Hence we take the minimum over $i=0,\dots,k$ to allow up to $k$ speedups.
+By using a layered construction, each path from \( (s,0) \) to \( (t,i) \) encodes a walk from \( s\to t \) in \( G \) spending exactly \( i \leq k \) speedups, and Dijkstra's algorithm finds the minimal possible total length among those paths.
+Hence we take the minimum over \( i=0,\dots,k \) to allow up to \( k \) speedups.
 
-The graph $L$ has $(k+1)\,|V|$ vertices and up to $(k+1)\,|E|$ edges.
-Thus Dijkstra's algorithm runs in $\mcO((nk + mk)\log(nk))=\mcO((m+n)k\log(nk))$ time.
+The graph \( L \) has \( (k+1)\,|V| \) vertices and up to \( (k+1)\,|E| \) edges.
+Thus Dijkstra's algorithm runs in \( \mcO((nk + mk)\log(nk))=\mcO((m+n)k\log(nk)) \) time.
 
 
 \end{solution}

@@ -13,8 +13,8 @@
 \setcounter{exercise}{3}
 % >>==========|| 13.4 ||==========<<
 \begin{exercise}
-Let $ G=(V,E) $ be a directed graph.
-We say that a set of vertices is \tit{almost independent} if each $ v\in S $ has at most one neighbor in $ S $.\footnote[5]{Two vertices $u \tand v$ are neighbors if they are connected by an edge.}
+Let \( G=(V,E) \) be a directed graph.
+We say that a set of vertices is \tit{almost independent} if each \( v\in S \) has at most one neighbor in \( S \).\footnote[5]{Two vertices \( u \tand v \) are neighbors if they are connected by an edge.}
 Consider the problem of computing the maximum carcdinality of any almost independent set of vertices.
 For this problem, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.
 \end{exercise}
@@ -24,44 +24,44 @@ For this problem, either (a) design and analyze a polynomial time algorithm (the
   To see this, we present a polynomial time reduction from the maximum cardinality independent set (MCIS) problem, a problem we saw to be NP-complete in class, to MCAIS.
 
   \begin{note}
-    Since that the condition for vertices $ v,w\in V $ to be neighbors only requires that there be a connection between the two, we need not be concerned with the directional property of the edges in $ E $.
-    Hence, we will interpret $ G $ as an undirected graph.
+    Since that the condition for vertices \( v,w\in V \) to be neighbors only requires that there be a connection between the two, we need not be concerned with the directional property of the edges in \( E \).
+    Hence, we will interpret \( G \) as an undirected graph.
   \end{note}
 
   Consider an arbitrary instance of independent set.
-  That is, suppose we have a graph $ G=(V,E) $.
-  The MCAIS problem seeks the largest $ S\ss V $ such that $ (v,w)\not\in E $ for all $ v,w\in S $.
+  That is, suppose we have a graph \( G=(V,E) \).
+  The MCAIS problem seeks the largest \( S\ss V \) such that \( (v,w)\not\in E \) for all \( v,w\in S \).
 
-  Create an auxiliary graph $ G'=(V',E') $, where $ V'=\bigcup\limits_{v_i\in V}\{v_i,v'_i\} $ and $ E'=\{(v_i,v_i')\mid v_i\in V\}\cup E $.
-  Thus, $ V' $ contains duplicates of each vertex in $ V $ and $ E' $ contains each edge in $ E $, as well as an additional edge connecting each pair of vertices $ v_j $ and $ v_j' $.
-  We can think of $ G' $ as a bilayered graph, where $ G $ is the top layer and every vertex has a copy of itself `hanging' below.
+  Create an auxiliary graph \( G'=(V',E') \), where \( V'=\bigcup\limits_{v_i\in V}\{v_i,v'_i\} \) and \( E'=\{(v_i,v_i')\mid v_i\in V\}\cup E \).
+  Thus, \( V' \) contains duplicates of each vertex in \( V \) and \( E' \) contains each edge in \( E \), as well as an additional edge connecting each pair of vertices \( v_j \) and \( v_j' \).
+  We can think of \( G' \) as a bilayered graph, where \( G \) is the top layer and every vertex has a copy of itself `hanging' below.
   Importantly, a `hanging' vertex is only connected to the original vertex.
 
   \begin{subproof}[Correctness.]
     (MCIS\imp MCAIS)
-    Assume we have that a maximum cardinality independent set of $ G $ has cardinality $ n $.
-    Notice that a subset $ S' $ of $ V' $ containing $ v'_i $ for every $ i $ is independent over $ G' $ with cardinality $ \order V $, since no two hanging vertices are connected by an edge.
-    We know there exists some independent set $ S $ of cardinality $ n $ over $ V $.
-    Then $ S'' = S\cup S' $ must be almost independent over $ G' $ with cardinality $ \order V + n $, since each vertex in $ S' $ gains at most one neighbor in the top layer of $ G' $.
-    Now assume ad absurdum that we have some $ H\sseq V' $ such that $ \order{H} > \order{S''} $.
-    If there exists some hanging vertex $ v'_k\not\in H $, then it must be the case that $ v_k\in H $ with some neighboring vertex $ v_{k+1}\in H $.
-    However, this implies that $ v'_{k+1}\not\in H $, so we can always replace $ v_k,v_{k+1} $ with their hanging counterparts.
-    Thus WLOG every hanging $ v'_i\in H $.
-    So $ \order H = \order V + m $ and by hypothesis $ \order V + m > \order V + n $.
-    Then we can remove the hanging vertices from $ H $ to get an independent set over $ G $ with cardinality $ m > n $.
-    However, this contradicts that the maximum cardinality of an independent set over $ G $ is $ n $.
-    Thus $ S'' $ must be a maximum cardinality almost independent set of $ G' $ with cardinality $ \order V + n $.
+    Assume we have that a maximum cardinality independent set of \( G \) has cardinality \( n \).
+    Notice that a subset \( S' \) of \( V' \) containing \( v'_i \) for every \( i \) is independent over \( G' \) with cardinality \( \order V \), since no two hanging vertices are connected by an edge.
+    We know there exists some independent set \( S \) of cardinality \( n \) over \( V \).
+    Then \( S'' = S\cup S' \) must be almost independent over \( G' \) with cardinality \( \order V + n \), since each vertex in \( S' \) gains at most one neighbor in the top layer of \( G' \).
+    Now assume ad absurdum that we have some \( H\sseq V' \) such that \( \order{H} > \order{S''} \).
+    If there exists some hanging vertex \( v'_k\not\in H \), then it must be the case that \( v_k\in H \) with some neighboring vertex \( v_{k+1}\in H \).
+    However, this implies that \( v'_{k+1}\not\in H \), so we can always replace \( v_k,v_{k+1} \) with their hanging counterparts.
+    Thus WLOG every hanging \( v'_i\in H \).
+    So \( \order H = \order V + m \) and by hypothesis \( \order V + m > \order V + n \).
+    Then we can remove the hanging vertices from \( H \) to get an independent set over \( G \) with cardinality \( m > n \).
+    However, this contradicts that the maximum cardinality of an independent set over \( G \) is \( n \).
+    Thus \( S'' \) must be a maximum cardinality almost independent set of \( G' \) with cardinality \( \order V + n \).
 
     (MCIS \pmi MCAIS)
-    Assume we have that a maximum cardinality almost independent set $ S $ of $ G' $ has cardinality $ n $.
-    As above, we can say WLOG $ S $ contains every hanging vertex.
-    Assume ad absurdum that $ S $ contains adjacent vertices $ v_i,v_{i+1} \in V $.
-    But $ v'_i \in S $ whence $ v_i $ has two neighbors, a contradiction.
-    Thus no two vertices in $ S $ are adjacent in the top layer of $ G' $, which we know to be isomorphic to $ G $.
-    Hence by removing every hanging vertex from $ S $, we can get an independent set $ H $ over $ G $ of cardinality $ \order H = n - \order V $.
-    Once again, assume ad absurdum that there exists some independent set $ K $ over $ G $ with cardinality $ m > n-\order V $.
-    Then by adding every hanging vertex to the set, we obtain an almost independent set with cardinality $ m+\order V > \order H + \order V = n $.
-    However, this contradicts that $ n $ is the maximum cardinality for an almost indepedent set over $ G' $ whence $ H $ must be a maximum cardinality independent set over $ G $.
+    Assume we have that a maximum cardinality almost independent set \( S \) of \( G' \) has cardinality \( n \).
+    As above, we can say WLOG \( S \) contains every hanging vertex.
+    Assume ad absurdum that \( S \) contains adjacent vertices \( v_i,v_{i+1} \in V \).
+    But \( v'_i \in S \) whence \( v_i \) has two neighbors, a contradiction.
+    Thus no two vertices in \( S \) are adjacent in the top layer of \( G' \), which we know to be isomorphic to \( G \).
+    Hence by removing every hanging vertex from \( S \), we can get an independent set \( H \) over \( G \) of cardinality \( \order H = n - \order V \).
+    Once again, assume ad absurdum that there exists some independent set \( K \) over \( G \) with cardinality \( m > n-\order V \).
+    Then by adding every hanging vertex to the set, we obtain an almost independent set with cardinality \( m+\order V > \order H + \order V = n \).
+    However, this contradicts that \( n \) is the maximum cardinality for an almost indepedent set over \( G' \) whence \( H \) must be a maximum cardinality independent set over \( G \).
   \end{subproof}
 \end{solution}
 \pagebreak

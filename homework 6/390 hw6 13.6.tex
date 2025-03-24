@@ -11,20 +11,20 @@
 \begin{document}
 \setcounter{section}{13}
 \setcounter{exercise}{6}
-\tbo{Exercise \theexercise.} Recall the dominating set problem\textsuperscript{\hyperref[fn:dmset]{$\dagger$}} from section 13.3.
+\tbo{Exercise \theexercise.} Recall the dominating set problem\textsuperscript{\hyperref[fn:dmset]{\( \dagger \)}} from section 13.3.
   Here we will consider the weighted version where the vertices are given positive weights, and the goal is to compute the minimum weight dominating set.
   For each of the following problems, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT. \\
 \noindent\rule{2in}{0.4pt} \\
-\parbox{\linewidth}{\small \textsuperscript{\label{fn:dmset}$\dagger$}A set of vertices $S \sseq V$ is a \tit{dominating set} if every vertex $v \in V$ is either in $S$ or the neighbor of a vertex in $S$.
+\parbox{\linewidth}{\small \textsuperscript{\label{fn:dmset}\( \dagger \)}A set of vertices \( S \sseq V \) is a \tit{dominating set} if every vertex \( v \in V \) is either in \( S \) or the neighbor of a vertex in \( S \).
   The minimum dominating set problem is to compute the minimum cardinality dominating set.}
 
 % >>==========|| 13.6 ||==========<<
 \begin{subexercise}
   The minimum weight dominating set problem for intervals, \tit{with the additional assumption that} no two intervals are nested.
-  To state it more precisely: the input consists of $ n $ weighted intervals $ \mcI $.
-  The non-nested assumptions means that for any two intervals $ I, J \in \mcI $, we never have $ I $ contained in $ J $ or $ J $ contained in $ I $.
+  To state it more precisely: the input consists of \( n \) weighted intervals \( \mcI \).
+  The non-nested assumptions means that for any two intervals \( I, J \in \mcI \), we never have \( I \) contained in \( J \) or \( J \) contained in \( I \).
 
-  The goal is to compute the minimum weight subset $ S \sseq \mcI $ of intervals such that every interval in $ \mcI $ is either in $ S $ or overlaps some interval in $ S $.
+  The goal is to compute the minimum weight subset \( S \sseq \mcI \) of intervals such that every interval in \( \mcI \) is either in \( S \) or overlaps some interval in \( S \).
 \begin{itemize}
   \item (For 1 pt. extra credit) Extend your algorithm to general intervals.\footnote[8]{Of course, anyone who has already solved the general case automatically solves the special case where no two intervals are nested.}
 \end{itemize}
@@ -33,7 +33,7 @@
 \begin{solution}
 We claim that the following algorithm suffices as a polynomial time solution.
 \begin{subproof}[Preprocessing]
-    Sorting the intervals $\mathcal{I}$ by left endpoint $\in \mathcal{O}(n\log n)$
+    Sorting the intervals \( \mathcal{I} \) by left endpoint \( \in \mathcal{O}(n\log n) \)
 \end{subproof}
 
 \begin{subproof}[Algorithm]
@@ -41,12 +41,12 @@ We claim that the following algorithm suffices as a polynomial time solution.
 \begin{quote}%
 \defalgo{MWDS}{\mathcal{I}=\{I_1,I_2...,I_n\},w=\mathcal{I} \rightarrow R_{>0}}
 
-\doc{given $n$ non-nested weighted intervals in $\mathcal{I}$ sorted by first endpoint, computes the minimum weight subset $S\subseteq\mathcal{I}$ such that every interval in $\mathcal{I}$ is in either S or overlaps some interval in S}
+\doc{given \( n \) non-nested weighted intervals in \( \mathcal{I} \) sorted by first endpoint, computes the minimum weight subset \( S\subseteq\mathcal{I} \) such that every interval in \( \mathcal{I} \) is in either S or overlaps some interval in S}
 %modifying to return subset too rn :) it only returns weights
 \begin{steps}
-    \item If $n = 0$ then return $\emptyset, 0$.
-    \item Let $J_1 = \{I_j \in \mathcal{I} : I_j\neq I_1 \text{ and } I_j \text{ overlaps } I_1\}$
-    \item If $\mathcal{I} \setminus (J_1 \cup {I_1}) == \emptyset$:
+    \item If \( n = 0 \) then return \( \emptyset, 0 \).
+    \item Let \( J_1 = \{I_j \in \mathcal{I} : I_j\neq I_1 \text{ and } I_j \text{ overlaps } I_1\} \)
+    \item If \( \mathcal{I} \setminus (J_1 \cup {I_1}) == \emptyset \):
     \begin{steps}
         \item return $ \min\text{-weight} \begin{cases}
             I_1, w(I_1)\\
@@ -55,16 +55,16 @@ We claim that the following algorithm suffices as a polynomial time solution.
     \end{steps}
     \item Else
     \begin{steps}
-    \item $S_{rem}, w_{rem}\leftarrow \subcall{MWDS}{\mathcal{I} \setminus (J_1 \cup {I_1}), w}$
-        \item $S_{inc}, w_{inc}\leftarrow \{I_1\} \cup S_{rem} , w(I_1) + w_{rem}$
-        \item If $J_1 \neq \emptyset$:
+    \item \( S_{rem}, w_{rem}\leftarrow \subcall{MWDS}{\mathcal{I} \setminus (J_1 \cup {I_1}), w} \)
+        \item \( S_{inc}, w_{inc}\leftarrow \{I_1\} \cup S_{rem} , w(I_1) + w_{rem} \)
+        \item If \( J_1 \neq \emptyset \):
         \begin{steps}
             \item return $ \min\text{-weight} \begin{cases}
            S_{inc},w_{inc}\\
             \subcall{MWDS}{\mathcal{I} \setminus {I_1},w}
         \end{cases}$
         \end{steps}
-        \item Else return $S_{inc},w_{inc}$
+        \item Else return \( S_{inc},w_{inc} \)
 
     \end{steps}
 
@@ -81,13 +81,13 @@ We claim that the following algorithm suffices as a polynomial time solution.
 % lolol i think that's the trick question? just stating it's np hard? yeaaa
 % love how we just forgot there is a chat feature too
 The above algorithm can be implemented by using caching the resulting subset and weight for every subproblem on an interval \subcall{MWDS}{\mathcal{I},w} to avoid recomputation.\\
-The number of subproblems due to non-nested intervals property is O(n) and time per subproblem is O(n) to find all the overlapping intervals with $I_1$. Hence, the runtime for \subcall{MWDS}{\mathcal{I},w} is \begin{center}
-    (\# of subproblems)(\# time per subproblem) = $\mathcal{O}(n)\mathcal{O}(n) = \mathcal{O}(n^2)$
+The number of subproblems due to non-nested intervals property is O(n) and time per subproblem is O(n) to find all the overlapping intervals with \( I_1 \). Hence, the runtime for \subcall{MWDS}{\mathcal{I},w} is \begin{center}
+    (\# of subproblems)(\# time per subproblem) = \( \mathcal{O}(n)\mathcal{O}(n) = \mathcal{O}(n^2) \)
 \end{center}
 Making our \textbf{Total Runtime} \(\mathcal{O}(n\log n) + \mathcal{O}(n^2) \in \mathcal{O}(n^2)\)
 
 \end{subproof}
-\begin{subproof}[How to use the algorithm] We need to first sort our intervals $\mathcal{I}$ by left endpoint and then call  \subcall{MWDS}{\mathcal{I},w}
+\begin{subproof}[How to use the algorithm] We need to first sort our intervals \( \mathcal{I} \) by left endpoint and then call  \subcall{MWDS}{\mathcal{I},w}
 
 \end{subproof}
 \begin{itemize}
@@ -108,13 +108,13 @@ Making our \textbf{Total Runtime} \(\mathcal{O}(n\log n) + \mathcal{O}(n^2) \in 
 \begin{quote}%
 \defalgo{MWDST}{T,v,exclude-root}
 
-\doc{given a tree $T=(V,E)$, vertex $v\in V$, weights $w:V\rightarrow \mathbb{R}$ and boolean exclude-root indicating whether v is excluded from the dominating set, computes the minimum weighted dominating subset in T}
+\doc{given a tree \( T=(V,E) \), vertex \( v\in V \), weights \( w:V\rightarrow \mathbb{R} \) and boolean exclude-root indicating whether v is excluded from the dominating set, computes the minimum weighted dominating subset in T}
 %modifying to return subset too rn :) it only returns weights
 \begin{steps}
-    \item If $v$ is a leaf:
+    \item If \( v \) is a leaf:
     \begin{steps}
-        \item If exclude-root return $\emptyset, \infty$
-        \item Else return $\{v\}, w(v)$
+        \item If exclude-root return \( \emptyset, \infty \)
+        \item Else return \( \{v\}, w(v) \)
     \end{steps}
 
     \item If exclude-root:
@@ -124,9 +124,9 @@ Making our \textbf{Total Runtime} \(\mathcal{O}(n\log n) + \mathcal{O}(n^2) \in 
     % \item Else minimum of w(v) + sum(\subcall{MWDST}{T,c,True} for all children c of v)??
     \item Else
     \begin{steps}
-        \item $S_{children}, w_{children} \rightarrow$ union and sum of \subcall{MWDST}{T,c,True} for all children c of v
-        \item $S_{inc}\leftarrow \{v\} \cup S_{children} ,w_{inc} \leftarrow w(v) + w_{children}$
-        \item $S_{exc}, w_{exc} \leftarrow$ Union and sum of \subcall{MWDST}{T,c,False} for all children c of v
+        \item \( S_{children}, w_{children} \rightarrow \) union and sum of \subcall{MWDST}{T,c,True} for all children c of v
+        \item \( S_{inc}\leftarrow \{v\} \cup S_{children} ,w_{inc} \leftarrow w(v) + w_{children} \)
+        \item \( S_{exc}, w_{exc} \leftarrow \) Union and sum of \subcall{MWDST}{T,c,False} for all children c of v
         \item return return $ \min\text{-weight} \begin{cases}
            S_{inc},w_{inc}\\
            S_{exc}, w_{exc}
@@ -146,10 +146,10 @@ The time per subproblem is to process all children of vertex v.
 Hence, the runtime for \subcall{MWDST}{T,v,exclude-root} with memoization is
 \begin{center}
 (\# of subproblems)(\# time per subproblem)\\
-$\sum_v($time spent on \subcall{MWDST}{T,v..}) = $O\bigg(\sum_v\#$ children of $v\bigg) = O(n)$
+\( \sum_v( \)time spent on \subcall{MWDST}{T,v..}) = \( O\bigg(\sum_v\# \) children of \( v\bigg) = O(n) \)
 \end{center}
 
-Making our \textbf{Total Runtime} $\mathcal{O}(n)$
+Making our \textbf{Total Runtime} \( \mathcal{O}(n) \)
 We also mention that the space usage is O(n) because there are O(n) subproblems, each requiring constant space.
 
 \end{subproof}

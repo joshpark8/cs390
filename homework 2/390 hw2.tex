@@ -9,24 +9,24 @@
 \fancyhead[R]{\tbo{Spring 2025 \\ Homework 2}}
 
 \begin{document}
-\tbo{Exercise 5.1.} Below is a series of optimization problems that takes as input an array $A[1..n]$ of integers, and asks for optimal subsequences of $A$ satisfying certain properties. Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
+\tbo{Exercise 5.1.} Below is a series of optimization problems that takes as input an array \( A[1..n] \) of integers, and asks for optimal subsequences of \( A \) satisfying certain properties. Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
 % >>==========|| 5.1.2 ||==========<<
 \setcounter{section}{5}
 \setcounter{exercise}{1}
 \setcounter{subexercise}{1}
 \begin{subexercise}
-  A sequence of numbers $ x_1,\ldots,x_k $ is \tit{convex} if $ x_{i+1}-x_i \geq x_i-x_{i-1} $ for $ i=2,\ldots,k-1 $. Compute the length of the longest convex subsequence of $ A $.
+  A sequence of numbers \( x_1,\ldots,x_k \) is \tit{convex} if \( x_{i+1}-x_i \geq x_i-x_{i-1} \) for \( i=2,\ldots,k-1 \). Compute the length of the longest convex subsequence of \( A \).
 \end{subexercise}
 
 \begin{proof}[Recursive spec.]
-Let $ A[1..n] $ be a fixed array, and $ cache[1..n][1..n] $ be an $ n\times n $ matrix. Define the function \tmo{convex}$(i,j)$ to return the length of the longest convex subsequence ending in $A[j]\tand A[i]$, with $i>j$.
+Let \( A[1..n] \) be a fixed array, and \( cache[1..n][1..n] \) be an \( n\times n \) matrix. Define the function \tmo{convex}\( (i,j) \) to return the length of the longest convex subsequence ending in \( A[j]\tand A[i] \), with \( i>j \).
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
 \begin{quote}
 \defalgo{convex}{i,j}
 \begin{steps}
-  \item If $ j < 1 $ or $ i = 1 $, then return 2
+  \item If \( j < 1 \) or \( i = 1 \), then return 2
   \item Else, return $ \max\limits_{1\leq k < j}
   \begin{cases}
     1 + \text{convex}(j, k) & \text{if } A[i] - A[j] \geq A[j] - A[k] \\
@@ -37,19 +37,19 @@ Let $ A[1..n] $ be a fixed array, and $ cache[1..n][1..n] $ be an $ n\times n $ 
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
- We can utilize dynamic programming to reduce running time by filling an $ \mcO(n^2) $ table $ cache[1..n][1..n] $, in which the entry $ cache[i][j] $ corresponds to $ \tmo{convex}(i,j) $.
+ We can utilize dynamic programming to reduce running time by filling an \( \mcO(n^2) \) table \( cache[1..n][1..n] \), in which the entry \( cache[i][j] \) corresponds to \( \tmo{convex}(i,j) \).
 \end{proof}
 
 \begin{proof}[Usage.]
-  To use this function, initialize some variable $ tmp := 1 $. Then iterate through the pairs $ (i,j) $ for which $ 1 \leq j < i < n $, and set $ tmp = \max\{tmp, \tmo{convex}(i,j)\} $. Finally, return $ tmp $.
+  To use this function, initialize some variable \( tmp := 1 \). Then iterate through the pairs \( (i,j) \) for which \( 1 \leq j < i < n \), and set \( tmp = \max\{tmp, \tmo{convex}(i,j)\} \). Finally, return \( tmp \).
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-  The function \tmo{convex} fills an $ n\times n $ matrix without repeating any computations, which gives us $ \mcO(n\sq) $ subproblems.
+  The function \tmo{convex} fills an \( n\times n \) matrix without repeating any computations, which gives us \( \mcO(n\sq) \) subproblems.
 
-  Each subproblem takes $ \mcO(n) $ time to complete in the worst case.
+  Each subproblem takes \( \mcO(n) \) time to complete in the worst case.
 
-  Thus our final time complexity is $ \mcO(n\cb) $.
+  Thus our final time complexity is \( \mcO(n\cb) \).
 \end{proof}
 \pagebreak
 
@@ -57,8 +57,8 @@ Let $ A[1..n] $ be a fixed array, and $ cache[1..n][1..n] $ be an $ n\times n $ 
 \setcounter{subexercise}{3}
 \begin{subexercise}
 Compute both \begin{itemize}
-\item the length of the longest increasing subsequences of $ A $ where the sum of integers is even,
-\item the length of the longest increasing subsequences of $ A $ where the sum of integers is odd.
+\item the length of the longest increasing subsequences of \( A \) where the sum of integers is even,
+\item the length of the longest increasing subsequences of \( A \) where the sum of integers is odd.
 \end{itemize}
 \end{subexercise}
 
@@ -67,43 +67,43 @@ Compute both \begin{itemize}
 \end{note}
 
 \begin{proof}[Recursive spec.]
-Returns a 2-tuple ($ a,b $) where $ a\tand b $ represent the length of the LIS ending at $ i $ with sums of even and odd parity, respectively.
+Returns a 2-tuple (\( a,b \)) where \( a\tand b \) represent the length of the LIS ending at \( i \) with sums of even and odd parity, respectively.
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
   \begin{quote}
   \defalgo{LIS-parity}{i}
   \begin{steps}
-    \item If $ A[i] $ is even: set $ a := 1 $ and $ b := 0 $
-    \item Else: set $ a := 0 $ and $ b := 1 $
-    \item For $ 1 \leq j \leq i-1 $: \begin{steps}
-      \item If $ A[j] < A[i] $: \begin{steps}
-        \item Set ($ \hat a, \hat b $) := \tmo{LIS-parity}(j)
-        \item If $ A[i] $ is even: set $ a := \max(a,\hat a + 1) $ and $ b := \max(b,\hat b+1) $
-        \item Else: set $ a := \max(a,\hat b + 1) $ and $ b := \max(b,\hat a + 1) $
+    \item If \( A[i] \) is even: set \( a := 1 \) and \( b := 0 \)
+    \item Else: set \( a := 0 \) and \( b := 1 \)
+    \item For \( 1 \leq j \leq i-1 \): \begin{steps}
+      \item If \( A[j] < A[i] \): \begin{steps}
+        \item Set (\( \hat a, \hat b \)) := \tmo{LIS-parity}(j)
+        \item If \( A[i] \) is even: set \( a := \max(a,\hat a + 1) \) and \( b := \max(b,\hat b+1) \)
+        \item Else: set \( a := \max(a,\hat b + 1) \) and \( b := \max(b,\hat a + 1) \)
       \end{steps}
     \end{steps}
-    \item return ($ a,b $)
+    \item return (\( a,b \))
   \end{steps}
   \end{quote}
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
-  We can leverage dynamic programming by caching the result of the $ \mcO(n) $ subcalls.
+  We can leverage dynamic programming by caching the result of the \( \mcO(n) \) subcalls.
 \end{proof}
 
 \begin{proof}[Usage.]
-  return $ \max\limits_{i\in[n]} \tmo{LIS-parity}(i) $
+  return \( \max\limits_{i\in[n]} \tmo{LIS-parity}(i) \)
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-  The $ \mcO(n) $ subcalls each take $ \mcO(n) $ time, giving us a final time complexity of $ \mcO(n\sq) $.
+  The \( \mcO(n) \) subcalls each take \( \mcO(n) \) time, giving us a final time complexity of \( \mcO(n\sq) \).
 \end{proof}
 \pagebreak
 
 % >>==========|| 5.1.5 ||==========<<
 \begin{subexercise}
-  Suppose each entry in A is also colored red, white, or blue. We say that a sequence is \tit{American} if the colors alternate red, white, blue, red, white, blue, \ldots.  The first number in the sequence can be any color. Compute the length of the longest increasing American subsequence of $ A $. (You can assume that you can look up the color of $A[i]$, for any $i \in [n]$, in constant time.)
+  Suppose each entry in A is also colored red, white, or blue. We say that a sequence is \tit{American} if the colors alternate red, white, blue, red, white, blue, \ldots.  The first number in the sequence can be any color. Compute the length of the longest increasing American subsequence of \( A \). (You can assume that you can look up the color of \( A[i] \), for any \( i \in [n] \), in constant time.)
 \end{subexercise}
 
 \begin{note}
@@ -111,44 +111,44 @@ Returns a 2-tuple ($ a,b $) where $ a\tand b $ represent the length of the LIS e
 \end{note}
 
 \begin{proof}[Recursive spec.]
-  Returns longest increasing American subsequence of $ A $ ending at $ i $.
+  Returns longest increasing American subsequence of \( A \) ending at \( i \).
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
-Assumes usage of subroutine \tmo{patriotic}($ \alpha,\beta $) that returns true if color of $ A[\alpha] $ follows color of $ A[\beta] $ in sequence.
+Assumes usage of subroutine \tmo{patriotic}(\( \alpha,\beta \)) that returns true if color of \( A[\alpha] \) follows color of \( A[\beta] \) in sequence.
 \begin{quote}
 \defalgo{LIS-USA}{i}
 \begin{steps}
-  \item Define $ len := 1 $
-  \item For $ 1\leq j < i $: \begin{steps}
-    \item If $ A[j] < A[i] $ and \tmo{patriotic}($ i,j $): \begin{steps}
-      \item Set $ len := \max\{len, \tmo{LIS-USA}(j)+1\} $
+  \item Define \( len := 1 \)
+  \item For \( 1\leq j < i \): \begin{steps}
+    \item If \( A[j] < A[i] \) and \tmo{patriotic}(\( i,j \)): \begin{steps}
+      \item Set \( len := \max\{len, \tmo{LIS-USA}(j)+1\} \)
     \end{steps}
   \end{steps}
-  \item return $ len $
+  \item return \( len \)
 \end{steps}
 \end{quote}
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
-  We leverage dynamic programming by caching the result of the $ \mcO(n) $ subcalls.
+  We leverage dynamic programming by caching the result of the \( \mcO(n) \) subcalls.
 \end{proof}
 
 \begin{proof}[Usage.]
-  return $ \max\limits_{1\leq i\leq n}\{\tmo{LIS-USA}(i)\} $
+  return \( \max\limits_{1\leq i\leq n}\{\tmo{LIS-USA}(i)\} \)
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-  Each subcall takes $ \mcO(n) $ time, so the final complexity is $ \mcO(n\sq) $.
+  Each subcall takes \( \mcO(n) \) time, so the final complexity is \( \mcO(n\sq) \).
 \end{proof}
 \pagebreak
 
 % >>==========|| 5.1.6 ||==========<<
 \begin{subexercise}
-A sequence $ x_1,\ldots, x_k $ is a \tit{palindrome} if the reversed sequence is the same; i.e., $ (x_1,\ldots,x_k) = (x_k,\ldots,x_1) $. For example, \begin{align*}
+A sequence \( x_1,\ldots, x_k \) is a \tit{palindrome} if the reversed sequence is the same; i.e., \( (x_1,\ldots,x_k) = (x_k,\ldots,x_1) \). For example, \begin{align*}
   \tit{mom, dad, racecar,\tand gohangasalamiimalasagnahog}
 \end{align*}
-are all palindromes. Compute the length of the longest palindrome subsequence of $ A $.
+are all palindromes. Compute the length of the longest palindrome subsequence of \( A \).
 \end{subexercise}
 
 \begin{note}
@@ -156,40 +156,40 @@ are all palindromes. Compute the length of the longest palindrome subsequence of
 \end{note}
 
 \begin{proof}[Recursive spec.]
-  Returns the length of the longest palindrome subsequence of $ A $ between indices $ i \tand j $.
+  Returns the length of the longest palindrome subsequence of \( A \) between indices \( i \tand j \).
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
 \begin{quote}
 \defalgo{pal}{i,j}
 \begin{steps}
-  \item If $ i = j $: return 1
-  \item return $ \max\{ 2+\tmo{pal}(i+1,j-1),\ \tmo{pal}(i+1,j),\ \tmo{pal}(i,j-1) \} $
+  \item If \( i = j \): return 1
+  \item return \( \max\{ 2+\tmo{pal}(i+1,j-1),\ \tmo{pal}(i+1,j),\ \tmo{pal}(i,j-1) \} \)
 \end{steps}
 \end{quote}
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
-  We leverage dynamic programming by caching the result of the $ \mcO(n\sq) $ subcalls.
+  We leverage dynamic programming by caching the result of the \( \mcO(n\sq) \) subcalls.
 \end{proof}
 
 \begin{proof}[Usage.]
-  return $ \tmo{pal}(1,n) $
+  return \( \tmo{pal}(1,n) \)
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-  Each subcall takes $ \mcO(1) $ time, giving a final complexity of $ \mcO(n\sq) $
+  Each subcall takes \( \mcO(1) \) time, giving a final complexity of \( \mcO(n\sq) \)
 \end{proof}
 \pagebreak
 
 % >>===========|| 5.2 ||===========<<
-\tbo{Exercise 5.2.} Let $ A[1..m] $ and $ B[1..n] $ be two arrays. Each of the following problems asks for some aspect (e.g., the length) of a common subsequence of $A[1..n] \tand B[1..n]$ satisfying or optimizing certain properties. (A common subsequence of $A \tand B$ is a sequence that is a subsequence of both $A \tand B$.) Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
+\tbo{Exercise 5.2.} Let \( A[1..m] \) and \( B[1..n] \) be two arrays. Each of the following problems asks for some aspect (e.g., the length) of a common subsequence of \( A[1..n] \tand B[1..n] \) satisfying or optimizing certain properties. (A common subsequence of \( A \tand B \) is a sequence that is a subsequence of both \( A \tand B \).) Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
 \setcounter{exercise}{2}
 \setcounter{subexercise}{0}
 
 % >>==========|| 5.2.1 ||==========<<
 \begin{subexercise} % 5.2.1
-  Compute the length of the longest common subsequence of $A \tand B$.
+  Compute the length of the longest common subsequence of \( A \tand B \).
 \end{subexercise}
 
 \begin{note}
@@ -197,36 +197,36 @@ are all palindromes. Compute the length of the longest palindrome subsequence of
 \end{note}
 
 \begin{proof}[Recursive spec.]
-  Returns length of longest common subsequence between $ A[1..a] $ and $ B[1..b] $.
+  Returns length of longest common subsequence between \( A[1..a] \) and \( B[1..b] \).
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
 \begin{quote}
 \defalgo{common}{a,b}
 \begin{steps}
-  \item If $ a=0 $ or $ b = 0 $: return 0
-  \item If $ A[a] = B[b] $: return $ 1+\tmo{common}(a-1,b-1) $
-  \item return $ \max \{\tmo{common}(a-1,b),\ \tmo{common}(a,b-1)\}$
+  \item If \( a=0 \) or \( b = 0 \): return 0
+  \item If \( A[a] = B[b] \): return \( 1+\tmo{common}(a-1,b-1) \)
+  \item return \( \max \{\tmo{common}(a-1,b),\ \tmo{common}(a,b-1)\} \)
 \end{steps}
 \end{quote}
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
-Cache the solution to each of the $ \mcO(n\sq) $ subproblems
+Cache the solution to each of the \( \mcO(n\sq) \) subproblems
 \end{proof}
 
 \begin{proof}[Usage.]
-return $ 2n - \tmo{common}(n,n) $
+return \( 2n - \tmo{common}(n,n) \)
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-Each of the $ \mcO(n\sq) $ subcalls takes $ \mcO(1) $ time, so the final comlexity is $ \mcO(n\sq) $
+Each of the \( \mcO(n\sq) \) subcalls takes \( \mcO(1) \) time, so the final comlexity is \( \mcO(n\sq) \)
 \end{proof}
 \pagebreak
 
 % >>==========|| 5.2.2 ||==========<<
 \begin{subexercise} % 5.2.2
-  Compute the length of the shortest common supersequence of $A \tand B$.
+  Compute the length of the shortest common supersequence of \( A \tand B \).
 \end{subexercise}
 
 \begin{note}
@@ -234,16 +234,16 @@ Each of the $ \mcO(n\sq) $ subcalls takes $ \mcO(1) $ time, so the final comlexi
 \end{note}
 
 \begin{proof}[Recursive spec.]
-  Returns the length of the shortest palindrome subsequence between $ A[a_1..a_2] $ and $ B[b_1..b_2] $
+  Returns the length of the shortest palindrome subsequence between \( A[a_1..a_2] \) and \( B[b_1..b_2] \)
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
 \begin{quote}
 \defalgo{shortest-common-pal}{a_1,a_2,b_1,b_2}
 \begin{steps}
-  \item If $ a_1 > a_2 $ or $ b_1 > b_2 $: return 0
-  \item If ($ a_1 = a_2 $ or $ b_1 = b_2 $) and $ A[a_1] = B[b_1] $: return 0
-  \item If $ A[a_1] = A[a_2] $ and $ B[b_1] = B[b_2] $ and $ A[a_1] = B[b_1] $: return $ 2+\tmo{common-pal}(a_1+1, a_2-1, b_1+1, b_2-1) $
+  \item If \( a_1 > a_2 \) or \( b_1 > b_2 \): return 0
+  \item If (\( a_1 = a_2 \) or \( b_1 = b_2 \)) and \( A[a_1] = B[b_1] \): return 0
+  \item If \( A[a_1] = A[a_2] \) and \( B[b_1] = B[b_2] \) and \( A[a_1] = B[b_1] \): return \( 2+\tmo{common-pal}(a_1+1, a_2-1, b_1+1, b_2-1) \)
   \item return $\min\begin{cases}
     \tmo{shortest-common-pal}(a_1+1,a_2,b_1,b_2) \\
     \tmo{shortest-common-pal}(a_1,a_2-1,b_1,b_2) \\
@@ -255,21 +255,21 @@ Each of the $ \mcO(n\sq) $ subcalls takes $ \mcO(1) $ time, so the final comlexi
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
-  Cache the solution to the $ n^4 $ subproblems
+  Cache the solution to the \( n^4 \) subproblems
 \end{proof}
 
 \begin{proof}[Usage.]
-  return $ \tmo{shortest-common-pal}(1,n,1,n) $
+  return \( \tmo{shortest-common-pal}(1,n,1,n) \)
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-  Each of the $ n^4 $ subproblems takes $ \mcO(1) $ time, so our final complexity is $ \mcO(n^4) $
+  Each of the \( n^4 \) subproblems takes \( \mcO(1) \) time, so our final complexity is \( \mcO(n^4) \)
 \end{proof}
 \pagebreak
 
 % >>==========|| 5.2.3 ||==========<<
 \begin{subexercise} % 5.2.3
-  Compute the length of the longest common subsequence of $A \tand B$ that is a
+  Compute the length of the longest common subsequence of \( A \tand B \) that is a
   palindrome.
 \end{subexercise}
 
@@ -278,16 +278,16 @@ Each of the $ \mcO(n\sq) $ subcalls takes $ \mcO(1) $ time, so the final comlexi
 \end{note}
 
 \begin{proof}[Recursive spec.]
-  Returns the length of the longest palindrome subsequence between $ A[a_1..a_2] $ and $ B[b_1..b_2] $
+  Returns the length of the longest palindrome subsequence between \( A[a_1..a_2] \) and \( B[b_1..b_2] \)
 \end{proof}
 
 \begin{proof}[Recursive implementation.]\
 \begin{quote}
 \defalgo{longest-common-pal}{a_1,a_2,b_1,b_2}
 \begin{steps}
-  \item If $ a_1 > a_2 $ or $ b_1 > b_2 $: return 0
-  \item If ($ a_1 = a_2 $ or $ b_1 = b_2 $) and $ A[a_1] = B[b_1] $: return 0
-  \item If $ A[a_1] = A[a_2] $ and $ B[b_1] = B[b_2] $ and $ A[a_1] = B[b_1] $: return $ 2+\tmo{common-pal}(a_1+1, a_2-1, b_1+1, b_2-1) $
+  \item If \( a_1 > a_2 \) or \( b_1 > b_2 \): return 0
+  \item If (\( a_1 = a_2 \) or \( b_1 = b_2 \)) and \( A[a_1] = B[b_1] \): return 0
+  \item If \( A[a_1] = A[a_2] \) and \( B[b_1] = B[b_2] \) and \( A[a_1] = B[b_1] \): return \( 2+\tmo{common-pal}(a_1+1, a_2-1, b_1+1, b_2-1) \)
   \item return $\max\begin{cases}
     \tmo{longest-common-pal}(a_1+1,a_2,b_1,b_2) \\
     \tmo{longest-common-pal}(a_1,a_2-1,b_1,b_2) \\
@@ -299,15 +299,15 @@ Each of the $ \mcO(n\sq) $ subcalls takes $ \mcO(1) $ time, so the final comlexi
 \end{proof}
 
 \begin{proof}[Dynamic Programming.]
-  Cache the solution to the $ n^4 $ subproblems
+  Cache the solution to the \( n^4 \) subproblems
 \end{proof}
 
 \begin{proof}[Usage.]
-  return $ \tmo{longest-common-pal}(1,n,1,n) $
+  return \( \tmo{longest-common-pal}(1,n,1,n) \)
 \end{proof}
 
 \begin{proof}[Analysis of running time.]
-  Each of the $ n^4 $ subproblems takes $ \mcO(1) $ time, so our final complexity is $ \mcO(n^4) $
+  Each of the \( n^4 \) subproblems takes \( \mcO(1) \) time, so our final complexity is \( \mcO(n^4) \)
 \end{proof}
 \pagebreak
 
@@ -315,7 +315,7 @@ Each of the $ \mcO(n\sq) $ subcalls takes $ \mcO(1) $ time, so the final comlexi
 \setcounter{exercise}{9}
 \begin{exercise}
   ... [C]ompute the maximum number of sets that can be obtained
-  in a game of Solitaire Set over the decks $A[1..m],\ B[1..n],\tand C[1..p]$. Design and analyze an algorithm for this problem.
+  in a game of Solitaire Set over the decks \( A[1..m],\ B[1..n],\tand C[1..p] \). Design and analyze an algorithm for this problem.
 \end{exercise}
 
 \begin{proof}[Recursive spec.]

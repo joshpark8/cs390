@@ -37,7 +37,7 @@
 % \begin{note}
 % For brevity's sake, I have assumed the Python convention for default parameter values  in the solutions for Problems 1.3 and 2.2. That is, assuming we have some function defined as
 
-% \tul{def func \tmo{someExampleFunction$(arg1, arg2 := 1, arg3 := 2)$:}},
+% \tul{def func \tmo{someExampleFunction\( (arg1, arg2 := 1, arg3 := 2) \):}},
 
 % we assume that
 
@@ -52,11 +52,11 @@
 % \end{note}
 
 \tbo{Exercise 1.3.1.} % PROBLEM 1.3.1
-Let $A[1..n]$ be in a \tit{rotated} sorted order. That is, there exists an index $i \in [n]$, called the \tit{rotation index}, such that the concatenation of $A[i..n]$ and $A[1..i - 1]$ is sorted in increasing order. (One can think of $A[1..n]$ as being sorted initially, and then rotated cyclically to the right by $i - 1$ slots). The goal is to compute the unknown rotation index $i$. For simplicity, you may assume all the elements are distinct.
+Let \( A[1..n] \) be in a \tit{rotated} sorted order. That is, there exists an index \( i \in [n] \), called the \tit{rotation index}, such that the concatenation of \( A[i..n] \) and \( A[1..i - 1] \) is sorted in increasing order. (One can think of \( A[1..n] \) as being sorted initially, and then rotated cyclically to the right by \( i - 1 \) slots). The goal is to compute the unknown rotation index \( i \). For simplicity, you may assume all the elements are distinct.
 
 \begin{solution}\ % SOLUTION 1.3.1
 \begin{quote}%
-\noindent\tul{def func \tmo{computeRotationIndex($A[1..n]$):}}%
+\noindent\tul{def func \tmo{computeRotationIndex(\( A[1..n] \)):}}%
 
 \doc{Given an array of length \( n \) in `rotated' sorted order, return the `rotation'
 index.
@@ -64,21 +64,21 @@ index.
 
 \begin{steps}
   % Base case
-  \item If $ n \leq 1 $, return $ 1 $.
+  \item If \( n \leq 1 \), return \( 1 \).
   % Split the search field
-  \item Let $ k := \floor{\frac{n}{2}} $.
-  \item If $ \parof{A[mid] > A[n]} $:
+  \item Let \( k := \floor{\frac{n}{2}} \).
+  \item If \( \parof{A[mid] > A[n]} \):
   \begin{steps}
-    \item Return $ k$ + \tmo{computeRotationIndex}$(A[k+1..n])$.
+    \item Return \( k \) + \tmo{computeRotationIndex}\( (A[k+1..n]) \).
   \end{steps}
-  \item Else if $ \parof{k = 1} $ OR $ \parof{A[k] > A[n] }$:
+  \item Else if \( \parof{k = 1} \) OR \( \parof{A[k] > A[n] } \):
   \begin{steps}
-    \item Return $ k $
+    \item Return \( k \)
   \end{steps}
   \item Else:
   \begin{steps}
     % Pivot lies in [left..mid]
-    \item Return \tmo{computeRotationIndex}$(A[1..k-1])$
+    \item Return \tmo{computeRotationIndex}\( (A[1..k-1]) \)
   \end{steps}
 \end{steps}
 \end{quote}
@@ -86,14 +86,14 @@ index.
 \pagebreak
 
 \tbo{Exercise 1.3.2.} % PROBLEM 1.3.2
-We say that $A[1..n]$ is a \tit{mountain} if there exists an index $i \in [n]$, called the
-\tit{peak}, such that $A[1..i]$ is sorted in increasing order and $A[i + 1..n]$ is sorted in
-decreasing order. Given a mountain $A[1..n]$, find the peak. For simplicity, you may assume all
+We say that \( A[1..n] \) is a \tit{mountain} if there exists an index \( i \in [n] \), called the
+\tit{peak}, such that \( A[1..i] \) is sorted in increasing order and \( A[i + 1..n] \) is sorted in
+decreasing order. Given a mountain \( A[1..n] \), find the peak. For simplicity, you may assume all
 elements are distinct.
 
 \begin{solution}\ % SOLUTION 1.3.2
 \begin{quote}%
-\noindent\tul{def func \tmo{findPeak($A[1..n]$):}}%
+\noindent\tul{def func \tmo{findPeak(\( A[1..n] \)):}}%
 
 \doc{Given a `mountain' of length \( n \), find the index of the `peak'.}
 
@@ -102,11 +102,11 @@ elements are distinct.
   \item Let \( k := \floor{\frac{n}{2}} \)
   \item If \( \parof{A[k] < A[k + 1]} \): %\rcomm{ascending; peak is to the right}
     \begin{steps}
-    \item Return $ k $ + \tmo{findPeak}(\( A[k+1..n]\))
+    \item Return \( k \) + \tmo{findPeak}(\( A[k+1..n]\))
     \end{steps}
-  \item Else if $\parof{k > 1}$ AND $\parof{ A[k-1] < A[k] }$:
+  \item Else if \( \parof{k > 1} \) AND \( \parof{ A[k-1] < A[k] } \):
     \begin{steps}
-    \item Return $ k $
+    \item Return \( k \)
     \end{steps}
   \item Else:
     \begin{steps}
@@ -118,39 +118,39 @@ elements are distinct.
 \pagebreak
 
 \tbo{Exercise 1.3.3.} % PROBLEM 1.3.3
-We say an index $i \in [n]$ is a \tit{local minimum} if either
+We say an index \( i \in [n] \) is a \tit{local minimum} if either
 \begin{enumerate}[label=(\alph*)]
-  \item $i = n = 1$,
-  \item $i = 1$ and $A[1] \leq A[2]$,
-  \item $i = n$ and $A[n] \leq A[n-1]$, or
-  \item $1 < i < n$, $A[i-1] \geq A[i]$ and $A[i] \geq A[i + 1]$.
+  \item \( i = n = 1 \),
+  \item \( i = 1 \) and \( A[1] \leq A[2] \),
+  \item \( i = n \) and \( A[n] \leq A[n-1] \), or
+  \item \( 1 < i < n \), \( A[i-1] \geq A[i] \) and \( A[i] \geq A[i + 1] \).
 \end{enumerate}
-The goal is to find a local minimum from an array $A[1..n]$.
+The goal is to find a local minimum from an array \( A[1..n] \).
 
 \begin{solution}\ % SOLUTION 1.3.3
 \begin{quote}%
-\noindent\tul{def func \tmo{findLocalMinimum($A[1..n]$):}}%
+\noindent\tul{def func \tmo{findLocalMinimum(\( A[1..n] \)):}}%
 
 \doc{Given an array of length \( n \), identify the `local minimum'.}%
 
 \begin{steps}
 % Base case
-\item If $ (n = 1) $: return 1 \rcomm{(a)}
-\item Let $ k := \floor{\frac{n}{2}} $
+\item If \( (n = 1) \): return 1 \rcomm{(a)}
+\item Let \( k := \floor{\frac{n}{2}} \)
 % Check if k is a local minimum
-\item If \big[$(k = 1)$ AND $(A[k] \leq A[k + 1])$\big] OR \rcomm{(b)}\\
-  \nf{\quad}\big[$(k = n)$ AND $\big(A[k] \leq A[k - 1]\big)$\big] OR \rcomm{(c)}\\
-  \nf{\quad}\big[$(1 < k < n)$ AND $(A[k - 1] \geq A[k])$ AND $(A[k] \leq A[k + 1])$\big]: \rcomm{(d)}
+\item If \big[\( (k = 1) \) AND \( (A[k] \leq A[k + 1]) \)\big] OR \rcomm{(b)}\\
+  \nf{\quad}\big[\( (k = n) \) AND \( \big(A[k] \leq A[k - 1]\big) \)\big] OR \rcomm{(c)}\\
+  \nf{\quad}\big[\( (1 < k < n) \) AND \( (A[k - 1] \geq A[k]) \) AND \( (A[k] \leq A[k + 1]) \)\big]: \rcomm{(d)}
   \begin{steps}
-  \item Return $ k $
+  \item Return \( k \)
   \end{steps}
-\item If \big[$ (k > 1) $  AND $ A[k-1] < A[k] $\big]:
+\item If \big[\( (k > 1) \)  AND \( A[k-1] < A[k] \)\big]:
   \begin{steps}
-  \item Return \tmo{findLocalMinimum}$(A[1..k-1])$
+  \item Return \tmo{findLocalMinimum}\( (A[1..k-1]) \)
   \end{steps}
 \item Else:
   \begin{steps}
-  \item Return \tmo{findLocalMinimum}$(A[k+1..n])$
+  \item Return \tmo{findLocalMinimum}\( (A[k+1..n]) \)
   \end{steps}
 \end{steps}
 \end{quote}
@@ -161,34 +161,34 @@ The goal is to find a local minimum from an array $A[1..n]$.
 Prove that each of the problems above have a lower bound of \( \Omega(\log n) \) queries in the comparison model.
 
 \begin{solution}\ % SOLUTION 1.3.4
-Each of the problems above have $ n $ possible values for the specified index. Any given comparison can have 2 possible outcomes: \boolT~or \boolF~. Thus in the worst case scenario we have \( 2^k \geq n \) where \( k \) is the number of queries. Solving for \( k \) gives us \( k \geq \log_2 n \). Therefore, the lower bound is \( \Omega(\log n) \).
+Each of the problems above have \( n \) possible values for the specified index. Any given comparison can have 2 possible outcomes: \boolT~or \boolF~. Thus in the worst case scenario we have \( 2^k \geq n \) where \( k \) is the number of queries. Solving for \( k \) gives us \( k \geq \log_2 n \). Therefore, the lower bound is \( \Omega(\log n) \).
 \end{solution}
 \pagebreak
 
 \tbo{Exercise 2.1.2.} % PROBLEM 2.1.2
-In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cyclic'' order from post $A$ to post $B$, from post $B$ to post $C$, and from post $C$ to post $A$. The goal is to move $n$ sorted rings from post $A$ to post $B$.
+In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cyclic'' order from post \( A \) to post \( B \), from post \( B \) to post \( C \), and from post \( C \) to post \( A \). The goal is to move \( n \) sorted rings from post \( A \) to post \( B \).
 
 \begin{solution}\ % SOLUTION 2.1.2
 \begin{quote}
-\noindent\tul{def func \tmo{cyclic-Hanoi($n$, $from$, $to$):}}%
+\noindent\tul{def func \tmo{cyclic-Hanoi(\( n \), \( from \), \( to \)):}}%
 
-\doc{Given an integer $n$ and starting/ending posts, $A$, $B$, or $C$, move $ n $ sorted rings from post $ A $ to post $ B $.}%
+\doc{Given an integer \( n \) and starting/ending posts, \( A \), \( B \), or \( C \), move \( n \) sorted rings from post \( A \) to post \( B \).}%
 \begin{steps}
-  \item If $n = 0$ or $from = to$:
+  \item If \( n = 0 \) or \( from = to \):
     \begin{steps}
     \item return
     \end{steps}
 
-  \item If \big[$(from = A)$ AND $(to = B)$\big] OR \\
-    \nf{\quad}\big[$(from = B)$ AND $(to = C)$\big] OR \\
-    \nf{\quad}\big[$(from = C)$ AND $(to = A)$\big]: \rcomm{One step}
+  \item If \big[\( (from = A) \) AND \( (to = B) \)\big] OR \\
+    \nf{\quad}\big[\( (from = B) \) AND \( (to = C) \)\big] OR \\
+    \nf{\quad}\big[\( (from = C) \) AND \( (to = A) \)\big]: \rcomm{One step}
       % Move n disks from 'from' to 'to' directly in one step of the cycle.
      \begin{steps}
-      \item If \big[($from \neq A$) AND ($to \neq A$)\big]:
+      \item If \big[(\( from \neq A \)) AND (\( to \neq A \))\big]:
         \begin{steps}
         \item Let other := A
         \end{steps}
-      \item Else if \big[($from \neq B$) AND ($to \neq B$)\big]:
+      \item Else if \big[(\( from \neq B \)) AND (\( to \neq B \))\big]:
         \begin{steps}
         \item Let other := B
         \end{steps}
@@ -196,9 +196,9 @@ In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cycli
         \begin{steps}
         \item Let other := C
         \end{steps}
-      \item \tmo{move-Cyclic}($n - 1$, $from$, $other$)
-      \item Move the top ring from $from$ to $to$
-      \item \tmo{move-Cyclic}($n - 1$, $other$, $to$)
+      \item \tmo{move-Cyclic}(\( n - 1 \), \( from \), \( other \))
+      \item Move the top ring from \( from \) to \( to \)
+      \item \tmo{move-Cyclic}(\( n - 1 \), \( other \), \( to \))
       \end{steps}
 
       \item Else: \rcomm{Two steps}
@@ -216,13 +216,13 @@ In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cycli
           \item \(mid := A\)
           \end{steps}
 
-        \item \tmo{moveCyclic}($n - 1$, $from$, \ $mid$).
+        \item \tmo{moveCyclic}(\( n - 1 \), \( from \), \ \( mid \)).
 
-        \item Move the top ring from $from$ to $mid$
+        \item Move the top ring from \( from \) to \( mid \)
 
-        \item Move the top ring from $mid$ to $to$
+        \item Move the top ring from \( mid \) to \( to \)
 
-        \item \tmo{moveCyclic}($n - 1$, $mid$, $to$).
+        \item \tmo{moveCyclic}(\( n - 1 \), \( mid \), \( to \)).
         \end{steps}
   \end{steps}
 \end{quote}
@@ -230,27 +230,27 @@ In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cycli
 \pagebreak
 
 \tbo{Exercise 2.1.3.} % PROBLEM 2.1.3
-The \tit{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi problem except now the goal is to move the $n$ sorted rings from post $A$ to post $C$.
+The \tit{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi problem except now the goal is to move the \( n \) sorted rings from post \( A \) to post \( C \).
 
 \begin{solution}\ % SOLUTION 2.1.3
-  To call the function, use \tmo{double-cyclic-Hanoi}($n$, $A$, $C$, $B$).
+  To call the function, use \tmo{double-cyclic-Hanoi}(\( n \), \( A \), \( C \), \( B \)).
   \begin{quote}
-  \noindent\tul{def func \tmo{double-cyclic-Hanoi($n$, $from$, $to$, $spare$):}}%
+  \noindent\tul{def func \tmo{double-cyclic-Hanoi(\( n \), \( from \), \( to \), \( spare \)):}}%
 
-  \doc{Given an integer $n$, a starting post, ending post, and spare post, move $ n $ sorted rings from the starting post $ from $ to the ending post $ to $.}%
+  \doc{Given an integer \( n \), a starting post, ending post, and spare post, move \( n \) sorted rings from the starting post \( from \) to the ending post \( to \).}%
   \begin{steps}
-    \item If $(n = 0)$ OR $(from = to)$:
+    \item If \( (n = 0) \) OR \( (from = to) \):
       \begin{steps}
         \item Return
       \end{steps}
     \item Let \(oneStep := \) \boolF~.
-    \item If \big[($from = A$) AND ($ to = B $)\big] OR \\
-      \nf{\quad}\big[($ from = B $) AND ($ to = C $)\big] OR \\
-      \nf{\quad}\big[($from = C$) AND ($ to = A $)\big]: \rcomm{One step}
+    \item If \big[(\( from = A \)) AND (\( to = B \))\big] OR \\
+      \nf{\quad}\big[(\( from = B \)) AND (\( to = C \))\big] OR \\
+      \nf{\quad}\big[(\( from = C \)) AND (\( to = A \))\big]: \rcomm{One step}
         \begin{steps}
-        \item $\tmo{double-cyclic-Hanoi}(n - 1, from, spare, to)$.
+        \item \( \tmo{double-cyclic-Hanoi}(n - 1, from, spare, to) \).
         \item Move the top ring from \( from \) to \( to \).
-        \item $\tmo{double-cyclic-Hanoi}(n - 1, spare, to, from)$.
+        \item \( \tmo{double-cyclic-Hanoi}(n - 1, spare, to, from) \).
         \end{steps}
     %   \end{steps}
     % \noindent\doc{test}
@@ -270,10 +270,10 @@ The \tit{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi probl
           \begin{steps}
           \item \(next := A\)
           \end{steps}
-      \item \tmo{double-cyclic-Hanoi}($n - 1$, $from$, $next$, $ to $).
-      \item Move the top ring from $ from $ to $ next $.
-      \item Move the top ring from $ next $ to $ to $.
-      \item \tmo{double-cyclic-Hanoi}($n - 1$, $next$, $to$, $from$).
+      \item \tmo{double-cyclic-Hanoi}(\( n - 1 \), \( from \), \( next \), \( to \)).
+      \item Move the top ring from \( from \) to \( next \).
+      \item Move the top ring from \( next \) to \( to \).
+      \item \tmo{double-cyclic-Hanoi}(\( n - 1 \), \( next \), \( to \), \( from \)).
       \end{steps}
     \end{steps}
   \end{quote}
@@ -281,24 +281,24 @@ The \tit{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi probl
 \pagebreak
 
 \tbo{Exercise 2.1.4.} % PROBLEM 2.1.4
-In the \tit{thick towers of Hanoi} problem, we have $ 3n $ rings of $ n $ distinct sizes with three copies of each ring. (Rings of the same size can stack on top of each other.) The goal is to move all $ 3n $ rings from post $ A $ to post $ B $.
+In the \tit{thick towers of Hanoi} problem, we have \( 3n \) rings of \( n \) distinct sizes with three copies of each ring. (Rings of the same size can stack on top of each other.) The goal is to move all \( 3n \) rings from post \( A \) to post \( B \).
 
 \begin{solution}\ % SOLUTION 2.1.4
 \begin{quote}
-\noindent\tul{\tmo{def func thick-Hanoi($ n $, $ A $, $ B $, $ C $):}}%
+\noindent\tul{\tmo{def func thick-Hanoi(\( n \), \( A \), \( B \), \( C \)):}}%
 
-\doc{Given an integer $n$, and posts $ A, B, $ and $ C $, move $ 3n $ rings from post $ A $ to post $ B $.}%
+\doc{Given an integer \( n \), and posts \( A, B, \) and \( C \), move \( 3n \) rings from post \( A \) to post \( B \).}%
 
 \begin{steps}
-  \item If $ (n > 0) $:
+  \item If \( (n > 0) \):
   \begin{steps}
-    \item \tmo{thick-Hanoi}($n-1$, $ A $, $C$, $ B $)
+    \item \tmo{thick-Hanoi}(\( n-1 \), \( A \), \( C \), \( B \))
 
-    \item For $i$ from 1 to 3:
+    \item For \( i \) from 1 to 3:
     \begin{steps}
-      \item Move the top ring from $ A $ to $ B $
+      \item Move the top ring from \( A \) to \( B \)
     \end{steps}
-    \item \tmo{thick-Hanoi}($n-1$, $ C $, $ B $, $ A $)
+    \item \tmo{thick-Hanoi}(\( n-1 \), \( C \), \( B \), \( A \))
   \end{steps}
 \end{steps}
 \end{quote}
@@ -306,30 +306,30 @@ In the \tit{thick towers of Hanoi} problem, we have $ 3n $ rings of $ n $ distin
 \pagebreak
 
 \tbo{Exercise 2.1.5.} % PROBLEM 2.1.5
-In the \tit{triple towers of Hanoi} problem, we have $ 3n $ rings of $ n $ distinct sizes with three copies of each ring. The goal is to distribute the rings so that each post has $ n $ rings, one of each size, in order.
+In the \tit{triple towers of Hanoi} problem, we have \( 3n \) rings of \( n \) distinct sizes with three copies of each ring. The goal is to distribute the rings so that each post has \( n \) rings, one of each size, in order.
 
 \begin{solution}\ % SOLUTION 2.1.5
 \begin{quote}
-\noindent\tul{def func \tmo{triple-Hanoi($n$, $A$, $B$, $C$):}}%
+\noindent\tul{def func \tmo{triple-Hanoi(\( n \), \( A \), \( B \), \( C \)):}}%
 
-\doc{Given an integer $n$, a starting post, an ending post, and a spare post, distribute $ 3n $ rings so that each post has $ n $ rings, one of each size, in order.}%
+\doc{Given an integer \( n \), a starting post, an ending post, and a spare post, distribute \( 3n \) rings so that each post has \( n \) rings, one of each size, in order.}%
 
 \begin{steps}
-  \item If $n = 1$:
+  \item If \( n = 1 \):
     \begin{steps}
-    \item Move the top ring from $ A $ to $ B $
-    \item Move the top ring from $ A $ to $ C $
+    \item Move the top ring from \( A \) to \( B \)
+    \item Move the top ring from \( A \) to \( C \)
     \end{steps}
   % Base case: 3 rings of the same smallest size
   % The third copy remains on A, so now each peg has one of size 1
   \item Else:
   % 1) Distribute the top 3(n-1) (smaller) rings among the pegs
     \begin{steps}
-    \item \tmo{triple-Hanoi}($n-1$, $A$, $B$, $C$) \lcomm{Distribute the smaller rings}
-    \item Move the top ring from $ A $ to $ B $
-    \item \tmo{triple-Hanoi}($n-1$, $C$, $B$, $A$) \lcomm{Free up C}
-    \item Move the top ring from $ A $ to $ C $
-    \item \tmo{triple-Hanoi}($n-1$, $B$, $A$, $C$) \lcomm{Place the smaller rings on top}
+    \item \tmo{triple-Hanoi}(\( n-1 \), \( A \), \( B \), \( C \)) \lcomm{Distribute the smaller rings}
+    \item Move the top ring from \( A \) to \( B \)
+    \item \tmo{triple-Hanoi}(\( n-1 \), \( C \), \( B \), \( A \)) \lcomm{Free up C}
+    \item Move the top ring from \( A \) to \( C \)
+    \item \tmo{triple-Hanoi}(\( n-1 \), \( B \), \( A \), \( C \)) \lcomm{Place the smaller rings on top}
     \end{steps}
 \end{steps}
 
@@ -338,58 +338,58 @@ In the \tit{triple towers of Hanoi} problem, we have $ 3n $ rings of $ n $ disti
 \pagebreak
 
 \tbo{Exercise 2.1.6.} % PROBLEM 2.1.6
-In the \tit{American towers of Hanoi} problem, we have $ n $ rings with each ring colored red, white, or blue. The three posts are also colored red, white, and blue. Initially all the rings are stacked (in order of size) on the red post. The goal is to stack all the red rings on the red post, the blue rings on the blue post, and the white rings on the white post (again, in order of size).
+In the \tit{American towers of Hanoi} problem, we have \( n \) rings with each ring colored red, white, or blue. The three posts are also colored red, white, and blue. Initially all the rings are stacked (in order of size) on the red post. The goal is to stack all the red rings on the red post, the blue rings on the blue post, and the white rings on the white post (again, in order of size).
 
 \begin{solution}\ %
 \begin{quote}
-\noindent\tul{def func \tmo{American-Hanoi($n$, $start$):}}%
+\noindent\tul{def func \tmo{American-Hanoi(\( n \), \( start \)):}}%
 
-\doc{Given an integer $n$ and a starting post, distribute the $ n $ colored rings to the post of corresponding color such that each post is in order. Assume we have functions \tmo{getColor} and \tmo{getPost} such that \tmo{getColor}($k$) will return the color of the $ n-k $th largest ring and \tmo{getPost($color$)} will return the post of that color.}%
+\doc{Given an integer \( n \) and a starting post, distribute the \( n \) colored rings to the post of corresponding color such that each post is in order. Assume we have functions \tmo{getColor} and \tmo{getPost} such that \tmo{getColor}(\( k \)) will return the color of the \( n-k \)th largest ring and \tmo{getPost(\( color \))} will return the post of that color.}%
 
 \begin{steps}
-  \item If $ n > 0$:
+  \item If \( n > 0 \):
   \begin{steps}
-    \item Let $largestColor = getColor(n)$
-    \item Let $target = postOfColor(largestRingColor)$
-    \item If $(target = start)$ THEN
+    \item Let \( largestColor = getColor(n) \)
+    \item Let \( target = postOfColor(largestRingColor) \)
+    \item If \( (target = start) \) THEN
       %     // The largest ring n is already on its correct post.
       %     // We do NOT need to move ring n at all,
       %     // just solve for the top n-1 rings in the same way.
       \begin{steps}
-      \item \tmo{American-Hanoi}($n-1$, $start$)
+      \item \tmo{American-Hanoi}(\( n-1 \), \( start \))
       \end{steps}
     \item Else:
     \begin{steps}
       %     // We must move ring n from 'startPost' to 'targetPost'.
       %     // First, move the smaller n-1 rings out of the way
       %     // onto the one remaining post (call it 'sparePost').
-      \item Let $spare$ be the post that is neither $start$ nor $target$
+      \item Let \( spare \) be the post that is neither \( start \) nor \( target \)
     %     // Step 1: Move top n-1 rings from startPost -> sparePost
     %     //         (using the *classic* Hanoi method).
-      \item \tmo{Towers-of-Hanoi}($ n-1 $, $ start $, $ spare $, $ target $)
+      \item \tmo{Towers-of-Hanoi}(\( n-1 \), \( start \), \( spare \), \( target \))
 
     %     // Step 2: Now move the largest ring n onto its correct post.
     %     MOVE_RING(n, startPost, targetPost)
-      \item Move the top ring from $ start $ to $ target $
+      \item Move the top ring from \( start \) to \( target \)
     %     // Step 3: Finally, move the n-1 rings from 'sparePost'
     %     //         to *their* correct color posts by recursion.
-      \item American-Hanoi($n-1$, $spare$)
+      \item American-Hanoi(\( n-1 \), \( spare \))
       \end{steps}
   \end{steps}
 \end{steps}
 \end{quote}
 \nf{} \\
 \begin{quote}
-\noindent\tul{def func \tmo{Towers-of-Hanoi($k$, $A$, $B$, $C$):}}%
+\noindent\tul{def func \tmo{Towers-of-Hanoi(\( k \), \( A \), \( B \), \( C \)):}}%
 
 \doc{Standard Towers of Hanoi helper function}%
 
 \begin{steps}
-  \item If $k > 0$:
+  \item If \( k > 0 \):
     \begin{steps}
-    \item \tmo{Towers-of-Hanoi}($k-1$, $A$, $C$, $B$)
-    \item Move the top ring from $A$ to $B$
-    \item \tmo{Towers-of-Hanoi}($k-1$, $C$, $B$, $A$)
+    \item \tmo{Towers-of-Hanoi}(\( k-1 \), \( A \), \( C \), \( B \))
+    \item Move the top ring from \( A \) to \( B \)
+    \item \tmo{Towers-of-Hanoi}(\( k-1 \), \( C \), \( B \), \( A \))
     \end{steps}
 \end{steps}
 \end{quote}
@@ -397,61 +397,61 @@ In the \tit{American towers of Hanoi} problem, we have $ n $ rings with each rin
 \pagebreak
 
 \tbo{Exercise 2.2.3.} % PROBLEM 2.2.3
-Given an undirected graph $ G = (V, E) $, return the maximum size of any matching.
+Given an undirected graph \( G = (V, E) \), return the maximum size of any matching.
 
-(A \tit{matching} is a set of edges $M \sseq E$ with disjoint endpoints.)
+(A \tit{matching} is a set of edges \( M \sseq E \) with disjoint endpoints.)
 
 \begin{solution}\ % SOLUTION 2.2.3
 \begin{quote}%
-\noindent\tul{def func \tmo{max-matching($G = (V, E)$):}}%
+\noindent\tul{def func \tmo{max-matching(\( G = (V, E) \)):}}%
 
-\doc{Given an undirected graph $ G = (V, E) $, return the maximum size of any matching.}%
+\doc{Given an undirected graph \( G = (V, E) \), return the maximum size of any matching.}%
 
 \begin{steps}
-  \item If $E = \emptyset$:
+  \item If \( E = \emptyset \):
     \begin{steps}
     \item Return 0
     \end{steps}
-  % \item Let $ G_{\nf{in}} := G $ and $ G_{\nf{ex}} := G $
-  \item We know there is at least one edge $ e \in E $, say $ e := (u, v) $
-  \item Let $ E_{\nf{temp}} := \{d\in E \mid u\in d \nf{ or } v\in d \nf{ and } d\neq e\} $ be the set of edges sharing a vertex with $ e $, but not including $ e $
-  \item Let $ G_{\nf{in}} := (V\setminus \{u,v\},\ E\setminus E_{u,v})$ be the graph obtained by removing  $ u,v $ and all edges incident to either vertex (besides $ e $) from $ G $
-  \item Let $ count_{\nf{in}} := 1+\tmo{max-matching}(G_{\nf{in}})$ \rcomm{Branch 1: Include $ e $}
-  \item Let $ G_{\nf{ex}} := (V,\ E\setminus\{e\}) $ be the graph obtained by removing the edge $ e $ from $ G $
-  \item Let $ count_{\nf{ex}} := \tmo{max-matching}(G_{\nf{ex}}) $ \rcomm{Branch 2: Exclude $ e $}
-  \item Return $\max(count_{\nf{in}}, count_{\nf{ex}})$
+  % \item Let \( G_{\nf{in}} := G \) and \( G_{\nf{ex}} := G \)
+  \item We know there is at least one edge \( e \in E \), say \( e := (u, v) \)
+  \item Let \( E_{\nf{temp}} := \{d\in E \mid u\in d \nf{ or } v\in d \nf{ and } d\neq e\} \) be the set of edges sharing a vertex with \( e \), but not including \( e \)
+  \item Let \( G_{\nf{in}} := (V\setminus \{u,v\},\ E\setminus E_{u,v}) \) be the graph obtained by removing  \( u,v \) and all edges incident to either vertex (besides \( e \)) from \( G \)
+  \item Let \( count_{\nf{in}} := 1+\tmo{max-matching}(G_{\nf{in}}) \) \rcomm{Branch 1: Include \( e \)}
+  \item Let \( G_{\nf{ex}} := (V,\ E\setminus\{e\}) \) be the graph obtained by removing the edge \( e \) from \( G \)
+  \item Let \( count_{\nf{ex}} := \tmo{max-matching}(G_{\nf{ex}}) \) \rcomm{Branch 2: Exclude \( e \)}
+  \item Return \( \max(count_{\nf{in}}, count_{\nf{ex}}) \)
 \end{steps}
 \end{quote}%
 \end{solution}%
 \pagebreak
 
 \tbo{Exercise 2.2.4.} % PROBLEM 2.2.4
-Given an undirected graph $ G = (V, E) $, return the maximum size of any independent set of vertices.
+Given an undirected graph \( G = (V, E) \), return the maximum size of any independent set of vertices.
 
-(An \tit{independent set} is a set of vertices $ S\sseq V $ such that no two vertices $ u,v\in S $ are connected by an edge.)
+(An \tit{independent set} is a set of vertices \( S\sseq V \) such that no two vertices \( u,v\in S \) are connected by an edge.)
 
 \begin{solution}\ % SOLUTION 2.2.4
 \begin{quote}%
-  \noindent\tul{def func \tmo{max-independent-set($G = (V, E)$):}}%
+  \noindent\tul{def func \tmo{max-independent-set(\( G = (V, E) \)):}}%
 
-  \doc{Given an undirected graph $ G = (V, E) $, return the maximum size of any independent set of vertices.}%
+  \doc{Given an undirected graph \( G = (V, E) \), return the maximum size of any independent set of vertices.}%
 
   \begin{steps}
-    \item If $ \abs{V} = 0 $:
+    \item If \( \abs{V} = 0 \):
       \begin{steps}
       \item Return 0
       \end{steps}
-    \item Else if $ \abs{V} = 1 $:
+    \item Else if \( \abs{V} = 1 \):
       \begin{steps}
       \item Return 1
       \end{steps}
-    \item For each vertex $ v \in V $:
+    \item For each vertex \( v \in V \):
       \begin{steps}
-      \item Let $ G_{\nf{in}} $ be the graph obtained by removing all edges containing $ v $ and all other vertices contained in said edges from $ G $
-      \item Let $ count_{\nf{in}} := 1+\tmo{max-independent-set}(G_{\nf{in}}) $ \rcomm{Branch 1: Include $ v $}
-      \item Let $ G_{\nf{ex}} $ be the graph obtained by removing $ v $ from $ G $
-      \item Let $ count_{\nf{ex}} := \tmo{max-independent-set}(G_{\nf{ex}}) $ \rcomm{Branch 2: Exclude $ v $}
-      \item Return $\max(count_{\nf{in}}, count_{\nf{ex}})$
+      \item Let \( G_{\nf{in}} \) be the graph obtained by removing all edges containing \( v \) and all other vertices contained in said edges from \( G \)
+      \item Let \( count_{\nf{in}} := 1+\tmo{max-independent-set}(G_{\nf{in}}) \) \rcomm{Branch 1: Include \( v \)}
+      \item Let \( G_{\nf{ex}} \) be the graph obtained by removing \( v \) from \( G \)
+      \item Let \( count_{\nf{ex}} := \tmo{max-independent-set}(G_{\nf{ex}}) \) \rcomm{Branch 2: Exclude \( v \)}
+      \item Return \( \max(count_{\nf{in}}, count_{\nf{ex}}) \)
       \end{steps}
   \end{steps}
 \end{quote}%
@@ -459,58 +459,58 @@ Given an undirected graph $ G = (V, E) $, return the maximum size of any indepen
 \pagebreak
 
 \tbo{Exercise 2.2.5.} % PROBLEM 2.2.5
-Given a sequence of numbers, $x_1, \ldots, x_n$, return the length of the longest (strictly) increasing subsequence of $x_1, \ldots, x_n$ over all subsequences that include $x_1$. (You may assume $n \geq 1$.)
+Given a sequence of numbers, \( x_1, \ldots, x_n \), return the length of the longest (strictly) increasing subsequence of \( x_1, \ldots, x_n \) over all subsequences that include \( x_1 \). (You may assume \( n \geq 1 \).)
 
-(A \tit{subsequence} of $x_1, \ldots, x_n$ is a sequence of the form $x_{i_1}, x_{i_2}, \ldots, x_{i_k}$, where $ 1\leq i_1<i_2<\cdots<i_k\leq n $. A sequence of numbers $y_1, \ldots, y_\ell$ is strictly increasing if $ y_i < y_{i+1} $ for $ i = 1, \ldots, \ell-1 $.)
+(A \tit{subsequence} of \( x_1, \ldots, x_n \) is a sequence of the form \( x_{i_1}, x_{i_2}, \ldots, x_{i_k} \), where \( 1\leq i_1<i_2<\cdots<i_k\leq n \). A sequence of numbers \( y_1, \ldots, y_\ell \) is strictly increasing if \( y_i < y_{i+1} \) for \( i = 1, \ldots, \ell-1 \).)
 
 \begin{solution}\ % SOLUTION 2.2.5
 \begin{quote}%
-\noindent\tul{def func \tmo{longest-increasing-subsequence-including-first($x_1, \ldots, x_n$):}} \rcomm{LISIF for short}%
+\noindent\tul{def func \tmo{longest-increasing-subsequence-including-first(\( x_1, \ldots, x_n \)):}} \rcomm{LISIF for short}%
 
-\doc{Given a sequence of numbers, $x_1, \ldots, x_n$, return the length of the longest strictly increasing subsequence of $x_1, \ldots, x_n$ over all subsequences that include $x_1$.}%
+\doc{Given a sequence of numbers, \( x_1, \ldots, x_n \), return the length of the longest strictly increasing subsequence of \( x_1, \ldots, x_n \) over all subsequences that include \( x_1 \).}%
 
 \begin{steps}
-  \item Let $longest = 1$
-  \item For each index $i$ from 2 to $n$:
+  \item Let \( longest = 1 \)
+  \item For each index \( i \) from 2 to \( n \):
     \begin{steps}
-    \item If $x_i > x_1$:
+    \item If \( x_i > x_1 \):
       \begin{steps}
-      \item Let $tail := \parof{x_{i+1}, x_{i+2}, \ldots, x_n}$
-      \item Let $current := 1 + \tmo{LISIF}(tail)$
-      \item Set $longest = \max(longest, current)$
+      \item Let \( tail := \parof{x_{i+1}, x_{i+2}, \ldots, x_n} \)
+      \item Let \( current := 1 + \tmo{LISIF}(tail) \)
+      \item Set \( longest = \max(longest, current) \)
       \end{steps}
     \end{steps}
-    \item Return $longest$
+    \item Return \( longest \)
   \end{steps}
 \end{quote}%
 \end{solution}%
 \pagebreak
 
 \tbo{Exercise 2.2.6.} % PROBLEM 2.2.6
-Given a directed graph $G$ and two vertices $s, t \in V$, return true if $s$ can reach $t$ in $G$, and \boolF~otherwise.
+Given a directed graph \( G \) and two vertices \( s, t \in V \), return true if \( s \) can reach \( t \) in \( G \), and \boolF~otherwise.
 
-($s$ can reach $t$ if either $s = t$ or there is a sequence of (directed) edges of the
-form $(s, v_1), (v_1, v_2), (v_2, v_3), \ldots,$ $\ (v_{k-1}, v_k), (v_k, t)$. Note that the endpoint of one
-edge is the initial point of the next edge. This is also called a (directed) walk in $G$ from $s$ to $t$.)
+(\( s \) can reach \( t \) if either \( s = t \) or there is a sequence of (directed) edges of the
+form \( (s, v_1), (v_1, v_2), (v_2, v_3), \ldots, \) \( \ (v_{k-1}, v_k), (v_k, t) \). Note that the endpoint of one
+edge is the initial point of the next edge. This is also called a (directed) walk in \( G \) from \( s \) to \( t \).)
 
 \begin{solution}\ % SOLUTION 2.2.6
 \begin{quote}%
-\noindent\tul{def func \tmo{reachable($G = (V, E)$, $ s $, $ t $):}}%
+\noindent\tul{def func \tmo{reachable(\( G = (V, E) \), \( s \), \( t \)):}}%
 
-\doc{Given a directed graph $G$ and two vertices $s, t \in V$, return true if $s$ can reach $t$ in $G$, and \boolF~otherwise.}%
+\doc{Given a directed graph \( G \) and two vertices \( s, t \in V \), return true if \( s \) can reach \( t \) in \( G \), and \boolF~otherwise.}%
 
 \begin{steps}
-  \item If $s = t$:
+  \item If \( s = t \):
     \begin{steps}
     \item Return \boolT~
     \end{steps}
   \end{steps}
-  \doc{Random traversal through all paths accessible from vertex $ s $}
+  \doc{Random traversal through all paths accessible from vertex \( s \)}
   \begin{steps}
   \setcounter{stepsi}{1}
-  \item For each edge $e = (s, v) \in E$:
+  \item For each edge \( e = (s, v) \in E \):
     \begin{steps}
-    \item Return \tmo{reachable}$(v, t)$
+    \item Return \tmo{reachable}\( (v, t) \)
     \end{steps}
   \item Return \boolF~
 \end{steps}
@@ -520,23 +520,23 @@ edge is the initial point of the next edge. This is also called a (directed) wal
 \pagebreak
 
 \tbo{Exercise 2.2.7.} % PROBLEM 2.2.7
-Given $ n $ integers $ x_1,\ldots,x_n\in\Z $, returns \boolT~if there is a subset of indicies $ S\sseq [n] $ such that $ \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i $, and \boolF~otherwise.
+Given \( n \) integers \( x_1,\ldots,x_n\in\Z \), returns \boolT~if there is a subset of indicies \( S\sseq [n] \) such that \( \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i \), and \boolF~otherwise.
 
 \begin{solution}\ % SOLUTION 2.2.7
 \begin{quote}%
-\noindent\tul{def func \tmo{partition($G = (V, E)$):}}%
+\noindent\tul{def func \tmo{partition(\( G = (V, E) \)):}}%
 
-\doc{Given $ n $ integers $ x_1,\ldots,x_n\in\Z $, returns \boolT~if there is a subset of indicies $ S\sseq [n] $ such that $ \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i $, and \boolF~otherwise.}%
+\doc{Given \( n \) integers \( x_1,\ldots,x_n\in\Z \), returns \boolT~if there is a subset of indicies \( S\sseq [n] \) such that \( \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i \), and \boolF~otherwise.}%
 
 \begin{steps}
-  \item Let $ total = \sum_{i\in [n]} x_i $
-  \item If $ total $ is odd:
+  \item Let \( total = \sum_{i\in [n]} x_i \)
+  \item If \( total \) is odd:
     \begin{steps}
     \item Return \boolF
     \end{steps}
-  \item Else: \rcomm{ETS $ \exists S\sseq [n] $ such that $ \sum_{i\in S} x_i = \frac{total}{2} $}
+  \item Else: \rcomm{ETS \( \exists S\sseq [n] \) such that \( \sum_{i\in S} x_i = \frac{total}{2} \)}
     \begin{steps}
-    \item Return \tmo{subset-sum}$(x_1,\ldots,x_n, \frac{total}{2})$
+    \item Return \tmo{subset-sum}\( (x_1,\ldots,x_n, \frac{total}{2}) \)
     \end{steps}
 
   \item IDK! I GIVE UP I AM SO TIRED SORRY

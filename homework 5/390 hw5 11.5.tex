@@ -4,15 +4,15 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA \\ Homework 5 (\theexercise)}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+\fancyhead[L]{\bd{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA \\ Homework 5 (\theexercise)}}
+\fancyhead[R]{\bd{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
 \setcounter{section}{11}
 \setcounter{exercise}{5}
 
-\tbo{Exercise \theexercise} Let \( \llist{x}{1}{n}\in \N \).
+\bd{Exercise \theexercise} Let \( \llist{x}{1}{n}\in \N \).
 For each of the following problems, either (a) design and analyze a polynomial time algorithm (the faster the better), or (b) prove that a polynomial time algorithm would imply a polynomial time algorithm for SAT.\textsuperscript{\hyperref[fn:sat]{2}} \\
 \noindent\rule{2in}{0.4pt} \\
 \parbox{\linewidth}{\small \textsuperscript{\label{fn:sat}2}You can use the solution of one subproblem to solve another, as long as there's no circular dependencies overall.}
@@ -20,7 +20,7 @@ For each of the following problems, either (a) design and analyze a polynomial t
 %-------------------------------- 11.5.1 SOLUTION ---------------------------------%
 
 \begin{subexercise}\label{qs:ptn}
-  The \tit{partition problem} asks if one can partition \( \llist{x}{1}{n} \) into two parts such that the sums of each part are equal.
+  The \it{partition problem} asks if one can partition \( \llist{x}{1}{n} \) into two parts such that the sums of each part are equal.
 \end{subexercise}
 
 \begin{solution}
@@ -75,7 +75,7 @@ Thus, a polynomial time solution for the partition problem implies a polynomial 
 %-------------------------------- 11.5.2 SOLUTION ---------------------------------%
 
 \begin{subexercise}\label{qs:3ptn}
-  The \tit{3-partition problem} asks if one can partition \( \llist{x}{1}{n} \) into 3 parts such that the sums of each part are all equal.
+  The \it{3-partition problem} asks if one can partition \( \llist{x}{1}{n} \) into 3 parts such that the sums of each part are all equal.
 \end{subexercise}
 
 \begin{solution}
@@ -83,7 +83,7 @@ Thus, a polynomial time solution for the partition problem implies a polynomial 
   To see this, we present a polynomial time reduction from the partition problem, which we showed to be hard in \ref{qs:ptn}.
 
   \begin{notation}
-  Given sets \( A \tand B \), we denote the \tit{\href{https://en.wikipedia.org/wiki/Disjoint_union}{disjoint union}} of \( A\tand B \) by \( A\sqcup B \).
+  Given sets \( A \tand B \), we denote the \it{\href{https://en.wikipedia.org/wiki/Disjoint_union}{disjoint union}} of \( A\tand B \) by \( A\sqcup B \).
   \end{notation}
 
   Consider an arbitrary instance of the partition problem.
@@ -123,7 +123,7 @@ Thus, a polynomial time solution for the partition problem implies a polynomial 
 %-------------------------------- 11.5.3 SOLUTION ---------------------------------%
 
 \begin{subexercise}
-  The \tit{any-k-partition problem} asks if one can partition \( \llist{x}{1}{n} \) into \( k \) parts, for any integer \( k \geq 2 \), such that the sums of each part are all equal.
+  The \it{any-k-partition problem} asks if one can partition \( \llist{x}{1}{n} \) into \( k \) parts, for any integer \( k \geq 2 \), such that the sums of each part are all equal.
 \end{subexercise}
 
 \begin{solution}
@@ -177,7 +177,7 @@ Thus, a polynomial time solution for the partition problem implies a polynomial 
 %-------------------------------- 11.5.4 SOLUTION ---------------------------------%
 
 \begin{subexercise}
-  The \tit{almost-partition problem} asks if one can partition \( \llist{x}{1}{n} \) into two parts such that the two sums of each part differ by at most 1.
+  The \it{almost-partition problem} asks if one can partition \( \llist{x}{1}{n} \) into two parts such that the two sums of each part differ by at most 1.
 \end{subexercise}
 
 \begin{solution}
@@ -211,7 +211,7 @@ This reduction can clearly be performed in polynomial time relative to the input
 
 \begin{subexercise}
   \footnote[3]{IMO, this one is the trickiest.}Let \( n \) be even.
-  The \tit{perfect partition problem} asks if one can partition \( \llist{x}{1}{n} \) into two parts such that
+  The \it{perfect partition problem} asks if one can partition \( \llist{x}{1}{n} \) into two parts such that
   \begin{enumerate}[label=(\alph*)]
     \item Each part has the same sum.
     \item Each part contains the same number of \( x_i \)'s.

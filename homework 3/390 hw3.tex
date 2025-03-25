@@ -4,16 +4,16 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA: Advanced Topics in Algorithms\\Homework 3}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+\fancyhead[L]{\bd{Josh Park \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA: Advanced Topics in Algorithms\\Homework 3}}
+\fancyhead[R]{\bd{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
 % >>==========|| 6.5 ||==========<<
-\tbo{Exercise 6.5.} Let \( G = (V, E) \) be a directed graph. We say two vertices \( s, t \in V \) are \tit{half-connected} if either \( s \) can reach \( t \) or \( t \) can reach \( s \).
-We say that the graph \( G \) is \tit{half-connected} if every pair of vertices is half-connected.
-We say that two vertices \( s \) and \( t \) are \tit{strictly half-connected} if either \( s \) can reach \( t \), or \( t \) can reach \( s \), but not both.
-We say that G is \tit{strictly half-connected} if every pair of vertices is strictly half-connected.
+\bd{Exercise 6.5.} Let \( G = (V, E) \) be a directed graph. We say two vertices \( s, t \in V \) are \it{half-connected} if either \( s \) can reach \( t \) or \( t \) can reach \( s \).
+We say that the graph \( G \) is \it{half-connected} if every pair of vertices is half-connected.
+We say that two vertices \( s \) and \( t \) are \it{strictly half-connected} if either \( s \) can reach \( t \), or \( t \) can reach \( s \), but not both.
+We say that G is \it{strictly half-connected} if every pair of vertices is strictly half-connected.
 \setcounter{section}{6}
 \setcounter{exercise}{5}
 \begin{subexercise}
@@ -85,7 +85,7 @@ This algorithm executes in \( \mcO(n\cb) \) time.
 \pagebreak
 
 % >>==========|| 7.1 ||==========<<
-\tbo{Exercise 7.1.} Each of the following problems describes a graph problem over an unweighted directed graph \( G = (V, E) \) with \( m \) edges and \( n \) vertices.
+\bd{Exercise 7.1.} Each of the following problems describes a graph problem over an unweighted directed graph \( G = (V, E) \) with \( m \) edges and \( n \) vertices.
 Each problem can be solved by constructing an auxiliary graph and calling a shortest path algorithm from this chapter as a black box.
 For each problem, (a) design an auxiliary graph and shortest path problem, (b) indicate which algorithm to apply and how, and (c) analyze the running time.
 No proof of correctness is required.
@@ -148,7 +148,7 @@ No proof of correctness is required.
 
 \begin{subexercise} % 7.1.5
   Suppose \( G \) is a patriotic directed graph where all the edges are colored either red, white, or blue.
-  An \tit{American walk} is a walk where the edges alternate in color in the order of the American dream: red, white, blue, red, white, blue...
+  An \it{American walk} is a walk where the edges alternate in color in the order of the American dream: red, white, blue, red, white, blue...
   Here the first edge could be any color and then the colors have to cycle through the American dream thereafter.
   Compute the length of the shortest American walk from \( s \) to \( t \).
 \end{subexercise}
@@ -179,7 +179,7 @@ No proof of correctness is required.
 
 \begin{subexercise} % 7.1.6
   Suppose \( G \) is again a patriotic directed graph where all the edges are colored either red, white, or blue.
-  An \tit{un-American walk} is a walk that never cycles through the American dream; that is, a walk where no three consecutive edges in the walk have colors that form any of the following three sequences: (red, white, blue), (white, blue, red), or (blue, red, white).
+  An \it{un-American walk} is a walk that never cycles through the American dream; that is, a walk where no three consecutive edges in the walk have colors that form any of the following three sequences: (red, white, blue), (white, blue, red), or (blue, red, white).
   Compute the length of the shortest un-American walk from \( s \) to \( t \).
 \end{subexercise}
 
@@ -251,7 +251,7 @@ No proof of correctness is required.
   The goal is to get to the exam as fast as possible, going 25\% over the speed limit for up to \( k \) streets, and obeying the speed limit everywhere else.
 
   Formally, the input consists of a directed graph \( G = (V, E) \), positive edge weights \( \ell:E\to \bbR_{>0} \), vertices \( s,t\in V \), and an integer \( k \in \N \).
-  The \tit{k-speeding distance} from \( s \) to \( t \) is defined as the minimum total length of any \( (s, t) \)-walk, except there the \( k \) largest edges are decreased by a factor of 4/5.
+  The \it{k-speeding distance} from \( s \) to \( t \) is defined as the minimum total length of any \( (s, t) \)-walk, except there the \( k \) largest edges are decreased by a factor of 4/5.
   For example, if \( k = 3 \), and you have an \( (s, t) \)-walk with edge lengths 6, 3, 4, 6, 9, 3, 6, 9, 7, 1, then the total length including the \( k \) ``speedups'' becomes \begin{align*}
     6+3+4+6+\frac{4}{5}*9+4+6+\frac{4}{5}*9+\frac{4}{5}*7+1=50.
   \end{align*}

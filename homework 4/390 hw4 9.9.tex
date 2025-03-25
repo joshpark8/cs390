@@ -4,15 +4,15 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA \\Homework 4 (\theexercise)}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+\fancyhead[L]{\bd{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA \\Homework 4 (\theexercise)}}
+\fancyhead[R]{\bd{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
 \setcounter{section}{9}
 \setcounter{exercise}{8}
 \begin{exercise}
-  Consider the following special case of SAT, which we will call \tit{k-occurrence-SAT} for a fixed parameter \( k \in \N \).
+  Consider the following special case of SAT, which we will call \it{k-occurrence-SAT} for a fixed parameter \( k \in \N \).
   The input consists of a SAT formula \( f (x_1, \ldots, x_n) \) in CNF such that every variable \( x_i \) appears (as is, or negated) in at most \( k \) clauses.
   The problem is to decide whether there is a satisfying assignment.
   For \( k = 3 \), either (a) design and analyze a polynomial time algorithm, or (b) show that a polynomial time algorithm for \( k \)-occurrence-SAT implies a polynomial time algorithm for (CNF-)SAT.\footnote{As a warmup, it might be helpful to first consider the case \( k = 5 \).

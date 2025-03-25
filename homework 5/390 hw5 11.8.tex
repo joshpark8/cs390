@@ -4,15 +4,15 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA \\ Homework 5 (\theexercise)}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+\fancyhead[L]{\bd{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA \\ Homework 5 (\theexercise)}}
+\fancyhead[R]{\bd{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
 \setcounter{section}{11}
 \setcounter{exercise}{8}
 
-\tbo{Exercise \theexercise} (Approximating subset sum.) Let \( \eps\in (0, 1) \) be fixed.
+\bd{Exercise \theexercise} (Approximating subset sum.) Let \( \eps\in (0, 1) \) be fixed.
 Here we treat \( \eps \) as a fixed constant (like \( \eps \) = .1, for 10\% error); in particular, running times of the form \( O(n^{O(1/\eps)}) \) count as a polynomial.
 
 A (\( 1 \pm \eps \))-approximation algorithm for subset sum is one that (correctly) either: \begin{enumerate}
@@ -161,7 +161,7 @@ We prove correctness by showing (i) if we successfully return a nonempty subset 
   \begin{subproof}[Correctness]
   We consider two cases:
 
-    \tit{Case 1:} Suppose there exists a subset
+    \it{Case 1:} Suppose there exists a subset
     \[
     S^* \subseteq \{x_1, \dots, x_n\} \quad \text{with} \quad \sum_{x \in S^*} x = T.
     \]
@@ -178,7 +178,7 @@ We prove correctness by showing (i) if we successfully return a nonempty subset 
     Then, calling \( S_{\text{small}} = \subcall{approx-subset-sum}{\mcS, \eps, C} \) yields a subset of \( \mcS \) whose sum is within a factor of \( (1\pm\eps) \) of \( C \).
     Consequently, the combined sum \( \sum \lt[B \cup S_{\text{small}}\rt] \) falls within the interval \( [(1-\eps)T,\,(1+\eps)T] \).
 
-    \tit{Case 2:} If no subset of the input sums to \( T \), then the algorithm returns \( \emptyset \).
+    \it{Case 2:} If no subset of the input sums to \( T \), then the algorithm returns \( \emptyset \).
     This outcome is correct, as it does not falsely claim the existence of a feasible subset.
   \end{subproof}
 \end{solution}

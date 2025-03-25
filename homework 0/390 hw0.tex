@@ -29,15 +29,15 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park \\ Prof. Quanrud}}
-\fancyhead[C]{\tbo{CS 390 ATA \\ Advanced Topics in Algorithms}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Homework 0 (corrections)}}
+\fancyhead[L]{\bd{Josh Park \\ Prof. Quanrud}}
+\fancyhead[C]{\bd{CS 390 ATA \\ Advanced Topics in Algorithms}}
+\fancyhead[R]{\bd{Spring 2025 \\ Homework 0 (corrections)}}
 
 \begin{document}
 % \begin{note}
 % For brevity's sake, I have assumed the Python convention for default parameter values  in the solutions for Problems 1.3 and 2.2. That is, assuming we have some function defined as
 
-% \tul{def func \tmo{someExampleFunction\( (arg1, arg2 := 1, arg3 := 2) \):}},
+% \ul{def func \tmo{someExampleFunction\( (arg1, arg2 := 1, arg3 := 2) \):}},
 
 % we assume that
 
@@ -51,12 +51,12 @@
 % If this is not acceptable, please let me know.
 % \end{note}
 
-\tbo{Exercise 1.3.1.} % PROBLEM 1.3.1
-Let \( A[1..n] \) be in a \tit{rotated} sorted order. That is, there exists an index \( i \in [n] \), called the \tit{rotation index}, such that the concatenation of \( A[i..n] \) and \( A[1..i - 1] \) is sorted in increasing order. (One can think of \( A[1..n] \) as being sorted initially, and then rotated cyclically to the right by \( i - 1 \) slots). The goal is to compute the unknown rotation index \( i \). For simplicity, you may assume all the elements are distinct.
+\bd{Exercise 1.3.1.} % PROBLEM 1.3.1
+Let \( A[1..n] \) be in a \it{rotated} sorted order. That is, there exists an index \( i \in [n] \), called the \it{rotation index}, such that the concatenation of \( A[i..n] \) and \( A[1..i - 1] \) is sorted in increasing order. (One can think of \( A[1..n] \) as being sorted initially, and then rotated cyclically to the right by \( i - 1 \) slots). The goal is to compute the unknown rotation index \( i \). For simplicity, you may assume all the elements are distinct.
 
 \begin{solution}\ % SOLUTION 1.3.1
 \begin{quote}%
-\noindent\tul{def func \tmo{computeRotationIndex(\( A[1..n] \)):}}%
+\noindent\ul{def func \tmo{computeRotationIndex(\( A[1..n] \)):}}%
 
 \doc{Given an array of length \( n \) in `rotated' sorted order, return the `rotation'
 index.
@@ -85,15 +85,15 @@ index.
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 1.3.2.} % PROBLEM 1.3.2
-We say that \( A[1..n] \) is a \tit{mountain} if there exists an index \( i \in [n] \), called the
-\tit{peak}, such that \( A[1..i] \) is sorted in increasing order and \( A[i + 1..n] \) is sorted in
+\bd{Exercise 1.3.2.} % PROBLEM 1.3.2
+We say that \( A[1..n] \) is a \it{mountain} if there exists an index \( i \in [n] \), called the
+\it{peak}, such that \( A[1..i] \) is sorted in increasing order and \( A[i + 1..n] \) is sorted in
 decreasing order. Given a mountain \( A[1..n] \), find the peak. For simplicity, you may assume all
 elements are distinct.
 
 \begin{solution}\ % SOLUTION 1.3.2
 \begin{quote}%
-\noindent\tul{def func \tmo{findPeak(\( A[1..n] \)):}}%
+\noindent\ul{def func \tmo{findPeak(\( A[1..n] \)):}}%
 
 \doc{Given a `mountain' of length \( n \), find the index of the `peak'.}
 
@@ -117,8 +117,8 @@ elements are distinct.
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 1.3.3.} % PROBLEM 1.3.3
-We say an index \( i \in [n] \) is a \tit{local minimum} if either
+\bd{Exercise 1.3.3.} % PROBLEM 1.3.3
+We say an index \( i \in [n] \) is a \it{local minimum} if either
 \begin{enumerate}[label=(\alph*)]
   \item \( i = n = 1 \),
   \item \( i = 1 \) and \( A[1] \leq A[2] \),
@@ -129,7 +129,7 @@ The goal is to find a local minimum from an array \( A[1..n] \).
 
 \begin{solution}\ % SOLUTION 1.3.3
 \begin{quote}%
-\noindent\tul{def func \tmo{findLocalMinimum(\( A[1..n] \)):}}%
+\noindent\ul{def func \tmo{findLocalMinimum(\( A[1..n] \)):}}%
 
 \doc{Given an array of length \( n \), identify the `local minimum'.}%
 
@@ -157,7 +157,7 @@ The goal is to find a local minimum from an array \( A[1..n] \).
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 1.3.4.} % PROBLEM 1.3.4
+\bd{Exercise 1.3.4.} % PROBLEM 1.3.4
 Prove that each of the problems above have a lower bound of \( \Omega(\log n) \) queries in the comparison model.
 
 \begin{solution}\ % SOLUTION 1.3.4
@@ -165,12 +165,12 @@ Each of the problems above have \( n \) possible values for the specified index.
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 2.1.2.} % PROBLEM 2.1.2
-In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cyclic'' order from post \( A \) to post \( B \), from post \( B \) to post \( C \), and from post \( C \) to post \( A \). The goal is to move \( n \) sorted rings from post \( A \) to post \( B \).
+\bd{Exercise 2.1.2.} % PROBLEM 2.1.2
+In the \it{cyclic towers of Hanoi} problem, a ring can only be moved in ``cyclic'' order from post \( A \) to post \( B \), from post \( B \) to post \( C \), and from post \( C \) to post \( A \). The goal is to move \( n \) sorted rings from post \( A \) to post \( B \).
 
 \begin{solution}\ % SOLUTION 2.1.2
 \begin{quote}
-\noindent\tul{def func \tmo{cyclic-Hanoi(\( n \), \( from \), \( to \)):}}%
+\noindent\ul{def func \tmo{cyclic-Hanoi(\( n \), \( from \), \( to \)):}}%
 
 \doc{Given an integer \( n \) and starting/ending posts, \( A \), \( B \), or \( C \), move \( n \) sorted rings from post \( A \) to post \( B \).}%
 \begin{steps}
@@ -229,13 +229,13 @@ In the \tit{cyclic towers of Hanoi} problem, a ring can only be moved in ``cycli
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 2.1.3.} % PROBLEM 2.1.3
-The \tit{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi problem except now the goal is to move the \( n \) sorted rings from post \( A \) to post \( C \).
+\bd{Exercise 2.1.3.} % PROBLEM 2.1.3
+The \it{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi problem except now the goal is to move the \( n \) sorted rings from post \( A \) to post \( C \).
 
 \begin{solution}\ % SOLUTION 2.1.3
   To call the function, use \tmo{double-cyclic-Hanoi}(\( n \), \( A \), \( C \), \( B \)).
   \begin{quote}
-  \noindent\tul{def func \tmo{double-cyclic-Hanoi(\( n \), \( from \), \( to \), \( spare \)):}}%
+  \noindent\ul{def func \tmo{double-cyclic-Hanoi(\( n \), \( from \), \( to \), \( spare \)):}}%
 
   \doc{Given an integer \( n \), a starting post, ending post, and spare post, move \( n \) sorted rings from the starting post \( from \) to the ending post \( to \).}%
   \begin{steps}
@@ -280,12 +280,12 @@ The \tit{double-cyclic towers of Hanoi} is like the cyclic towers of Hanoi probl
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 2.1.4.} % PROBLEM 2.1.4
-In the \tit{thick towers of Hanoi} problem, we have \( 3n \) rings of \( n \) distinct sizes with three copies of each ring. (Rings of the same size can stack on top of each other.) The goal is to move all \( 3n \) rings from post \( A \) to post \( B \).
+\bd{Exercise 2.1.4.} % PROBLEM 2.1.4
+In the \it{thick towers of Hanoi} problem, we have \( 3n \) rings of \( n \) distinct sizes with three copies of each ring. (Rings of the same size can stack on top of each other.) The goal is to move all \( 3n \) rings from post \( A \) to post \( B \).
 
 \begin{solution}\ % SOLUTION 2.1.4
 \begin{quote}
-\noindent\tul{\tmo{def func thick-Hanoi(\( n \), \( A \), \( B \), \( C \)):}}%
+\noindent\ul{\tmo{def func thick-Hanoi(\( n \), \( A \), \( B \), \( C \)):}}%
 
 \doc{Given an integer \( n \), and posts \( A, B, \) and \( C \), move \( 3n \) rings from post \( A \) to post \( B \).}%
 
@@ -305,12 +305,12 @@ In the \tit{thick towers of Hanoi} problem, we have \( 3n \) rings of \( n \) di
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 2.1.5.} % PROBLEM 2.1.5
-In the \tit{triple towers of Hanoi} problem, we have \( 3n \) rings of \( n \) distinct sizes with three copies of each ring. The goal is to distribute the rings so that each post has \( n \) rings, one of each size, in order.
+\bd{Exercise 2.1.5.} % PROBLEM 2.1.5
+In the \it{triple towers of Hanoi} problem, we have \( 3n \) rings of \( n \) distinct sizes with three copies of each ring. The goal is to distribute the rings so that each post has \( n \) rings, one of each size, in order.
 
 \begin{solution}\ % SOLUTION 2.1.5
 \begin{quote}
-\noindent\tul{def func \tmo{triple-Hanoi(\( n \), \( A \), \( B \), \( C \)):}}%
+\noindent\ul{def func \tmo{triple-Hanoi(\( n \), \( A \), \( B \), \( C \)):}}%
 
 \doc{Given an integer \( n \), a starting post, an ending post, and a spare post, distribute \( 3n \) rings so that each post has \( n \) rings, one of each size, in order.}%
 
@@ -337,12 +337,12 @@ In the \tit{triple towers of Hanoi} problem, we have \( 3n \) rings of \( n \) d
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 2.1.6.} % PROBLEM 2.1.6
-In the \tit{American towers of Hanoi} problem, we have \( n \) rings with each ring colored red, white, or blue. The three posts are also colored red, white, and blue. Initially all the rings are stacked (in order of size) on the red post. The goal is to stack all the red rings on the red post, the blue rings on the blue post, and the white rings on the white post (again, in order of size).
+\bd{Exercise 2.1.6.} % PROBLEM 2.1.6
+In the \it{American towers of Hanoi} problem, we have \( n \) rings with each ring colored red, white, or blue. The three posts are also colored red, white, and blue. Initially all the rings are stacked (in order of size) on the red post. The goal is to stack all the red rings on the red post, the blue rings on the blue post, and the white rings on the white post (again, in order of size).
 
 \begin{solution}\ %
 \begin{quote}
-\noindent\tul{def func \tmo{American-Hanoi(\( n \), \( start \)):}}%
+\noindent\ul{def func \tmo{American-Hanoi(\( n \), \( start \)):}}%
 
 \doc{Given an integer \( n \) and a starting post, distribute the \( n \) colored rings to the post of corresponding color such that each post is in order. Assume we have functions \tmo{getColor} and \tmo{getPost} such that \tmo{getColor}(\( k \)) will return the color of the \( n-k \)th largest ring and \tmo{getPost(\( color \))} will return the post of that color.}%
 
@@ -380,7 +380,7 @@ In the \tit{American towers of Hanoi} problem, we have \( n \) rings with each r
 \end{quote}
 \nf{} \\
 \begin{quote}
-\noindent\tul{def func \tmo{Towers-of-Hanoi(\( k \), \( A \), \( B \), \( C \)):}}%
+\noindent\ul{def func \tmo{Towers-of-Hanoi(\( k \), \( A \), \( B \), \( C \)):}}%
 
 \doc{Standard Towers of Hanoi helper function}%
 
@@ -396,14 +396,14 @@ In the \tit{American towers of Hanoi} problem, we have \( n \) rings with each r
 \end{solution}
 \pagebreak
 
-\tbo{Exercise 2.2.3.} % PROBLEM 2.2.3
+\bd{Exercise 2.2.3.} % PROBLEM 2.2.3
 Given an undirected graph \( G = (V, E) \), return the maximum size of any matching.
 
-(A \tit{matching} is a set of edges \( M \sseq E \) with disjoint endpoints.)
+(A \it{matching} is a set of edges \( M \sseq E \) with disjoint endpoints.)
 
 \begin{solution}\ % SOLUTION 2.2.3
 \begin{quote}%
-\noindent\tul{def func \tmo{max-matching(\( G = (V, E) \)):}}%
+\noindent\ul{def func \tmo{max-matching(\( G = (V, E) \)):}}%
 
 \doc{Given an undirected graph \( G = (V, E) \), return the maximum size of any matching.}%
 
@@ -425,14 +425,14 @@ Given an undirected graph \( G = (V, E) \), return the maximum size of any match
 \end{solution}%
 \pagebreak
 
-\tbo{Exercise 2.2.4.} % PROBLEM 2.2.4
+\bd{Exercise 2.2.4.} % PROBLEM 2.2.4
 Given an undirected graph \( G = (V, E) \), return the maximum size of any independent set of vertices.
 
-(An \tit{independent set} is a set of vertices \( S\sseq V \) such that no two vertices \( u,v\in S \) are connected by an edge.)
+(An \it{independent set} is a set of vertices \( S\sseq V \) such that no two vertices \( u,v\in S \) are connected by an edge.)
 
 \begin{solution}\ % SOLUTION 2.2.4
 \begin{quote}%
-  \noindent\tul{def func \tmo{max-independent-set(\( G = (V, E) \)):}}%
+  \noindent\ul{def func \tmo{max-independent-set(\( G = (V, E) \)):}}%
 
   \doc{Given an undirected graph \( G = (V, E) \), return the maximum size of any independent set of vertices.}%
 
@@ -458,14 +458,14 @@ Given an undirected graph \( G = (V, E) \), return the maximum size of any indep
 \end{solution}%
 \pagebreak
 
-\tbo{Exercise 2.2.5.} % PROBLEM 2.2.5
+\bd{Exercise 2.2.5.} % PROBLEM 2.2.5
 Given a sequence of numbers, \( x_1, \ldots, x_n \), return the length of the longest (strictly) increasing subsequence of \( x_1, \ldots, x_n \) over all subsequences that include \( x_1 \). (You may assume \( n \geq 1 \).)
 
-(A \tit{subsequence} of \( x_1, \ldots, x_n \) is a sequence of the form \( x_{i_1}, x_{i_2}, \ldots, x_{i_k} \), where \( 1\leq i_1<i_2<\cdots<i_k\leq n \). A sequence of numbers \( y_1, \ldots, y_\ell \) is strictly increasing if \( y_i < y_{i+1} \) for \( i = 1, \ldots, \ell-1 \).)
+(A \it{subsequence} of \( x_1, \ldots, x_n \) is a sequence of the form \( x_{i_1}, x_{i_2}, \ldots, x_{i_k} \), where \( 1\leq i_1<i_2<\cdots<i_k\leq n \). A sequence of numbers \( y_1, \ldots, y_\ell \) is strictly increasing if \( y_i < y_{i+1} \) for \( i = 1, \ldots, \ell-1 \).)
 
 \begin{solution}\ % SOLUTION 2.2.5
 \begin{quote}%
-\noindent\tul{def func \tmo{longest-increasing-subsequence-including-first(\( x_1, \ldots, x_n \)):}} \rcomm{LISIF for short}%
+\noindent\ul{def func \tmo{longest-increasing-subsequence-including-first(\( x_1, \ldots, x_n \)):}} \rcomm{LISIF for short}%
 
 \doc{Given a sequence of numbers, \( x_1, \ldots, x_n \), return the length of the longest strictly increasing subsequence of \( x_1, \ldots, x_n \) over all subsequences that include \( x_1 \).}%
 
@@ -486,7 +486,7 @@ Given a sequence of numbers, \( x_1, \ldots, x_n \), return the length of the lo
 \end{solution}%
 \pagebreak
 
-\tbo{Exercise 2.2.6.} % PROBLEM 2.2.6
+\bd{Exercise 2.2.6.} % PROBLEM 2.2.6
 Given a directed graph \( G \) and two vertices \( s, t \in V \), return true if \( s \) can reach \( t \) in \( G \), and \boolF~otherwise.
 
 (\( s \) can reach \( t \) if either \( s = t \) or there is a sequence of (directed) edges of the
@@ -495,7 +495,7 @@ edge is the initial point of the next edge. This is also called a (directed) wal
 
 \begin{solution}\ % SOLUTION 2.2.6
 \begin{quote}%
-\noindent\tul{def func \tmo{reachable(\( G = (V, E) \), \( s \), \( t \)):}}%
+\noindent\ul{def func \tmo{reachable(\( G = (V, E) \), \( s \), \( t \)):}}%
 
 \doc{Given a directed graph \( G \) and two vertices \( s, t \in V \), return true if \( s \) can reach \( t \) in \( G \), and \boolF~otherwise.}%
 
@@ -519,12 +519,12 @@ edge is the initial point of the next edge. This is also called a (directed) wal
 \end{solution}%
 \pagebreak
 
-\tbo{Exercise 2.2.7.} % PROBLEM 2.2.7
+\bd{Exercise 2.2.7.} % PROBLEM 2.2.7
 Given \( n \) integers \( x_1,\ldots,x_n\in\Z \), returns \boolT~if there is a subset of indicies \( S\sseq [n] \) such that \( \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i \), and \boolF~otherwise.
 
 \begin{solution}\ % SOLUTION 2.2.7
 \begin{quote}%
-\noindent\tul{def func \tmo{partition(\( G = (V, E) \)):}}%
+\noindent\ul{def func \tmo{partition(\( G = (V, E) \)):}}%
 
 \doc{Given \( n \) integers \( x_1,\ldots,x_n\in\Z \), returns \boolT~if there is a subset of indicies \( S\sseq [n] \) such that \( \sum_{i\in S}x_i = \sum_{i\in[n]\setminus S} x_i \), and \boolF~otherwise.}%
 

@@ -6,12 +6,12 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA \\ Homework 4 (\theexercise)}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+\fancyhead[L]{\bd{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA \\ Homework 4 (\theexercise)}}
+\fancyhead[R]{\bd{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
-\tbo{Exercise 8.2} The following problem (and more elaborate extensions) appear in
+\bd{Exercise 8.2} The following problem (and more elaborate extensions) appear in
 reinforcement learning. Let \( G = (V, E) \) be a directed graph and let the edges be
 annotated by positive edge weights \( r : E \to \bbR_{>0} \). We think of the vertices as states
 of some device under our control, and the edge weights \( r(e) \) as rewards obtained by
@@ -34,7 +34,7 @@ Our approach is to constrain Bellman-Ford to compute minimum walks with no more 
 
 \doc{Computes the minimum-length \( d(s,v) \) of a \( k \)-walk from \( s \) to \( v \) for all \( v \in V \).}
 
-% \noindent\tul{\tmo{K-Bellman-Ford(\( G (V, E) \), \( s \in V \), k):}}%
+% \noindent\ul{\tmo{K-Bellman-Ford(\( G (V, E) \), \( s \in V \), k):}}%
 \begin{steps}
   \item Set \( d(s, v) = +\infty \) for all \( v \in V \).
   \item Set \( d(s,s) = 0. \)
@@ -90,9 +90,9 @@ By induction, the claim holds for all \( k \).
 
 % -------------------------------- 8.2.2 SOLUTION ---------------------------------%
 \begin{subexercise}
-  Here we also incorporate a \tit{discount rate}.
+  Here we also incorporate a \it{discount rate}.
   Let \( \alpha\in (0,1) \) be given.
-  Given a walk with edges \( e_1,\ldots, e_k \), the \tit{discounted total reward} of the walk is given by
+  Given a walk with edges \( e_1,\ldots, e_k \), the \it{discounted total reward} of the walk is given by
   \begin{align*}
     r(e_1)+\alpha r(e_2) + \cdots + \alpha^{k-1}r(e_k).
   \end{align*}
@@ -139,9 +139,9 @@ By assumption, a \( k-1 \)-walk gives a discounted total reward of \begin{align*
 \end{align*}
 Upon running \( \subcall{max-discount-walk}{s,t,k} \), our algorithm presents two cases: either it adds a new edge, or it does nothing.
 
-\tit{Case 1.} If \( \subcall{MDW}{s,t,k}=\subcall{MDW}{s,t,k-1} \), then correctness follows directly from the inductive hypothesis.
+\it{Case 1.} If \( \subcall{MDW}{s,t,k}=\subcall{MDW}{s,t,k-1} \), then correctness follows directly from the inductive hypothesis.
 
-\tit{Case 2.} If \( \subcall{MDW}{s,t,k}\neq \subcall{MDW}{s,t,k-1} \), then \( \subcall{MDW}{s,t,k}=\subcall{MDW}{s,t,k-1}+\alpha^{k-1}r(e_k) \) for some \( k^{\text{th}} \) edge \( e_k \). By the inductive hypothesis, we have that \begin{align*}
+\it{Case 2.} If \( \subcall{MDW}{s,t,k}\neq \subcall{MDW}{s,t,k-1} \), then \( \subcall{MDW}{s,t,k}=\subcall{MDW}{s,t,k-1}+\alpha^{k-1}r(e_k) \) for some \( k^{\text{th}} \) edge \( e_k \). By the inductive hypothesis, we have that \begin{align*}
 \subcall{MDW}{s,t,k}&=\subcall{MDW}{s,t,k-1}+\alpha^{k-1}r(e_k) \\
 &= r(e_1) + \alpha r(e_2)+ \cdots + \alpha^{k-2} r(e_{k-1}) +\alpha^{k-1}r(e_k).
 \end{align*}

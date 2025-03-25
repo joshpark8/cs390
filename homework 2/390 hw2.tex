@@ -4,18 +4,18 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park \\ Prof. Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA \\ Advanced Topics in Algorithms}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Homework 2}}
+\fancyhead[L]{\bd{Josh Park \\ Prof. Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA \\ Advanced Topics in Algorithms}}
+\fancyhead[R]{\bd{Spring 2025 \\ Homework 2}}
 
 \begin{document}
-\tbo{Exercise 5.1.} Below is a series of optimization problems that takes as input an array \( A[1..n] \) of integers, and asks for optimal subsequences of \( A \) satisfying certain properties. Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
+\bd{Exercise 5.1.} Below is a series of optimization problems that takes as input an array \( A[1..n] \) of integers, and asks for optimal subsequences of \( A \) satisfying certain properties. Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
 % >>==========|| 5.1.2 ||==========<<
 \setcounter{section}{5}
 \setcounter{exercise}{1}
 \setcounter{subexercise}{1}
 \begin{subexercise}
-  A sequence of numbers \( x_1,\ldots,x_k \) is \tit{convex} if \( x_{i+1}-x_i \geq x_i-x_{i-1} \) for \( i=2,\ldots,k-1 \). Compute the length of the longest convex subsequence of \( A \).
+  A sequence of numbers \( x_1,\ldots,x_k \) is \it{convex} if \( x_{i+1}-x_i \geq x_i-x_{i-1} \) for \( i=2,\ldots,k-1 \). Compute the length of the longest convex subsequence of \( A \).
 \end{subexercise}
 
 \begin{proof}[Recursive spec.]
@@ -103,7 +103,7 @@ Returns a 2-tuple (\( a,b \)) where \( a\tand b \) represent the length of the L
 
 % >>==========|| 5.1.5 ||==========<<
 \begin{subexercise}
-  Suppose each entry in A is also colored red, white, or blue. We say that a sequence is \tit{American} if the colors alternate red, white, blue, red, white, blue, \ldots.  The first number in the sequence can be any color. Compute the length of the longest increasing American subsequence of \( A \). (You can assume that you can look up the color of \( A[i] \), for any \( i \in [n] \), in constant time.)
+  Suppose each entry in A is also colored red, white, or blue. We say that a sequence is \it{American} if the colors alternate red, white, blue, red, white, blue, \ldots.  The first number in the sequence can be any color. Compute the length of the longest increasing American subsequence of \( A \). (You can assume that you can look up the color of \( A[i] \), for any \( i \in [n] \), in constant time.)
 \end{subexercise}
 
 \begin{note}
@@ -145,8 +145,8 @@ Assumes usage of subroutine \tmo{patriotic}(\( \alpha,\beta \)) that returns tru
 
 % >>==========|| 5.1.6 ||==========<<
 \begin{subexercise}
-A sequence \( x_1,\ldots, x_k \) is a \tit{palindrome} if the reversed sequence is the same; i.e., \( (x_1,\ldots,x_k) = (x_k,\ldots,x_1) \). For example, \begin{align*}
-  \tit{mom, dad, racecar,\tand gohangasalamiimalasagnahog}
+A sequence \( x_1,\ldots, x_k \) is a \it{palindrome} if the reversed sequence is the same; i.e., \( (x_1,\ldots,x_k) = (x_k,\ldots,x_1) \). For example, \begin{align*}
+  \it{mom, dad, racecar,\tand gohangasalamiimalasagnahog}
 \end{align*}
 are all palindromes. Compute the length of the longest palindrome subsequence of \( A \).
 \end{subexercise}
@@ -183,7 +183,7 @@ are all palindromes. Compute the length of the longest palindrome subsequence of
 \pagebreak
 
 % >>===========|| 5.2 ||===========<<
-\tbo{Exercise 5.2.} Let \( A[1..m] \) and \( B[1..n] \) be two arrays. Each of the following problems asks for some aspect (e.g., the length) of a common subsequence of \( A[1..n] \tand B[1..n] \) satisfying or optimizing certain properties. (A common subsequence of \( A \tand B \) is a sequence that is a subsequence of both \( A \tand B \).) Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
+\bd{Exercise 5.2.} Let \( A[1..m] \) and \( B[1..n] \) be two arrays. Each of the following problems asks for some aspect (e.g., the length) of a common subsequence of \( A[1..n] \tand B[1..n] \) satisfying or optimizing certain properties. (A common subsequence of \( A \tand B \) is a sequence that is a subsequence of both \( A \tand B \).) Design and analyze an algorithm for each of these problems, addressing items 1--5 from section 5.2.
 \setcounter{exercise}{2}
 \setcounter{subexercise}{0}
 

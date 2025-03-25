@@ -4,18 +4,18 @@
 \input{letterfont}
 \input{macros}
 
-\fancyhead[L]{\tbo{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
-\fancyhead[C]{\tbo{CS 390ATA \\ Homework 6 (\theexercise)}}
-\fancyhead[R]{\tbo{Spring 2025 \\ Page \thepage}}
+\fancyhead[L]{\bd{Josh Park, Amy Kang, Diya Singh \\ Prof. Kent Quanrud}}
+\fancyhead[C]{\bd{CS 390ATA \\ Homework 6 (\theexercise)}}
+\fancyhead[R]{\bd{Spring 2025 \\ Page \thepage}}
 
 \begin{document}
 \setcounter{section}{12}
 \setcounter{exercise}{15}
-\tbo{Exercise \theexercise.} \tbo{It's-a me, Mario!}
+\bd{Exercise \theexercise.} \bd{It's-a me, Mario!}
 This problem is inspired by Super Mario World, where Mario must make it from some starting point to the flag in front of a castle, collecting as many coins as possible along the way.
 
 Let \( G = (V,E) \) be a directed graph where each vertex \( v \in V \) has \( C_v \geq 0 \) coins.
-For a walk in \( G \), we say that the \tit{number of coins collected by the walk} is the total sum of \( C_v \) over all \tit{distinct} vertices \( v \) in the walk.
+For a walk in \( G \), we say that the \it{number of coins collected by the walk} is the total sum of \( C_v \) over all \it{distinct} vertices \( v \) in the walk.
 (If we visit a vertex \( v \) more than once, we still only get \( C_v \) coins total.)
 Given \( s, t \in V \), the goal is to compute the maximum number of coins collected by any \( (s, t) \)-walk.
 

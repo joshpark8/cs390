@@ -17,9 +17,21 @@ For a spanning tree \( T \), we say that the \it{bottleneck weight of \( T \)} i
 \begin{subexercise}
 Prove that the MST is also a minimum bottleneck weight spanning tree of \( G \).
 \end{subexercise}
-
 \begin{solution}
-
+  Let \( \alpha \) be the MST of \( G \).
+  Assume ad absurdum that there exists an minimum bottleneck weight spanning tree (MBWST) \( \beta \) of \( G \) such that \( \alpha \neq \beta \).
+  Then by definition of bottleneck weight, we have that \begin{align*}
+    \max\limits_{e\in \alpha}\{w(e)\} > \max\limits_{e\in \beta}\{w(e)\}.
+  \end{align*}
+  That is to say, there exists some edge \( e=(v_1, v_2)\in\alpha \) such that \( w(e) \) is greater than \( w(e') \) for every \( e'\in \beta \).
+  Obviously \( e\not\in \beta \), but by definition of spanning tree \( \beta \) spans \( e \).
+  Since \( \alpha \) does not contain any cycles by definition of tree, WLOG there exists some \( f=(v_1, v_3) \in \beta \) such that \( f\not\in\alpha \).
+  Then we have that \begin{align*}
+    w(e) > w(f).
+  \end{align*}
+  By the spanning property of \( \alpha \), we know there exists an edge \( (v_3,v_k)\in\alpha \) for some arbitrary vertex \( v_k \).
+  Thus by removing \( e \) and adding \( f \) to \( \alpha \), we can preserve the spanning property of \( \alpha \) while reducing its total weight, contradicting that \( \alpha \) is the MST of \( G \).
+  Thus the minimum spanning tree of \( G \) must also be a minimum bottleneck spanning tree of \( G \).
 \end{solution}
 \pagebreak
 

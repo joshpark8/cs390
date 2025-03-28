@@ -15,7 +15,7 @@
 \begin{exercise} \label{ex:flow-decomp}
   Suppose you had an \( (s, t) \)-flow \( f \).
   We know that there exists an \( (s,t) \)-path packing of the same size as \( f \); here we are interested in algorithms that take \( f \) and compute such a path packing.
-  Such a path packing is called a \it{flow decomposition} of \( f \).
+  Such a path packing is called a \textit{flow decomposition} of \( f \).
 
   Design and analyze an algorithm that, in \( O(m\sq) \) time, computes a maximum path packing \( x \) of the same size as \( f \), such that:
   \begin{enumerate}
@@ -24,20 +24,67 @@
   \end{enumerate}
 \end{exercise}
 
-\begin{solution}
+\begin{solution} The below algorithm guarentees at most \textit{m} paths since each iteration removes at least one edge, maintains the same $|f|$ and if \textit{f} is integral, then min$|f(e)|$ for an edge \textit{e} will also be integral.
 
+
+\begin{quote}%
+\defalgo{Fdecomp}{G,f,s,t}
+
+\doc{given (s,t)-flow \textit{f} decompose it into a maximum path packing \textit{x} of same size such that there are at most m distinct paths in \textit{x} and if \textit{f} is integral then \textit{x} is also integral}
+%trying my best
+\begin{steps}
+
+    \item $\mathcal{P},w \leftarrow \emptyset$
+    \item $G' \leftarrow$ subgraph of $G$ with edges $e$ where $f(e) > 0$
+    \item While a $(s,t)$-path in $G'$ exists:
+    \begin{steps}
+    \item $p \leftarrow$ any $(s,t)$-path  in $G'$ \doc{using BFS or DFS}
+    \item $w_p  \leftarrow  \min\{f(e) : e \in p\}$
+    \item Add $p$ to $\mathcal{P}$ and $w_p$ to $w$
+    \item For each edge $e \in p$:
+        \begin{steps}
+        \item $f(e) \leftarrow f(e) - w_p$
+        \item If $f(e) = 0$, remove $e$ from $G'$
+        \end{steps}
+    \end{steps}
+    \item Return $(\mathcal{P}, w)$
+
+
+    \end{steps}
+
+\end{quote}
+
+\begin{subproof}[Runtime]
+There are m edges in the flow, we can find each path using BFS or DFS in $O(m)$ time hence the total runtime is $O(m^2)$
+\end{subproof}
+\begin{subproof}[Correctness]
+The flow decomposition algorithm correctly decomposes an (s,t)-flow f into a maximum path packing x of the same size by iteratively finding paths and extracting flow along them:
+Valid Path Packing: In each iteration, we extract a path p with weight $w_p$ (the minimum flow along the path) and reduce the flow on each edge in p by exactly $w_p$. This ensures that for any edge e, the sum of weights of paths containing e never exceeds f(e).
+
+Maximum Size: The algorithm continues until no (s,t)-path remains in G'. At this point, all flow from s to t has been decomposed into paths. The total weight of the path packing equals the original flow value $|f|$.
+
+At most m distinct paths: Each iteration removes at least one edge from G' (the edge with minimum flow $w_p$). Since there are at most m edges, the algorithm terminates after at most m iterations, resulting in at most m distinct paths.
+
+If f is integral, then all flow values f(e) are integers. The minimum of integers is an integer, so $w_p$ will always be integral. Therefore, all path weights in the decomposition are integral.
+
+The algorithm terminates when there is no (s,t)-path in G', meaning all flow has been decomposed into paths, and the resulting path packing satisfies all the required properties.
+\end{subproof}
 \end{solution}
 \pagebreak
 
 % >>==========|| 18.4 ||==========<<
 \bd{Exercise 18.4.} This exercise develops a \( O((m\sq + mn\log(n))\log(\lambda)) \)-time algorithm for maximum \( (s,t) \)-flow and builds on ideas from exercise \ref{ex:flow-decomp}.
-
 \stepcounter{exercise}
-\begin{subexercise}
-  Prove the following: Given any \( (s, t) \)-flow problem with max flow value \( \lambda > 0 \), there exists an \( (s, t) \)-path where the minimum capacity edge is at least \( \lambda/m \).
+
+\begin{subexercise} \label{ex:proof-lambda}
+Prove the following: Given any \( (s, t) \)-flow problem with max flow value \( \lambda > 0 \), there exists an \( (s, t) \)-path where the minimum capacity edge is at least \( \lambda/m \).
 \end{subexercise}
 
 \begin{solution}
+Let $f$ be a max (s,t)-flow with value $\lambda > 0$, by \textit{flow decomposition} solved in 18.3  we know $f$ can be decomposed into at most $m$ (s,t)-paths say $p_1, \dots, p_k : k\leq m$ with flow values $f_1,\dots,f_k$ where \[\sum_{i=1}^k f_i = \lambda\]
+
+For the sake of contradiction, assume that every path $p_i$ has minimum capacity edge is less than $\lambda/m$. Then summation over all paths gives \[ \sum_{i=1}^k f_i < k(\lambda/m) \leq m(\lambda/m) = \lambda\]
+Hence, a contradiction is reached as the total flow value is equal to $\lambda$. therefore, there must exist at least one path with minimum capacity of at least $\lambda/m$
 
 \end{solution}
 \pagebreak
@@ -47,17 +94,88 @@
     Even if the \( O(m + n log(n)) \)-running time eludes you, you can assume it as a black box for the next part.}
 \end{subexercise}
 
-\begin{solution}
+\begin{solution} Below algorithm given any (s,t)-flow problem with max flow $\lambda>0$ finds (s,t)-path where minimum capacity edge is at least $\lambda/m$
+\begin{quote}%
+\defalgo{FMinCapPath}{G=(V,E),s,t,c,\lambda}
 
+\doc{given any (s,t)-flow problem with max flow $\lambda>0$ finds (s,t)-path where minimum capacity edge is at least $c_{min} =\lambda/m$}
+%trying my best
+\begin{steps}
+    \item $G' \leftarrow G\setminus \{e\in E: c(e)<c_{min}\}$
+    \item $p \leftarrow$ Dijkstra's algorithm using Fibonacci Heap to find (s,t)-path
+    \item Return p \doc{if path does not exist Dijkstra returns null or $\infty$}
+    \end{steps}
+\end{quote}
+\begin{subproof}[Runtime]
+    Removing edges with capacity less than $c_{min} = O(m)$ and running Dijkstra on G' using Fibonacci heap takes $O(m+n\log n)$. Hence, total runtime \[O(m) + O(m+n\log n) = O(m+n\log n)\]
+\end{subproof}
 \end{solution}
 \pagebreak
 
 \begin{subexercise}
-  Prove the following: Given any \( (s, t) \)-flow problem with max flow value \( \lambda > 0 \), there exists an \( (s, t) \)-path where the minimum capacity edge is at least \( \lambda/m \).
+  Based on the two parts above, design and analyze an $(s,t)$-max flow algorithm that runs in $O(m(m+n\log(n))\log(\lambda))$ time for integer capacities, where $\lambda$ denotes the value of the maximum flow.\footnote[5]{This is polynomial with respect to the bit complexity of the input.}\footnote[6]{A possibly helpful bit of math: for (small) $\epsilon > 0, \log1+\epsilon(x) \leq O(\log(x)/\epsilon)$ is a good approximation (which you may want to verify for yourself).} (The algorithm does not know the true value of $\lambda$\textit{ a priori.})
 \end{subexercise}
 
 \begin{solution}
+\begin{quote}%
+\defalgo{MaxFlow}{G=(V,E),s,t,c}
 
+\doc{Computes max (s,t)-flow in G for integer capacities}
+%trying my best
+\begin{steps}
+    \item $f(e) =0 \forall e\in E, low =1,high=\sum_{e\in \delta^+(s)} c(e)$
+    \item $c_f(u,v) \leftarrow c(u,v)$ for all $(u,v) \in E$ \doc{Initialize residual capacities}
+    \item While $high-low > 1$
+    \begin{steps}
+        \item $mid \leftarrow (low+high)/2$
+        \item $p\rightarrow \subcall{FMinCapPath}{G=(V,E),s,t,c,mid}$
+        \item if p exists:
+        \begin{steps}
+            \item $w_p \leftarrow \min\{c_f(u,v) : (u,v) \in p\}$ \doc{Bottleneck capacity}
+            \item Augment flow along p
+            \item For each $(u,v)\in p$:
+            \begin{steps}
+
+            \item $f(u,v) \leftarrow f(u,v) + w_p$
+            \item $f(v,u) \leftarrow f(v,u) - w_p$
+            \item $c_f(u,v) \leftarrow c_f(u,v) - w_p$
+            \item $c_f(v,u) \leftarrow c_f(v,u) + w_p$
+
+            \end{steps}
+
+            \item $low \leftarrow mid$ \doc{Update lower bound}
+
+        \end{steps}
+        \item else $high \leftarrow mid$
+
+    \end{steps}
+    \item Return f
+    \end{steps}
+\end{quote}
+
+\begin{subproof}[Runtime]
+The algorithm performs a binary search on the maximum flow value $\lambda$, which is initially bounded by the total outgoing capacity from $s$. Since capacities are integers, the binary search takes $O(\log(\lambda))$ iterations.
+
+In each iteration, finding a path with minimum capacity at least $\lambda/m$ using FMinCapPath in $O(m + n\log n)$ time, augmenting flow along the path and updating residual capacities takes $O(m)$ time.
+
+Each augmenting path found by FMinCapPath has minimum capacity at least $\lambda/m$ , since the maximum flow value is $\lambda$, there can be at most $O(m)$ such augmentations before reaching the maximum flow.
+
+Hence, the total time complexity as required is:
+\[
+O(\log(\lambda)) \cdot O(m + n\log n) \cdot O(m) = O(m(m + n\log n)\log(\lambda))
+\]
+
+\end{subproof}
+
+\begin{subproof}[Correctness]
+The algorithm uses binary search to find the maximum flow value $\lambda$. In each iteration, it tries to find an augmenting path where all edges have capacity at least $mid/m$.
+
+If such a path exists, we know that the maximum flow value is at least $mid$, so we update the lower bound. We then augment flow along this path, which increases the total flow while maintaining flow conservation.
+
+If no such path exists, we can infer from part \ref{ex:proof-lambda} that the maximum flow value must be less than $mid$, so we update the upper bound.
+
+The binary search continues until the gap between upper and lower bounds is at most 1, at which point we have found the maximum flow value being an integer.
+\end{subproof}
 \end{solution}
 \pagebreak
 

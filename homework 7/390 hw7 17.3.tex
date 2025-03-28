@@ -21,6 +21,56 @@ For this problem, either (a) design and analyze a polynomial time algorithm (the
 
 \begin{solution}
 
+This problem has a polynomial-time solution.
+
+Abstractly, if we can find two simple paths in $G$---one from $a$ to $b$ and one from $b$ to $c$---that are vertex-disjoint except for at vertex $b$, then we can concatenate these two paths to get an $(a,b,c)$-path.
+
+To do this, we construct an auxiliary digraph $G'$.
+
+First, to force vertex-disjointedness, we split each vertex $v \in V$ into two vertices, $v_{in}$ and $v_{out}$ and assign a directed edge from $v_{in}$ to $v_{out}$. Then for each undirected edge $\{u, v\}$ in $G$, we add two directed edges $(u_{out}, v_{in})$ and $(v_{out}, u_{in})$.
+Finally, we assign $b_{out}$ to be the source vertex and direct both $a_{out}$ and $c_{out}$ to a single destination vertex $t$.
+
+Now, finding two edge-disjoint paths from $b_{out}$ to $t$ in $G'$ will guarantee vertex-disjoint paths from $b$ to $a$ and $b$ to $c$ in $G$. The former path can be reversed and concatenated to obtain an $(a, b, c)$-path.
+
+\begin{quote}%
+\defalgo{abc-path}{G, a, b, c}
+
+\doc{given $a, b, c \in G$ in an undirected graph, computes whether an $(a,b,c)$-path exists in $G$.}
+
+\begin{steps}
+    \item Construct the auxiliary digraph $G'$:
+    \begin{steps}
+        \item For every vertex $v \in V$, create vertices $v_{in}$ and $v_{out}$ and add the edge ($v_{in}, v_{out}$).
+        \item For every undirected edge $\{u,v\} \in E$, add the edges ($u_{out}, v_{in}$) and ($v_{out}, u_{in}$).
+        \item Let $s \leftarrow b$.
+        \item Create a sink vertex $t$, and add edges from $a_{out}$ and $c_{out}$ to $t$.
+    \end{steps}
+    \item If \subcall{augmenting-paths}{G', s, t} = 2 then
+    \begin{steps}
+        \item Return \texttt{true}.
+    \end{steps}
+  \item Return \texttt{false}.
+\end{steps}
+\end{quote}
+
+
+\vspace{1cc}
+\begin{subproof} [Runtime.]
+We use \subcall{augmenting-paths}{G', s, t} to compute the maximal number of edge-disjoint $(s,t)$-paths. Note that we can slightly modify \subcall{augmenting-paths}{} to return true immediately when we find 2 such paths so that the runtime is in $O(m)$.
+\end{subproof}
+
+
+\begin{subproof} [Correctness.]
+We now prove that an $(a,b,c)$-path exists in $G$ if and only if \subcall{augmenting-paths}{G', s, t} = 2.
+
+First, suppose there are two edge-disjoint paths from $b_{out}$ to $t$ in $G'$.
+Since the only incoming vertices to $t$ are $a_out$ and $c_out$, one path translates to a path that goes to vertex $a \ (a_{in}, a_{out})$ and other, a path that goes to vertex $c \ (c_{in}, c_{out})$ from $b$. Vertex-splitting guarantees that these two paths are vertex-disjoint in $G$; hence, there exist vertex-disjoint paths from $b$ to $a$ and $b$ to $c$. The path from $b$ to $a$ can be reversed, since $G$ is undirected, and prepended to the path from $b$ to $c$ to get an $(a, b, c)$-path.
+
+Conversely, suppose $G$ has an $(a,b,c)$-path.
+This path can be split in to two vertex-and-edge-disjoint paths; one from $b$ to $a$ and the other, from $b$ to $c$. It follows that these two paths can be extended to two edge-disjointed paths from $b_{out}$ to $t$ in $G'$. Since the maximum path-packing in $G'$ clearly has size 2, \subcall{augmenting-paths}{G', b_{out}, t} will return 2.
+\end{subproof}
+
+
 \end{solution}
 \pagebreak
 

@@ -42,7 +42,41 @@ bottleneck weight spanning tree of \( G \).
 \end{subexercise}
 
 \begin{solution}
+  Our algorithm is as follows:
+  \begin{quote}
+    \defalgo{MBWST}{G=(V,E)}
+    \begin{steps}
+      \item Compute the median edge weight \( w_{\text{med}} \) using median of medians \rcomm{O(m)}
+      \item	Partition \( E \) into \( E_{\leq} = \{ e \in E : w(e) \leq w_{\text{med}} \} \) and \( E_{>} = \{ e \in E : w(e) > w_{\text{med}} \} \)
+      \item Run BFS to check if \( G_{\le} = (V, E_{\le}) \) \rcomm{O(m+n)}
+    \end{steps}
+  \end{quote}
 
+  If \( G_{\le} \) is connected, then there is a spanning tree all of whose edges have weight at most \( w_{\text{med}} \).
+  In particular, the MBWST has bottleneck weight at most \( w_{\text{med}} \). We can thus restrict our search to the edges in \( E_{\le} \).
+
+  Else, any spanning tree must use at least one edge from \( E_{>} \).
+  In this case, we can contract each connected component of \( G_{\le} \) into a single supervertex.
+  Form the new graph \( G' \) on these supervertices where each edge corresponds to an edge in \( E_{>} \) (with the same weight).
+  Notice that a spanning tree of G corresponds to a spanning tree of \( G' \) once we add back any spanning trees for the contracted components (which can be computed via BFS).
+  We then continue our search on \( G' \) with the new edge set.
+
+\begin{subproof}[Runtime Complexity]
+  Each iteration uses \( O(m+n) \) time for the median selection and connectivity test.
+  Further, in each case at least about half of the edges are discarded (or \( G \) is contracted such that the total number of edges in the \( G' \) decreases).
+  This gives a recurrence of the form
+  \begin{align*}
+    T(m) = T\Big(\frac{m}{2}\Big) + O(m+n)
+  \end{align*}
+  which solves to \( O(m+n) \).
+\end{subproof}
+
+\begin{subproof}[Correctness]
+  By recursively reducing the set of candidate edges, we eventually obtain a subgraph that is connected and such that the highest weight in the MBWST is the smallest possible threshold guaranteeing connectivity.
+  Finally, once the threshold is determined, a spanning tree taken from the subgraph \( G_\leq \) is a MBWST.
+\end{subproof}
+
+  Thus, the algorithm runs in \( O(m+n) \) time and outputs a MBWST.
 \end{solution}
 \pagebreak
 
